@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests, re
 from datetime import datetime
-
+import json
 
 url = 'https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-tue-18th-feb-2025/'
 
@@ -45,21 +45,34 @@ def extract_table(soup):
     return table_dict
 
 def extract_text(soup):
-    texts = soup.find_all('p')
+    ## there are difference occassions the text is presented
 
-    # find the boundary p which is space only that separate main text and info text
-    x = [p.get_text()=='\xa0' for p in texts]
-    if True in x:
-        boundary = x.index(True)
+    # condition 1: main text is not in p tag, while info text is 
+    if soup.find_all('div', dir = 'auto'):
+        for text in soup.find_all('div', dir = 'auto'):
+            if text.get_text() == 'https://www.adventuresmart.uk/':
+                break
+            else:
+                main_text = text.get_text()
 
-        main_text = ""
-        for i in range(1,boundary):
-            main_text = main_text + texts[i].get_text() + ' '
+        info_text = soup.find_all('p')[1].get_text()
 
-        info_text = texts[boundary + 1].get_text()
-    else:
-        main_text = texts[1].get_text()
-        info_text = texts[2].get_text()
+    else: # condition 2 (main and info text are in p and separate by an empty p tag) and condition 3 (no empty p tag)
+        texts = soup.find_all('p')
+        
+        # find the boundary p which is space only that separate main text and info text
+        x = [p.get_text()=='\xa0' for p in texts]
+        if True in x: #condition 2
+            boundary = x.index(True)
+
+            main_text = ""
+            for i in range(1,boundary):
+                main_text = main_text + texts[i].get_text() + ' '
+
+            info_text = texts[boundary + 1].get_text()
+        else: #condition 3
+            main_text = texts[1].get_text()
+            info_text = texts[2].get_text()
     
     return main_text, info_text
 
@@ -101,12 +114,14 @@ def load_links():
 def scrape_one_incident(url):
     soup = create_soup(url)
     table = extract_table(soup)
+    table['url'] = url
     main_text, info_text = extract_text(soup)
     table['main_text'] = main_text
     table['info_text'] = info_text
     table_info = extract_info_from_text(table)
-    final_table = format_date_time(table_info)
-    return final_table
+    #final_table = format_date_time(table_info)
+    #return final_table
+    return table_info
 
 def main():
     urls = load_links()
@@ -115,9 +130,10 @@ def main():
         url = urls[i][:-1]
         print(f'scraping {url}')
         data.append(scrape_one_incident(url))
-    #trial = scrape_one_incident(url)
-    with open('twenty_incidents.json','w') as file:
-        file.writelines(data) 
+    #url = 'https://www.wmrt.org.uk/incidents/upper-eskdale-sat-22nd-mar-2025/'
+        #trial = scrape_one_incident(url)
+        with open('twenty_incidents.json','a') as file:
+            json.dump(data,file)
     print('finish!')
 
 main()
