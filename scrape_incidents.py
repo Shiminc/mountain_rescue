@@ -55,7 +55,6 @@ def extract_text(soup):
             else:
                 main_text = text.get_text()
 
-        info_text = soup.find_all('p')[1].get_text()
 
     else: # condition 2 (main and info text are in p and separate by an empty p tag) and condition 3 (no empty p tag)
         texts = soup.find_all('p')
@@ -69,30 +68,32 @@ def extract_text(soup):
             for i in range(1,boundary):
                 main_text = main_text + texts[i].get_text() + ' '
 
-            info_text = texts[boundary + 1].get_text()
         else: #condition 3
             main_text = texts[1].get_text()
-            info_text = texts[2].get_text()
     
-    return main_text, info_text
+    return main_text
 
-def extract_info_from_text(table):
-    matches = re.search(r"started at ([0-9]{2}:[0-9]{2})", table['info_text']) 
+def extract_rescue_info(soup):
+    rescue_info = soup.find('div', id = 'rescueinfo').get_text()
+    return rescue_info
+
+def extract_rescue_info_from_text(table):
+    matches = re.search(r"started at ([0-9]{2}:[0-9]{2})", table['rescue_info']) 
     if matches:
         table['start_time'] = matches.group(1)
-    matches = re.search(r"ended at ([0-9]{2}:[0-9]{2})", table['info_text']) 
+    matches = re.search(r"ended at ([0-9]{2}:[0-9]{2})", table['rescue_info']) 
     if matches:
         table['end_time'] = matches.group(1)
-    matches = re.search(r"(\d+\.?\d*) hrs", table['info_text'])
+    matches = re.search(r"(\d+\.?\d*) hrs", table['rescue_info'])
     if matches:
         table['hrs'] = matches.group(1)
-    matches = re.search(r"(\d+) Wasdale", table['info_text']) 
+    matches = re.search(r"(\d+) Wasdale", table['rescue_info']) 
     if matches:
         table['staff'] = matches.group(1)
-    matches = re.search(r"(NY[ \d]+)", table['info_text']) 
+    matches = re.search(r"(NY[ \d]+)", table['rescue_info']) 
     if matches:
         table['location'] = matches.group(1)
-    matches = re.search(r"Total rescuer hours: (\d+\.?\d*)", table['info_text'])
+    matches = re.search(r"Total rescuer hours: (\d+\.?\d*)", table['rescue_info'])
     if matches:
         table['total_hrs'] = matches.group(1)
     
@@ -115,10 +116,9 @@ def scrape_one_incident(url):
     soup = create_soup(url)
     table = extract_table(soup)
     table['url'] = url
-    main_text, info_text = extract_text(soup)
-    table['main_text'] = main_text
-    table['info_text'] = info_text
-    table_info = extract_info_from_text(table)
+    table['main_text'] = extract_text(soup)
+    table['rescue_info'] = extract_rescue_info(soup)
+    table_info = extract_rescue_info_from_text(table)
     #final_table = format_date_time(table_info)
     #return final_table
     return table_info
