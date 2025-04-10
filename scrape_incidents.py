@@ -132,8 +132,8 @@ def main():
         data.append(scrape_one_incident(url))
     #url = 'https://www.wmrt.org.uk/incidents/upper-eskdale-sat-22nd-mar-2025/'
         #trial = scrape_one_incident(url)
-        with open('twenty_incidents.json','a') as file:
-            json.dump(data,file)
+    with open('twenty_incidents.json','w') as file:
+        json.dump(data,file)
     print('finish!')
 
 main()
