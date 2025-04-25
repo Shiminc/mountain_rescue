@@ -1,8 +1,6 @@
 import pandas as pd
 import json
-import time
-from datetime import timedelta 
-from datetime import date 
+from datetime import timedelta, date, datetime 
 import altair as alt
 
 
@@ -15,6 +13,8 @@ def load_data():
 
 def format_datetime(data):
     data['date'] = pd.to_datetime(data['date'], format = "%d %b %Y" )
+
+
     data['start_time_obj'] = pd.to_datetime(data['start_time'], format = "%H:%M")
     data['end_time_obj'] = pd.to_datetime(data['end_time'], format = "%H:%M")
 
@@ -22,10 +22,21 @@ def format_datetime(data):
     data['next_day'] = data['end_time_obj'] < data['start_time_obj']   
     data.loc[data['next_day'] == True,'end_time_obj'] =  data['end_time_obj'] +  pd.Timedelta(days=1)
 
+
     # calculate time used
     data['time_used'] = data['end_time_obj'] - data['start_time_obj']
     # data['time_used'] = data['time_used'].total_seconds()
     data['time_used'] = data['time_used'].apply(pd.Timedelta.total_seconds)
+    # turn seconds to hours
+    data['time_used'] = data['time_used']/3600
+
+    # convert start time and end time to float and based on from '1900-01-01T00:00:00'
+    base_datetime = datetime.strptime('01 Jan 1900', "%d %b %Y")
+    data['start'] = data['start_time_obj'] - base_datetime
+    data['start'] = (data['start'].apply(pd.Timedelta.total_seconds))/3600
+    data['end'] = data['end_time_obj'] - base_datetime
+    data['end'] = (data['end'].apply(pd.Timedelta.total_seconds))/3600
+
     return data
 
 def set_up_altair():
@@ -33,52 +44,33 @@ def set_up_altair():
     alt.data_transformers.disable_max_rows()
 
 def time_spent_plot(data):
-    base = alt.Chart(data).mark_point().encode(
-    color = alt.Color('Incident_Cause')
+    #print(data)
+    base = alt.Chart(data).encode(
+        color = 'Incident_Cause'
     )
 
+    axis_labels = ("datum.label == 0 ? '0 AM' : datum.label == 6 ? '6 AM' : datum.label == 12 ? '12 Noon' : datum.label == 18 ? '6 PM' : datum.label == 24 ? 'Next day' : datum.label == 30 ? '6 AM' : datum.label == 36 ? '12 Noon' : datum.label == 42 ? '6 PM' : datum.label == 48 ? '0 AM' : 'Others'") 
     start_point = base.mark_point().encode(
-    x = alt.X('yearmonthdatehoursminutes(start_time_obj):T', axis = alt.Axis(labels=False), scale=alt.Scale(domain=['1900-01-01T00:00:00', '1900-01-03T00:00:00'])).title(None),
-    #x = alt.X('yearmonthdatehoursminutes(start_time_obj):T', axis = alt.Axis(labels=False), timeUnit='yearmonthdatehours').title(None),
-
-    y = alt.Y('date'),
-    )
-
+        x = alt.X('start', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
+        y = alt.Y('date'),
+        )
+    
     end_point = base.mark_point().encode(
-    x = alt.X('yearmonthdatehoursminutes(end_time_obj):T', axis = alt.Axis(labels=False), scale=alt.Scale(domain=['1900-01-01T00:00:00', '1900-01-03T00:00:00'])).title(None),
-    y = alt.Y('date'),
-    )
+        x = alt.X('end', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
+        y = alt.Y('date'),
+        )
 
     start_end_line = base.mark_rule().encode(
-    x = alt.X('start_time_obj', axis = alt.Axis(labels=False)).title(None),
-    x2 = 'end_time_obj',
-    y = alt.Y('date'),
-    strokeWidth='staff:Q'
+        x = alt.X('start'),
+        x2 = 'end',
+        y = alt.Y('date'),
+        strokeWidth='staff'
     )
+    
+    return (start_point + end_point )
+    
 
-    # mark the next day
-    rule = base.mark_rule(strokeDash=[2, 2]).encode(
-    x = alt.datum(alt.DateTime(year=1900, month = 1, date = 2, hours = 0)),
-    color=alt.value("red")
-    )
-
-    # label for the next day
-    label = rule.mark_text(
-        text = 'Next day',
-        dx = 35,
-        baseline = 'bottom'
-    )
-
-    xaxis_label =  pd.DataFrame.from_dict({
-        'timestamp' : ['1900-01-01T00:00:00', '1900-01-01T00:06:00', '1900-01-01T00:12:00', '1900-01-01T00:18:00', '1900-01-02T00:00:00','1900-01-02T00:06:00','1900-01-02T00:12:00','1900-01-02T00:18:00', '1900-01-03T00:00:00'],'label' : ['0 AM', '6 AM', '12 Noon', '6 PM', 'Next day', '6 AM', '12 Noon', '6 PM', '0 AM']})
-    xaxis_label_chart = alt.Chart(xaxis_label).mark_text().encode(
-        x = alt.X('timestamp:T', axis = alt.Axis(labels=False)).title(None),
-        dx = 35,
-        text = 'label'
-    )
-    xaxis_label_chart.show()
-
-    return (start_point + end_point + start_end_line + rule + label)
+    #return (start_point + end_point + start_end_line )
 
 
 
