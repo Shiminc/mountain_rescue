@@ -130,7 +130,9 @@ def scrape_one_incident(url):
 def main():
     urls = load_links()
     data = []
-    for i in range(0,len(urls)):
+    # for i in range(0,len(urls)):
+    # scrape until start of 2015
+    for i in range(0,1410): 
         url = urls[i][:-1] # to drop the \n in each line
         print(f'scraping {url}')
         data.append(scrape_one_incident(url))

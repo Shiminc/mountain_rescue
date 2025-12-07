@@ -1,14 +1,31 @@
 import pandas as pd
 import json
 import time
+from datetime import timedelta, date, datetime 
+import numpy as np
 import altair as alt
-
-PATH = 'all_incidents.json'
 
 def set_up_altair():
     alt.renderers.enable('browser')
     #alt.renderers.enable('mimetype') # offline renderer
     alt.data_transformers.disable_max_rows()
+
+
+def moving_averages(series, window):
+    new_series = []
+    for i in range(0, len(series)):
+      if i < (window - 1):
+          new_series.append(pd.NA)
+      else:
+          elms_in_window = []
+          for j in range(0,window):
+              elms_in_window.append(series[i-window+1+j])
+          new_series.append(np.mean(elms_in_window))    
+
+        #   element_in_window = [series[i - window + 1], series[i-wi]]      
+
+    return new_series
+
 
 def read_json_to_df(path):
     # load the json
@@ -39,7 +56,8 @@ def filter_by_year(df,year):
     df = df[df['year']>year]
     return df
 
-def aggregate_by_year_month(df, start_date='2012-01-01', end_date='2025-06-01', freq='MS'):
+
+def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-11-01', freq='MS'):
     #create a dummy series that include all date so that when we merge with the data, any month without any incident will be able to filled with 0
     index = pd.date_range(start_date, end_date, freq=freq)
     dummy_series = pd.Series(index=index,name='dummy')
@@ -58,47 +76,14 @@ def aggregate_by_year_month(df, start_date='2012-01-01', end_date='2025-06-01', 
     merged_df['year']=merged_df.dateTime.dt.year
     merged_df['month']=merged_df.dateTime.dt.month
     merged_df['year_month']= pd.to_datetime(merged_df['dateTime'], format = "%Y-%m-%d").astype(str)
-    merged_df
+    merged_df['moving_average']=moving_averages(merged_df.Incident,12)
     return merged_df
 
-def create_year_month_line_chart(df):
-    line_overall = alt.Chart(df).mark_line(point=True).encode(
-        alt.X('year_month:T'),
-        alt.Y('Incident:Q')
-    ).configure_axisTemporal
 
-
-    return line_overall
-
-def create_year_line_chart(df):
-    line_overall = alt.Chart(df).mark_line(point=True).encode(
-        alt.X('year:O'),
-        alt.Y('sum(Incident):Q')
-    )
-    return line_overall
-
-def create_month_year_line(df):
-    line_overall = alt.Chart(df).mark_line(point=True).encode(
-        alt.X('month:O'),
-        alt.Y('Incident:Q'),
-        alt.Color('year:O')
-    )
-    return line_overall
 
 def main():
-    set_up_altair()
-
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
-    data = filter_by_year(data, 2011)
-    incident_count = aggregate_by_year_month(data)
-    #chart_1 = create_year_month_line_chart(incident_count)
-    #chart_2 = create_year_line_chart(incident_count)
-    #chart_3 = create_month_year_line(incident_count)
-    #alt.vconcat(chart_1, chart_2, chart_3).resolve_scale(color='independent', x='independent', y= 'independent').show()
-    create_year_month_line_chart(incident_count).show()
-
-    print('finish')
-
-
+    trial_series = np.random.rand(10)
+    window = 3
+    new_series = (moving_averages(trial_series, window))
+    print(len(new_series))
 main()

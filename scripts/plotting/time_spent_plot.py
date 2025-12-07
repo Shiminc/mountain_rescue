@@ -5,7 +5,7 @@ import altair as alt
 from altair import datum
 
 
-PATH = 'all_incidents.json'
+PATH = "../../data/all_incidents.json"
 
 def load_data():
     with open(PATH, 'r') as json_file:
@@ -45,31 +45,30 @@ def set_up_altair():
     alt.data_transformers.disable_max_rows()
 
 def time_spent_plot(data):
-    #print(data)
     base = alt.Chart(data).encode(
         color = 'Incident_Cause'
-    ).transform_filter((datum.Incident_Cause != 'Other') & (datum.Incident_Cause != ''))
+    )
+    # ).transform_filter((datum.Incident_Cause != 'Other') & (datum.Incident_Cause != ''))
 
     axis_labels = ("datum.label == 0 ? '0 AM' : datum.label == 6 ? '6 AM' : datum.label == 12 ? '12 Noon' : datum.label == 18 ? '6 PM' : datum.label == 24 ? 'Next day' : datum.label == 30 ? '6 AM' : datum.label == 36 ? '12 Noon' : datum.label == 42 ? '6 PM' : datum.label == 48 ? '0 AM' : 'Others'") 
     start_point = base.mark_point().encode(
         x = alt.X('start', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
-        y = alt.Y('yearmonth(date):T'),
+        y = alt.Y('yearmonthdate(date):T'),
         )
     
     end_point = base.mark_point().encode(
         x = alt.X('end', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
-        y = alt.Y('yearmonth(date):T'),
+        y = alt.Y('yearmonthdate(date):T'),
         )
 
     start_end_line = base.mark_rule(strokeWidth=5).encode(
         x = alt.X('start'),
         x2 = 'end',
-        y = alt.Y('yearmonth(date):T'),
+        y = alt.Y('yearmonthdate(date):T'),
     )
     
-    return (start_point + end_point + start_end_line)
-
-    #return (start_point + end_point + start_end_line )
+    # return (start_point + end_point + start_end_line).properties(height=3000)
+    return start_end_line
 
 def dual_axis_plot(data):
     base = alt.Chart(data).encode(
@@ -100,10 +99,13 @@ def main():
     #data = data.sort_values(by=['time_used'],ascending=False).head(20)
 
     # cut off from 2000
-    data = data[data['date']>pd.Timestamp(2012, 1, 1, 0) ]
+    data = data[data['date']>pd.Timestamp(2025, 1, 1, 0) ]
+    # combine Other and " " to Other and renamed to Other incidents based on the official map
+    # data['Incident_Cause'].replace({'':'Other'}, inplace=True)
+    data.loc[data['Incident_Cause'] == '','Incident_Cause'] = 'Other'
 
-    #chart = time_spent_plot(data)
-    chart = dual_axis_plot(data)
+    chart = time_spent_plot(data)
+    # chart = dual_axis_plot(data)
     chart.show()
     print('finish')
 

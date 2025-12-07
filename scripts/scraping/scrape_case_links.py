@@ -4,7 +4,7 @@ import requests
 url = "https://www.wmrt.org.uk/incidents/page/"
 
 def main():
-    pages = 130
+    pages = 136
     case_links = []
 
     for page in range(1,pages+1):
