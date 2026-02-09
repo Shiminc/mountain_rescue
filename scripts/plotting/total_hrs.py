@@ -11,7 +11,7 @@ def aggregate_by_year_month_hrs(df, start_date='2015-01-01', end_date='2025-11-0
     index = pd.date_range(start_date, end_date, freq=freq)
     dummy_series = pd.Series(index=index,name='dummy')
 
-    df['total_hrs'] = df['total_hrs'].astype(float)
+    df['hrs'] = df['hrs'].astype(float)
     df['total_hrs'] = df['total_hrs'].astype(float)
 
 

@@ -1,0 +1,106 @@
+,0
+"('Cold', 'Rain')",20
+"('Cloudy Summits', 'Cold')",24
+"('Cold', 'Mist')",38
+"('Rain', 'Windy')",56
+"('Cold', 'Drizzle')",5
+"('Drizzle', 'Mist')",10
+"('Cloudy Summits', 'Rain')",22
+"('Cloudy Summits', 'Cool')",29
+"('Cool', 'Dry')",28
+"('Cool', 'Mist')",27
+"('Mist', 'Rain')",83
+"('Cloudy Summits', 'Dry')",51
+"('Clear', 'Dry')",39
+"('Dry', 'Sunny')",76
+"('Clear', 'Cool')",19
+"('Cool', 'Drizzle')",3
+"('Dry', 'Windy')",5
+"('Sunny', 'Warm')",67
+"('Dry', 'Warm')",11
+"('Cool', 'Showers')",8
+"('Cloudy Summits', 'Mild')",3
+"('Cloudy Summits', 'Warm')",6
+"('Cloudy Summits', 'Mist')",3
+"('Dry', 'Hot')",2
+"('Hot', 'Sunny')",22
+"('Dry', 'Mild')",6
+"('Mild', 'Mist')",10
+"('Cool', 'Rain')",5
+"('Cool', 'Storms')",1
+"('Storms', 'Windy')",1
+"('Mist', 'Windy')",8
+"('Cold', 'Mild')",1
+"('Mild', 'Rain')",4
+"('Clear', 'Cold')",32
+"('Cold', 'Dry')",27
+"('Cold', 'Showers')",7
+"('Showers', 'Windy')",6
+"('Dry', 'Snow')",1
+"('Dry', 'Mist')",7
+"('Cool', 'Dark')",1
+"('Cold', 'Windy')",8
+"('Cloudy Summits', 'Windy')",4
+"('Clear', 'Cloudy Summits')",2
+"('Clear', 'Windy')",2
+"('Cloudy Summits', 'Showers')",3
+"('Gales', 'Rain')",1
+"('Cloudy Summits', 'Dark')",1
+"('Dry', 'Low Cloud')",1
+"('Low Cloud', 'Rain')",19
+"('Cold', 'Sunny')",6
+"('Rain', 'Snow')",6
+"('Snow', 'Sunny')",1
+"('Cold', 'Snow')",8
+"('Drizzle', 'Mild')",1
+"('Snow', 'Windy')",6
+"('Cold', 'Ice')",5
+"('Rain', 'Showers')",2
+"('Mist', 'Snow')",3
+"('Cold', 'Sleet / Hail')",1
+"('Sleet / Hail', 'Windy')",1
+"('Mist', 'Warm')",1
+"('Mist', 'Sunny')",3
+"('Showers', 'Sunny')",5
+"('Sunny', 'Windy')",3
+"('Clear', 'Warm')",3
+"('Mist', 'Showers')",3
+"('Dry', 'Showers')",1
+"('Cool', 'Sunny')",4
+"('Storms', 'Warm')",1
+"('Cool', 'Windy')",1
+"('Cold', 'Hill Fog')",2
+"('Hill Fog', 'Windy')",1
+"('Drizzle', 'Hill Fog')",1
+"('Ice', 'Snow')",2
+"('Clear', 'Mild')",3
+"('Mild', 'Sunny')",1
+"('Dry', 'Overcast')",1
+"('Cool', 'Overcast')",1
+"('Clear', 'Mist')",1
+"('Clear', 'Rain')",2
+"('Clear', 'Sunny')",2
+"('Mild', 'Overcast')",1
+"('Cold', 'Dark')",2
+"('Cold', 'Gales')",2
+"('Gales', 'Mist')",1
+"('Clear', 'Ice')",2
+"('Ice', 'Windy')",2
+"('Cold', 'Low Cloud')",2
+"('Ice', 'Rain')",1
+"('Gales', 'Storms')",1
+"('Gales', 'Sunny')",1
+"('Clear', 'Dark')",1
+"('Low Cloud', 'Warm')",2
+"('Dark', 'Mist')",1
+"('Clear', 'Hot')",6
+"('Cloudy Summits', 'Sunny')",1
+"('Low Cloud', 'Showers')",1
+"('Hill Fog', 'Rain')",5
+"('Fine', 'Sunny')",2
+"('Fine', 'Warm')",1
+"('Dry', 'Gales')",1
+"('Rain', 'Warm')",3
+"('Hill Fog', 'Low Cloud')",3
+"('Sleet / Hail', 'Snow')",1
+"('Fine', 'Hot')",1

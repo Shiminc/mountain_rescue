@@ -28,7 +28,7 @@ def extract_table(soup):
     
     # processing the table content
     if 'Type' in table_dict.keys():
-        incident = table_dict['Type'].split(' — ')
+        incident = table_dict['Type'].split(' — ')  
         table_dict['Incident_Type'] = incident[0]
         table_dict['Incident_Cause'] = incident[1]
 

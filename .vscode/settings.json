@@ -1,0 +1,9 @@
+{
+    "editor.wordBasedSuggestions": "off",
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.quickSuggestions": {
+        "other": "off"
+    },
+    "editor.suggest.selectionMode": "always",
+    "dataWrangler.experiments.copilot.enabled": false
+}

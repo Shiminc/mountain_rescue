@@ -1,4 +1,4 @@
-from utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+from utils import set_up_altair, handling_problematic_data, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
@@ -12,11 +12,11 @@ def trend_year(data):
     df = aggregate_by_year_month(data)
     df = df[df.year>=2015]
 
-    selection = alt.selection_point(fields=['year'], value=[{'year': 2025},{'year':2016},{'year':2021},{'year':2023},{'year':2017},{'year':2024}])
+    selection = alt.selection_point(fields=['year'], value=[{'year': 2025},{'year':2023},{'year':2024}])
     # selection = alt.selection_point(encodings=['color'], value=[{'year': 2025}], nearest=True, empty=False)
     color = (
         alt.when(selection)
-        .then(alt.Color("year:N").scale(scheme="tableau10").legend(None))
+        .then(alt.Color("year:N").scale(scheme="paired").legend(None))
         .otherwise(alt.value("lightgray"))
         )
 
@@ -58,7 +58,10 @@ def stacked_bar_chart(data):
         alt.X('count():Q')
     )
 
-    bar_chart = base.mark_bar().encode(color = alt.Color('Incident_Cause:N')) 
+    bar_chart = base.mark_bar().encode(
+        color = alt.Color('Incident_Cause:N').scale(scheme='tableau10'),
+        tooltip = ["Incident_Cause", alt.Text('count()', title=None)]) 
+    
     label = base.mark_text(align='left', dx=2).encode(text='count():Q')
 
 
@@ -70,11 +73,12 @@ def main():
 
     data = read_json_to_df(PATH)
     data = format_time_columns(data)
+    data = handling_problematic_data(data)
 
     trend_chart = trend_year(data)
     bar_chart = stacked_bar_chart(data)
 
-    (trend_chart | bar_chart).resolve_legend(color = 'independent').show()
+    (trend_chart | bar_chart).resolve_scale(color='independent').show()
     print('finish')
 
 

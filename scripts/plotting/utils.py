@@ -6,7 +6,7 @@ import numpy as np
 import altair as alt
 
 def set_up_altair():
-    alt.renderers.enable('browser')
+    # alt.renderers.enable('browser')
     #alt.renderers.enable('mimetype') # offline renderer
     alt.data_transformers.disable_max_rows()
 
@@ -36,15 +36,14 @@ def read_json_to_df(path):
     data_pd = pd.DataFrame(data)
 
     # initial cleaning
+    # data_pd.reset_index(drop = True, inplace=True)
     data_pd.dropna(subset=['date'],inplace=True)
-    data_pd.reset_index(inplace=True)
-    data_pd.drop(labels=['index'], axis='columns',inplace=True)
-    # data_pd.drop_duplicates() methods not working
+
     return data_pd
 
 def format_time_columns(df):
     df['date'] = pd.to_datetime(df['date'], format='%d %b %Y')
-    df.sort_values(by=['date'])
+    # df.sort_values(by=['date'])
     df['year'] = df['date'].dt.year.astype(int)
     df['month'] = df['date'].dt.month.astype(int)
     df['year_month'] = df['year'].astype(str) + '-' + df['month'].astype(str)
@@ -79,11 +78,43 @@ def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-11-01', 
     merged_df['moving_average']=moving_averages(merged_df.Incident,12)
     return merged_df
 
+def handling_problematic_data(data):
+    # empty cell in incident cause to be recoded to another original value Other
+    # data.Incident_Cause[data.Incident_Cause=='']='Other'
+    # data['Incident_Cause'].replace({'': 'Other'})
+    data.loc[data['Incident_Cause']=='','Incident_Cause']='Other'
+    # based on the mean number of staff of the full callout and limited callout - 15 vs 7, current data only 6 count of callout which is quite seprate, 2, 4, then 11 , so use 10 as cut off
+    data.loc[(data['Incident_Type']=='Callout') & (data['staff'] >=10),'Incident_Type']='Full Callout'
+    data.loc[(data['Incident_Type']=='Callout') & (data['staff'] <10),'Incident_Type']='Limited Callout'
+    # drop rows with hrs or staff as NaN, most are either short alert or flood responding rather than mountain rescue
+    data = data.dropna(subset=['hrs','staff'])
 
+    return data
+    
+def convert_to_numeric(data):
+    # data['hrs'] = data['hrs'].astype(float)
+    # data['total_hrs'] = data['total_hrs'].astype(float)
+    # data['staff'] = data['staff'].astype(int)
+    data['hrs'] = pd.to_numeric(data['hrs'], errors='coerce')
+    data['total_hrs'] = pd.to_numeric(data['total_hrs'], errors='coerce')
+    data['staff'] = pd.to_numeric(data['staff'], errors='coerce')    
+    return data
 
-def main():
-    trial_series = np.random.rand(10)
-    window = 3
-    new_series = (moving_averages(trial_series, window))
-    print(len(new_series))
-main()
+def calculating_other_agencies(data):
+    data['Agencies_count'] = data['Other Agencies'].apply(lambda x: len(x) if type(x) == list else 0)
+    return data
+
+def determine_next_day(data):
+    data['start_time_obj'] = pd.to_datetime(data['start_time'], format = "%H:%M")
+    data['end_time_obj'] = pd.to_datetime(data['end_time'], format = "%H:%M")
+
+    # to add one day delta to the end time if it ends in the next day
+    data['next_day'] = data['end_time_obj'] < data['start_time_obj']   
+
+    return data
+# def main():
+#     trial_series = np.random.rand(10)
+#     window = 3
+#     new_series = (moving_averages(trial_series, window))
+#     print(len(new_series))
+# main()
