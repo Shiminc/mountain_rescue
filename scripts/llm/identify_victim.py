@@ -37,7 +37,6 @@ def create_system_msg():
 
 def create_human_msg(main_text):
     # reduce the amount of text that llm needs to read by only taking the first two sentences of the incident reports
-    print(main_text)
     if main_text !='':
         main_text = main_text.replace('No.', 'number')
         sent_list = (main_text).split('.')
@@ -60,19 +59,19 @@ def create_response(model,system_msg, human_msg):
 def create_victim_value(df, model, system_msg):
 
     for idx, incident_text in enumerate(df.main_text):
-        if idx > 7:
-            human_msg = create_human_msg(incident_text)
-            response = create_response(model,system_msg, human_msg)
-            print(idx)
-            print(df.iloc[idx]['Incident'])
-            row_dict = {}
-            row_dict['Incident'] = df.iloc[idx]['Incident']
-            row_dict['victims'] = response
+        
+        human_msg = create_human_msg(incident_text)
+        response = create_response(model,system_msg, human_msg)
+        print(idx)
+        print(df.iloc[idx]['Incident'])
+        row_dict = {}
+        row_dict['Incident'] = df.iloc[idx]['Incident']
+        row_dict['victims'] = response
 
-            with open('victims_2024.json','a') as file:
-                json.dump(row_dict,file)
-                file.write(', ')
-            time.sleep(60)
+        with open('victims_2023.json','a') as file:
+            json.dump(row_dict,file)
+            file.write(', ')
+        time.sleep(60)
             
 
 def main():
@@ -82,7 +81,7 @@ def main():
     data = convert_to_numeric(data)
     data = handling_problematic_data(data)
     
-    data = data[(data['year']>2023) & (data['year']<2025)]
+    data = data[(data['year']>2022) & (data['year']<2024)]
 
     system_msg = create_system_msg()
     model = initialise_model()
