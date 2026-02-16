@@ -8,8 +8,7 @@ from dotenv import load_dotenv, find_dotenv
 from langchain.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_mistralai import ChatMistralAI
 from utils.utils import convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
-import pandas as pd
-import numpy as np
+
 PATH = "../../data/all_incidents.json"
 
 def load_api():
@@ -38,10 +37,17 @@ def create_system_msg():
 
 def create_human_msg(main_text):
     # reduce the amount of text that llm needs to read by only taking the first two sentences of the incident reports
-    main_text = main_text.replace('No.', 'number')
-    sent_list = (main_text).split('.')
-    first_two_sent = sent_list[0] + '. ' + sent_list[1]
-    return first_two_sent
+    print(main_text)
+    if main_text !='':
+        main_text = main_text.replace('No.', 'number')
+        sent_list = (main_text).split('.')
+        if len(sent_list)>1:
+            first_two_sent = sent_list[0] + '. ' + sent_list[1]
+            return first_two_sent
+        else:
+            return main_text
+    elif main_text == '':
+        return 'no mountain rescue report found.'
 
 def create_response(model,system_msg, human_msg):
     try:
@@ -54,18 +60,19 @@ def create_response(model,system_msg, human_msg):
 def create_victim_value(df, model, system_msg):
 
     for idx, incident_text in enumerate(df.main_text):
-        human_msg = create_human_msg(incident_text)
-        response = create_response(model,system_msg, human_msg)
-        print(idx)
-        print(df.iloc[idx]['Incident'])
-        row_dict = {}
-        row_dict['Incident'] = df.iloc[idx]['Incident']
-        row_dict['victims'] = response
+        if idx > 7:
+            human_msg = create_human_msg(incident_text)
+            response = create_response(model,system_msg, human_msg)
+            print(idx)
+            print(df.iloc[idx]['Incident'])
+            row_dict = {}
+            row_dict['Incident'] = df.iloc[idx]['Incident']
+            row_dict['victims'] = response
 
-        with open('victims_2024.json','a') as file:
-            json.dump(row_dict,file)
-            file.write(', ')
-        time.sleep(60)
+            with open('victims_2024.json','a') as file:
+                json.dump(row_dict,file)
+                file.write(', ')
+            time.sleep(60)
             
 
 def main():
@@ -74,9 +81,7 @@ def main():
     data = format_time_columns(data)
     data = convert_to_numeric(data)
     data = handling_problematic_data(data)
-    data = calculating_other_agencies(data)
-    data = determine_next_day(data)
-
+    
     data = data[(data['year']>2023) & (data['year']<2025)]
 
     system_msg = create_system_msg()
