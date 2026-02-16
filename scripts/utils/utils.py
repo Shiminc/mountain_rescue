@@ -35,10 +35,6 @@ def read_json_to_df(path):
     # read into the df
     data_pd = pd.DataFrame(data)
 
-    # initial cleaning
-    # data_pd.reset_index(drop = True, inplace=True)
-    data_pd.dropna(subset=['date'],inplace=True)
-
     return data_pd
 
 def format_time_columns(df):
@@ -87,7 +83,7 @@ def handling_problematic_data(data):
     data.loc[(data['Incident_Type']=='Callout') & (data['staff'] >=10),'Incident_Type']='Full Callout'
     data.loc[(data['Incident_Type']=='Callout') & (data['staff'] <10),'Incident_Type']='Limited Callout'
     # drop rows with hrs or staff as NaN, most are either short alert or flood responding rather than mountain rescue
-    data = data.dropna(subset=['hrs','staff'])
+    data = data.dropna(subset=['hrs','staff','date'])
 
     return data
     

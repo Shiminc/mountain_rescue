@@ -1,4 +1,4 @@
-from utils import set_up_altair, convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
+from scripts.utils.utils import set_up_altair, convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
 import pandas as pd
 import numpy as np
 import networkx as nx
