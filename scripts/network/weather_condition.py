@@ -1,4 +1,8 @@
-from scripts.utils.utils import set_up_altair, convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.utils import set_up_altair, convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
 import pandas as pd
 import numpy as np
 import networkx as nx
@@ -95,6 +99,7 @@ def create_chord_chart(df):
     d3.chord(df, color='source', opacity='source', cmap='Set2') 
     d3.show()
     return d3
+
 def main():
     data = read_json_to_df(PATH)
     data = format_time_columns(data)

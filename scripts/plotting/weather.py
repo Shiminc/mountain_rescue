@@ -1,4 +1,8 @@
-from scripts.utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
 import pandas as pd
 import altair as alt
 from datetime import datetime
