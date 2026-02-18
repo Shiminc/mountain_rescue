@@ -4,6 +4,7 @@ import time
 from datetime import timedelta, date, datetime 
 import numpy as np
 import altair as alt
+import os 
 
 def set_up_altair():
     alt.renderers.enable('browser')
@@ -51,6 +52,19 @@ def filter_by_year(df,year):
     df = df[df['year']>year]
     return df
 
+
+def create_victims_df():
+    path = '../../data/victims'
+    file_list = os.listdir(path)
+    data_list = []
+    for file_path in file_list:
+        temp_path = path + '/' + file_path
+        with open(temp_path, 'r') as json_file:
+            data_list = data_list + json.load(json_file)
+
+    data_pd = pd.DataFrame(data_list)
+
+    return data_pd
 
 def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-11-01', freq='MS'):
     #create a dummy series that include all date so that when we merge with the data, any month without any incident will be able to filled with 0
