@@ -12,11 +12,15 @@ def extract_human_victims(string):
     print(string)
     print(type(string))
     stripped_string = string.strip('()')
+    stripped_string = stripped_string.strip()
+
     string_list = stripped_string.split(',')
     return string_list[0]
 
 def extract_animal_victims(string):
     stripped_string = string.strip('()')
+    stripped_string = stripped_string.strip()
+
     string_list = stripped_string.split(',')
     return string_list[1]
 

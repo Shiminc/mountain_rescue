@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
-PATH = "../../data/victims_2024.json"
+PATH = "../../data/victims/victims_2022.json"
 
 def create_separate_victims_tuple(df):
     df['human_victims'] = 0
@@ -15,19 +15,27 @@ def extract_human_victims(string):
     print(string)
     print(type(string))
     stripped_string = string.strip('()')
+    stripped_string = stripped_string.strip()
+
     string_list = stripped_string.split(',')
     return string_list[0]
 
 def extract_animal_victims(string):
     stripped_string = string.strip('()')
+    stripped_string = stripped_string.strip()
+
     string_list = stripped_string.split(',')
     return string_list[1]
 
 
 def main():
     data = read_json_to_df(PATH)
+    incidents = data['Incident']
+    for incident in incidents:
+        print(incident)
     data = create_separate_victims_tuple(data)
-    problem = data[data['human_victims']=='-1']
+    # data.to_csv('checking.csv')
+    problem = data[(data['human_victims']=='-1') ]
     print('finish')
 
 main()

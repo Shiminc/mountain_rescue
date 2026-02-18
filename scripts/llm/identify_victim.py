@@ -1,7 +1,7 @@
 import os
 import sys
-
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import time
 import json
 from dotenv import load_dotenv, find_dotenv
@@ -59,7 +59,6 @@ def create_response(model,system_msg, human_msg):
 def create_victim_value(df, model, system_msg):
 
     for idx, incident_text in enumerate(df.main_text):
-        
         human_msg = create_human_msg(incident_text)
         response = create_response(model,system_msg, human_msg)
         print(idx)
@@ -68,11 +67,11 @@ def create_victim_value(df, model, system_msg):
         row_dict['Incident'] = df.iloc[idx]['Incident']
         row_dict['victims'] = response
 
-        with open('victims_2023.json','a') as file:
+        with open('victims_2022.json','a') as file:
             json.dump(row_dict,file)
             file.write(', ')
         time.sleep(60)
-            
+                
 
 def main():
     api_key = load_api()
@@ -81,7 +80,7 @@ def main():
     data = convert_to_numeric(data)
     data = handling_problematic_data(data)
     
-    data = data[(data['year']>2022) & (data['year']<2024)]
+    data = data[(data['year']>2021) & (data['year']<2023)]
 
     system_msg = create_system_msg()
     model = initialise_model()
