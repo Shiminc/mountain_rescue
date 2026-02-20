@@ -36,3 +36,4 @@ def create_victims_df():
     data_pd = pd.DataFrame(data_list)
 
     return data_pd
+
