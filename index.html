@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="title" content= "Mountain Rescue">
+    <meta name="description" content="Wasdale Mountain Rescue Incident Analysis">
+    <meta name="author" content="Shi Min Chua">
+
+
+    <meta property="og:title" content="Mountain Rescue">
+    <meta property="og:type" content="website">
+    <!-- <meta property='og:image' content='https://raw.githubusercontent.com/Shiminc/UK_diversity_mapping/main/preview.PNG'>
+    <meta property="og:url" content="https://shiminc.github.io/UK_diversity_mapping/">
+    <meta property="og:description" content="Choropleth map illustrating diversity in England/Wales based on ONS country of birth data"> -->
+    <meta property="og:locale" content="en_UK">
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+
+  <body>
+    <header>
+    <h1>Mountain Rescue Team works for free for your leisure and safety</h1>
+    <p>SHI MIN CHUA</p>
+    </header>
+
+    <section id="introduction">
+        <p> At the beginning of 2026, an outpouring of donation has been made to <a href="https://www.wmrt.org.uk/", target="_blank">Wasdale Mountain Rescue Team</a> to help cover the cost of hotel fee after <a href="https://www.bbc.co.uk/news/articles/c9vx0jrnmejo#:~:text=Wasdale%20Mountain%20Rescue%20Team%20said,29%20December%2C%20in%20%22treacherous%22%20conditions.", target="_blank">news</a> of two walkers not paying the hotel that took them in after the team rescued them and arranged for them to spend the night in the hotel. 
+            However, the cost of the rescue is not limited to the hotel fee.           
+            According to the <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-mon-29th-dec-2025/", target="_blank">incident report</a>, the rescue
+            involved 8 team members who have spent their evening until after midnight (7.1 hours) to rescue the men. Of course the team did not get paid for their labour, which would be 57 hours in total, because mountain rescue teams in the UK are operated by volunteers. 
+            Besides this recent incident, back in February 2021, a <a href="https://www.bbc.co.uk/news/uk-england-cumbria-55978537", target="_blank">headline</a> reported a mountain rescuer fell for 150m and suffered spinal fractures while out in a mission around midnight to assist a camper with chest pain.
+            This incident actually happened during Covid-19 lockdown when people were supposed to not mingle outside their bubbles. 
+            Despite these human cost and injuries, almost all the time, the mountain rescue teams have never been accusative of the victims for being ill-prepared or turning people off from the mountains.
+        </p> 
+                  
+     
+        <p> In this article, I am going to visualise with some quantitative information I gathered from the incident reports of the Wasdale Mountain Rescue Team to illustrate the tough work they have put in to keep us safe in Lake District. 
+        </p>
+        <br>
+        <p> Mountain rescue in the UK are operated by volunteers, meaning they do not get paid for spending their time rescuing others, or assisting other civil services. 
+
+        </p>
+            <br>
+        <p>
+        <b>Most diverse areas tend to be in London and major cities in England, with the diversity decreasing further away from them.</b>
+        </p>
+    </section>
+
+
+    <footer>
+    <div id="appendix">
+        <h4>Disclaimer</h4>
+        <ul>
+            <li> The opinion expressed here is my own and does not represent any mountain rescue team. Despite me having read quite a lot of the incident reports and conducting the analyses presented here,  My understandding on mountain rescue is highly likely different from the team members who have done all the hardwork.</li>
+            <li> As a leisure hiker who goes to Lake District every year, I did this piece to express my personal admiration to these unsung heroes who sacrificed their time and sometimes put themselves at risk to ensure all walkers could enjoy the beautiful scenery in Lake District safely. I am in awe with their selfless efforts, whether during summer when everybody is enjoying holiday except them, or during cold winter night when visibility is low on the mountains, or during rainy days when walking paths become flowing streams.  </li>
+            <li> I hope this piece will raise awareness in future hikers such that when they set up for a walk, they would have the mountain rescue team in their mind and they do not risk their own safety that in turn requires the team risking theirs. </li>
+        </ul>
+        <h4>Methodology</h4>
+        <ul>
+            <li>This visualisation is created with Python, with the interactive chropleth map generated by using Folium library while the charts in the popup and in the article by Vega-Altair.</li>
+            <li>The <strong>diversity</strong> score is calculated following the formula of <a href = "https://en.wikipedia.org/wiki/Entropy_(information_theory), target="_blank"">entropy</a> of information theory, which has been used in diversity research for ethnicity. It takes into account of the proportion of all the groups present rather than just simply using the proportion of a particular group, for example the majority group which is born in the UK in this case. The lowest score is 0, meaning that only one group of people are present, while the maximum score for 16 categories, as in the current analysis, is 2.77, when all of the groups have equal proportion. </li>
+            <li>Relevant code and data can be found at my <a href="https://github.com/Shiminc/UK_diversity_mapping" , target="_blank">github </a> repository.</li>
+            <li>You could reach me at shiminc@gmail.com. </li>
+        </ul>
+    </div>
+    </footer>
+    </body>
+</html>
