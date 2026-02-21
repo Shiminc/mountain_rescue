@@ -6,21 +6,20 @@ def create_separate_victims_tuple(df):
     df['human_victims'] = df['victims'].apply(extract_human_victims)
     df['animal_victims'] = 0
     df['animal_victims'] = df['victims'].apply(extract_animal_victims)
+    df['human_victims'] = pd.to_numeric(df['human_victims'], errors='coerce')    
+    df['animal_victims'] = pd.to_numeric(df['animal_victims'], errors='coerce')    
+
     return df
 
 def extract_human_victims(string):
-    print(string)
-    print(type(string))
     stripped_string = string.strip('()')
     stripped_string = stripped_string.strip()
-
     string_list = stripped_string.split(',')
     return string_list[0]
 
 def extract_animal_victims(string):
     stripped_string = string.strip('()')
     stripped_string = stripped_string.strip()
-
     string_list = stripped_string.split(',')
     return string_list[1]
 

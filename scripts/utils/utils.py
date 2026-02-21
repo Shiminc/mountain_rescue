@@ -6,10 +6,7 @@ import numpy as np
 import altair as alt
 import os 
 
-def set_up_altair():
-    alt.renderers.enable('browser')
-    #alt.renderers.enable('mimetype') # offline renderer
-    alt.data_transformers.disable_max_rows()
+
 
 
 def moving_averages(series, window):
