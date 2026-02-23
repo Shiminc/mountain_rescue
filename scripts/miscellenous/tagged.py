@@ -26,6 +26,6 @@ def main():
 
 
     # create_histogram(tagged, 'Other Agencies', bin=False).show()
-    create_stacked_bar(tagged, 'Tagged', 'Incident_Cause').show()
+    create_stacked_bar(tagged, 'Tagged', 'Incident_Type').show()
     print('finish')
 main()
