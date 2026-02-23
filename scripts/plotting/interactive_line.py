@@ -1,4 +1,5 @@
-from scripts.utils.utils import set_up_altair, handling_problematic_data, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+from utils.utils import handling_problematic_data, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+from utils.plot import set_up_altair
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt

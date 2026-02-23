@@ -1,13 +1,13 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-
-from utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+from utils.plot import set_up_altair
+from utils.utils import preprocess_data
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
-PATH = "../../data/all_incidents.json"
+# double y-axis to show count of incident and staff/hrs/total_hrs in the same chart to show trends
 
 def create_stacked_bar(df):
     bar_chart = alt.Chart(df).mark_bar(width=5).encode(
@@ -40,14 +40,16 @@ def create_stacked_bar(df):
 
 def main():
     set_up_altair()
+    data = preprocess_data()
+    # data = read_json_to_df(PATH)
+    # data = format_time_columns(data)
+    # data.loc[data['Incident_Cause'] == '','Incident_Cause'] = 'Other'
+    # data = data[data['date']>pd.Timestamp(2015, 1, 1, 0) ]
 
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
-    data.loc[data['Incident_Cause'] == '','Incident_Cause'] = 'Other'
-    data = data[data['date']>pd.Timestamp(2015, 1, 1, 0) ]
+    # data['hrs'] = data['hrs'].astype(float)
+    # data['total_hrs'] = data['total_hrs'].astype(float)
+    # data['staff'] = data['staff'].astype(float)
 
-    data['hrs'] = data['hrs'].astype(float)
-    data['total_hrs'] = data['total_hrs'].astype(float)
     create_stacked_bar(data).show()
     print('finish')
 

@@ -1,9 +1,13 @@
-from scripts.utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.utils import moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+from utils.plot import set_up_altair
 import pandas as pd
 import altair as alt
 
 PATH = "../../data/all_incidents.json"
-
+# less useful - line chart with 2025 one line , the mean of the rest as one
 def line_chart(df):
     line_chart = alt.Chart(df).mark_line().encode(
         alt.X('month:O'),
@@ -29,7 +33,7 @@ def main():
     data = read_json_to_df(PATH)
     data = format_time_columns(data)
     incident_count = aggregate_by_year_month(data)
-    previous_years = incident_count[incident_count['year'] < 2025]
+    previous_years = incident_count[(incident_count['year'] < 2025) & incident_count['year'] > 2014]
     current_year =  incident_count[(incident_count['year'] == 2025)]
     current_year = current_year[['month','Incident']].rename(columns={"Incident":"2025"})
     aggregated_month = aggregate_by_month(incident_count).reset_index().rename(columns={"Incident":"Average_in_past_years"})
