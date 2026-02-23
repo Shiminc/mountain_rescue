@@ -7,7 +7,7 @@ from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
-# double y-axis to show count of incident and staff/hrs/total_hrs in the same chart to show trends
+# double y-axis by year_month to show count of incident and staff/hrs/total_hrs in the same chart to show trends
 
 def create_stacked_bar(df):
     bar_chart = alt.Chart(df).mark_bar(width=5).encode(
