@@ -17,3 +17,13 @@ def create_histogram(df, var_x, bin=True):
         y = 'count()',
     )
     return bar_chart
+
+def create_stacked_bar(df, var_x, stacked_var):
+    string_y = 'count(' + stacked_var + ')'
+    bar_chart = alt.Chart(df).mark_bar().encode(
+        x = var_x,
+        y = string_y,
+        color = stacked_var
+    )
+
+    return bar_chart
