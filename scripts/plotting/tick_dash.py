@@ -23,7 +23,8 @@ def bubble(df):
         alt.Y('year(date):T'),
         color = alt.Color('Incident_Cause:N'),
         size = alt.Size('hrs'),
-        tooltip = alt.Tooltip(['url'])
+        tooltip = alt.Tooltip(['Location','data','total_hrs']),
+        href ='url'
     ).properties(
         width = 1000
     )
@@ -77,7 +78,7 @@ def main():
 
     (tick_dash(data) &  bubble(data) & heat_map(data)).show()
     data = format_end_time(data)
-    gantt_chart(data).show()
+    # gantt_chart(data).show()
     print('finish')
 
 
