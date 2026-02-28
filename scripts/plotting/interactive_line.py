@@ -1,5 +1,9 @@
-from utils.utils import handling_problematic_data, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.plot import set_up_altair
+from utils.utils import preprocess_data,  aggregate_by_year_month
+
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
@@ -72,9 +76,7 @@ def stacked_bar_chart(data):
 def main():
     set_up_altair()
 
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
-    data = handling_problematic_data(data)
+    data = preprocess_data()
 
     trend_chart = trend_year(data)
     bar_chart = stacked_bar_chart(data)

@@ -1,8 +1,13 @@
-from scripts.utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.plot import set_up_altair
+from utils.utils import preprocess_data,  aggregate_by_year_month, moving_averages
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
+# across years and months
 PATH = "../../data/all_incidents.json"
 
 
@@ -47,8 +52,8 @@ def create_year_month_line(df):
 def main():
     set_up_altair()
 
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
+    set_up_altair()
+    data = preprocess_data()
     total_hrs_average = aggregate_by_year_month_hrs(data)
     create_year_month_line(total_hrs_average).show()
     print('finish')

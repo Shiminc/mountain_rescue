@@ -1,6 +1,11 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.plot import set_up_altair
+from utils.utils import preprocess_data,  aggregate_by_year_month
+
 import pandas as pd
 import altair as alt
-from scripts.utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
 
 # cwd = os.getcwd()
 # PARENT = os.path.basename(os.path.dirname(cwd))
@@ -53,10 +58,7 @@ def heat_map(df):
 
 def main():
     set_up_altair()
-
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
-    # data = filter_by_year(data, 2014)
+    data = preprocess_data()
     incident_count = aggregate_by_year_month(data)
     
     #chart_1 = create_year_month_line_chart(incident_count)
@@ -64,7 +66,7 @@ def main():
     #chart_3 = create_month_year_line(incident_count)
     #alt.vconcat(chart_1, chart_2, chart_3).resolve_scale(color='independent', x='independent', y= 'independent').show()
     # create_year_month_line_chart(incident_count).show()
-    (create_year_month_line(incident_count) + create_year_month_line_smooth(incident_count)).show()
+    (create_year_month_line(incident_count) + create_year_month_line_smooth(incident_count) & heat_map(incident_count)).show()
     # heat_map(incident_count).show()
     print('finish')
 

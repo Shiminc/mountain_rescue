@@ -36,7 +36,21 @@ def create_stacked_bar(df):
     chart = (bar_chart + year_line + line_chart).properties(width = 1000).configure_axisX(title=None)
     return chart
 
+def create_scatter(df):
+    incident = df.groupby(['year','month'])['Incident'].count()
+    hrs = df.groupby(['year','month'])['hrs'].sum()
 
+    print('break')
+
+    data = pd.merge(incident, hrs, on=['year','month']).reset_index(drop=True)
+
+
+    chart = alt.Chart(data).mark_point().encode(
+        alt.X('Incident'),
+        alt.Y('hrs'),
+        # alt.Color('year')
+    )
+    return chart
 
 def main():
     set_up_altair()
@@ -49,6 +63,7 @@ def main():
     # data['hrs'] = data['hrs'].astype(float)
     # data['total_hrs'] = data['total_hrs'].astype(float)
     # data['staff'] = data['staff'].astype(float)
+    create_scatter(data).show()
 
     create_stacked_bar(data).show()
     print('finish')

@@ -1,10 +1,13 @@
-from scripts.utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.plot import set_up_altair
+from utils.utils import preprocess_data,  aggregate_by_year_month
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
-PATH = "../../data/all_incidents.json"
-
+# faceted plot split by month
 
 def trend_across_years(df,month_input):
     data = df[df['month']==month_input]
@@ -40,9 +43,8 @@ def trend_year(df):
 
 def main():
     set_up_altair()
+    data = preprocess_data()
 
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
     incident_count = aggregate_by_year_month(data)
 
     chart = trend_across_years(incident_count, 1)
