@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="title" content= "Mountain Rescue">
+    <meta name="description" content="Wasdale Mountain Rescue Incident Analysis">
+    <meta name="author" content="Shi Min Chua">
+
+
+    <meta property="og:title" content="Mountain Rescue">
+    <meta property="og:type" content="website">
+    <!-- <meta property='og:image' content='https://raw.githubusercontent.com/Shiminc/UK_diversity_mapping/main/preview.PNG'>
+    <meta property="og:url" content="https://shiminc.github.io/UK_diversity_mapping/">
+    <meta property="og:description" content="Choropleth map illustrating diversity in England/Wales based on ONS country of birth data"> -->
+    <meta property="og:locale" content="en_UK">
+    <link rel="stylesheet" href="styles.css">
+
+       <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <!-- Import vega-embed -->
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  </head>
+
+  <body>
+    <header>
+    <h1>Mountain Rescue Team works for free for your leisure and safety - Additional visualisations</h1>
+    <p>SHI MIN CHUA</p>
+    </header>
+        <div class="chartholder">
+            <div id="vis1"></div>
+        </div>
+
+   </body>
+
+<!-- Script for other charts -->
+
+<script type="text/javascript">
+        var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/appendix.json";
+        vegaEmbed('#vis1', spec).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+</script>
