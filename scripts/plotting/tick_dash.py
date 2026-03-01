@@ -13,53 +13,27 @@ def tick_dash(df):
     chart = alt.Chart(df).mark_tick().encode(
         alt.X('dayofyear(date):T'),
         alt.Y('year(date):T'),
-        color = alt.Color('Incident_Cause:N')
+        color = alt.Color('Incident_Cause:N'),
     )
     return chart
 
+# TODO colourblind colour, legend to show bar chart about how many cases in each cause, and side bar to show each year total 
+
 def bubble(df):
-    chart = alt.Chart(df).mark_point(opacity=0.5, filled=True).encode(
+    chart = alt.Chart(df).mark_circle(opacity=0.5, filled=True).encode(
         alt.X('monthdate(date):T'),
+        # alt.X('dayofyear(date):T'),
         alt.Y('year(date):T'),
         color = alt.Color('Incident_Cause:N'),
-        size = alt.Size('hrs'),
-        tooltip = alt.Tooltip(['Location','data','total_hrs']),
+        size = alt.Size('total_hrs').scale(bins=[0,50,100,200,400,800]),
+        tooltip = alt.Tooltip(['Location','date','total_hrs']),
         href ='url'
     ).properties(
         width = 1000
     )
     return chart
 
-def format_end_time(df):
-    df['end_time'] = pd.to_datetime(df['end_time'],format="%H:%M")
-    df['start_time'] = pd.to_datetime(df['start_time'],format="%H:%M")
 
-    # to add one day delta to the end time if it ends in the next day
-    df['next_day'] = df['end_time'] < df['start_time']   
-    # df.loc[df['next_day'] == True,'end_time'] =  df['end_time'] +  pd.Timedelta(days=1)
-
-    for index, row in df.iterrows():
-        if row['next_day']:
-            # row['end_time'] = row['end_time'] + pd.Timedelta(days=1)
-            df.loc[index, 'end_time'] = row['end_time'] + pd.Timedelta(days=1)
-            
-    # this_is_not_the_df = [row['end_time'] + pd.Timedelta(days=1) for row in df.iterrows() if row['next_day']]
-    return df
-
-
-def gantt_chart(df):
- 
-    chart = alt.Chart(df).mark_bar().encode(
-        alt.X('start_time:T'),
-        alt.X2('end_time:T'),
-        alt.Y('year:O'),
-        alt.Color('Incident_Cause:N')
-    ).properties(
-        width = 1000,
-        height = 500
-    )
-
-    return chart
 
 def heat_map(df):
     data = aggregate_by_year_month(df)
@@ -76,8 +50,10 @@ def main():
     set_up_altair()
     data = preprocess_data()
 
-    (tick_dash(data) &  bubble(data) & heat_map(data)).show()
-    data = format_end_time(data)
+    tick_dash(data).show() 
+    # bubble(data).save('main_chart.json')
+    bubble(data).show()
+    # data = format_end_time(data)
     # gantt_chart(data).show()
     print('finish')
 
