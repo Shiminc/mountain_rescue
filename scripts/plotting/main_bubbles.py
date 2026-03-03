@@ -25,8 +25,8 @@ def bubble(df):
     chart = alt.Chart(df, title='Incidents happened across the years').mark_circle(opacity=0.5, filled=True).encode(
         alt.X('monthdate(date):T').axis(format='%b').title(None),
         alt.Y('year(date):T').title(None),
-        alt.Color('Incident_Cause:N'),
-        alt.Size('total_hrs').scale(bins=[0,50,100,200,400,800]),
+        alt.Color('Incident_Cause:N').title('Incident Cause').legend(orient='right'),
+        alt.Size('total_hrs').scale(bins=[0,50,100,200,400,800]).title('total hours').legend(orient='right'),
         alt.Tooltip(['Location','Incident_Cause','date','start_time','hrs','staff','Weather', 'Other Agencies']),
         href ='url'
     ).properties(
@@ -53,9 +53,14 @@ def bubble(df):
 
 def stacked_horizon(data):
 
-    stacked_bar = alt.Chart(data, title='Total number of incidents in each year').mark_bar().encode(
-        alt.X('count()').sort('descending').title('Count of Incidents'),
+    stacked_bar = alt.Chart(data,
+                            title = alt.Title('Total number of Incidents in each year',
+                                              orient = 'bottom')
+                            ).mark_bar().encode(
+        alt.X('count()').sort('descending').title(None),
+        # alt.X('count()').title(None),
         alt.Y('year(date):T').axis(None),
+        # alt.Y('year(date):T').title(None),
         alt.Color('Incident_Cause:N'),
         tooltip =[
             alt.Tooltip(field="Incident_Cause"),
@@ -73,7 +78,8 @@ def stacked_horizon_caption():
 
         text = alt.value(['The number of incidents jumped in 2021 and generally',
                           'attributed to revenge tourism after Covid lockdown.',
-                            'However it never regressed to pre-Covid times.']) 
+                           'However it never regressed to pre-Covid times.'])
+                          
     )
     return caption
 
@@ -102,8 +108,11 @@ def main():
     data = preprocess_data()
     # bubble(data).save('main_chart.json')
     # alt.concat(stacked_horizon(data),bubble(data),  spacing=5).show()
-    alt.concat(stacked_horizon(data) & stacked_horizon_caption(),(bubble(data) & monthly_bar(data)).resolve_scale(x='shared'),spacing=-5).show()
-    # (monthly_bar(data) & (bubble(data)|stacked_horizon(data))).show()
+    # alt.concat((bubble(data) & monthly_bar(data)).resolve_scale(x='shared'), stacked_horizon(data) & stacked_horizon_caption(),spacing=-5).show()
+    alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
+               (bubble(data) & monthly_bar(data)).resolve_scale(x='shared'),
+               spacing=-5).show()
+
     print('finish')
 
 
