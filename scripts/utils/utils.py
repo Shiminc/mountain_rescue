@@ -51,7 +51,7 @@ def filter_by_year(df,year):
     return df
 
 
-def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-11-01', freq='MS'):
+def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-12-31', freq='MS'):
     #create a dummy series that include all date so that when we merge with the data, any month without any incident will be able to filled with 0
     index = pd.date_range(start_date, end_date, freq=freq)
     dummy_series = pd.Series(index=index,name='dummy')
@@ -125,6 +125,14 @@ def determine_next_day(data):
 
     # to add one day delta to the end time if it ends in the next day
     data['next_day'] = data['end_time_obj'] < data['start_time_obj']   
+    data.loc[data['next_day'] == True,'end_time_obj'] =  data['end_time_obj'] +  pd.Timedelta(days=1)
+
+    # convert start time and end time to float and based on from '1900-01-01T00:00:00'
+    base_datetime = datetime.strptime('01 Jan 1900', "%d %b %Y")
+    data['start_hour'] = data['start_time_obj'] - base_datetime
+    data['start_hour'] = (data['start_hour'].apply(pd.Timedelta.total_seconds))/3600
+    data['end_hour'] = data['end_time_obj'] - base_datetime
+    data['end_hour'] = (data['end_hour'].apply(pd.Timedelta.total_seconds))/3600
 
     return data
 

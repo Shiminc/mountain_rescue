@@ -3,7 +3,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf, month_plot, quarter_plot
-from utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+from utils.utils import read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+
 import pandas as pd
 
 PATH = "../../data/all_incidents.json"

@@ -1,3 +1,9 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.plot import set_up_altair
+from utils.utils import preprocess_data,  aggregate_by_year_month
+
 import pandas as pd
 import json
 from datetime import timedelta, date, datetime 
@@ -52,23 +58,23 @@ def time_spent_plot(data):
 
     axis_labels = ("datum.label == 0 ? '0 AM' : datum.label == 6 ? '6 AM' : datum.label == 12 ? '12 Noon' : datum.label == 18 ? '6 PM' : datum.label == 24 ? 'Next day' : datum.label == 30 ? '6 AM' : datum.label == 36 ? '12 Noon' : datum.label == 42 ? '6 PM' : datum.label == 48 ? '0 AM' : 'Others'") 
     start_point = base.mark_point().encode(
-        x = alt.X('start', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
+        x = alt.X('start_hour', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
         y = alt.Y('yearmonthdate(date):T'),
         )
     
     end_point = base.mark_point().encode(
-        x = alt.X('end', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
+        x = alt.X('end_hour', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])),
         y = alt.Y('yearmonthdate(date):T'),
         )
 
-    start_end_line = base.mark_rule(strokeWidth=5).encode(
-        x = alt.X('start'),
-        x2 = 'end',
+    start_end_line = base.mark_rule(strokeWidth=2).encode(
+        x = alt.X('start_hour'),
+        x2 = 'end_hour',
         y = alt.Y('yearmonthdate(date):T'),
     )
     
-    # return (start_point + end_point + start_end_line).properties(height=3000)
-    return start_end_line
+    return (start_point + end_point + start_end_line).properties(height=3000)
+    # return start_end_line
 
 def dual_axis_plot(data):
     base = alt.Chart(data).encode(
@@ -92,17 +98,18 @@ def dual_axis_plot(data):
 
 def main():
     set_up_altair()
-    data = load_data()
-    data = format_datetime(data)
+    data = preprocess_data()
+    # data = load_data()
+    # data = format_datetime(data)
 
-    # use small dataset n = 10
-    #data = data.sort_values(by=['time_used'],ascending=False).head(20)
+    # # use small dataset n = 10
+    # #data = data.sort_values(by=['time_used'],ascending=False).head(20)
 
-    # cut off from 2000
-    data = data[data['date']>pd.Timestamp(2025, 1, 1, 0) ]
-    # combine Other and " " to Other and renamed to Other incidents based on the official map
-    # data['Incident_Cause'].replace({'':'Other'}, inplace=True)
-    data.loc[data['Incident_Cause'] == '','Incident_Cause'] = 'Other'
+    # # cut off from 2000
+    # data = data[data['date']>pd.Timestamp(2025, 1, 1, 0) ]
+    # # combine Other and " " to Other and renamed to Other incidents based on the official map
+    # # data['Incident_Cause'].replace({'':'Other'}, inplace=True)
+    # data.loc[data['Incident_Cause'] == '','Incident_Cause'] = 'Other'
 
     chart = time_spent_plot(data)
     # chart = dual_axis_plot(data)

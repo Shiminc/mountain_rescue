@@ -1,7 +1,8 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
+from utils.utils import read_json_to_df, format_time_columns, preprocess_data, aggregate_by_year_month, filter_by_year
+from utils.plot import set_up_altair
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
@@ -41,14 +42,22 @@ def output_formatting(df, y_var):
     df['dateTime'] = pd.to_datetime(df['dateTime'], format='%d %b %Y')
     return df
 
+def stacked_bar(df):
+    chart = alt.Chart(df).mark_bar().encode(
+        alt.X('yearmonth(date):T').title(None),
+        alt.Y('count()').title(None),
+        alt.Color('Incident_Cause')
+    )
+    return chart
 
-def line_chart(df, series_component, colour='blue', point: bool = False):
+
+def line_chart(df, series_component, colour='purple', point: bool = False):
     line = alt.Chart(df).mark_line(point=point,color=colour).encode(
-        alt.X('dateTime:T'),
+        alt.X('dateTime:T').axis(format = "%b %y").title(None),
         alt.Y('Incident:Q').title(series_component),
         tooltip=['yearmonth(dateTime)', 'Incident']
     ).properties(
-    width=600,
+    width=1000,
     height=100)
 
     return line
@@ -56,11 +65,19 @@ def line_chart(df, series_component, colour='blue', point: bool = False):
 def main():
     set_up_altair()
 
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
+    # data = read_json_to_df(PATH)
+    # data = format_time_columns(data)
+
+    data = preprocess_data()
+
     incident_count = aggregate_by_year_month(data)
     timeseries = input_formatting(incident_count)
     
+    training_data = incident_count[incident_count['year']<2025]
+    test_data = incident_count[incident_count['year']==2025]
+
+    # timeseries = input_formatting(training_data)
+
     decomposed_result = decompose(timeseries)
     trend = pd.DataFrame(decomposed_result.trend)
     seasonal = pd.DataFrame(decomposed_result.seasonal)
@@ -71,7 +88,7 @@ def main():
     seasonal = output_formatting(seasonal,'season')
     residuals = output_formatting(residuals,'resid')
 
-    (line_chart(original_series, 'Observed',point=True) & line_chart(trend, 'trend') & line_chart(seasonal, 'season') & line_chart(residuals, 'residuals')).show()
+    ((stacked_bar(data) + line_chart(original_series, 'Observed')) & line_chart(trend, 'trend') & line_chart(seasonal, 'season') & line_chart(residuals, 'residuals')).show()
     # (line_chart(original_series, 'Incident') + line_chart(trend, 'trend')).show()
   
     print('finish')

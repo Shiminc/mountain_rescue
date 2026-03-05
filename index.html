@@ -18,6 +18,19 @@
     <meta property="og:locale" content="en_UK">
     <link rel="stylesheet" href="styles.css">
 
+       <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <!-- Import vega-embed -->
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
   </head>
 
   <body>
@@ -30,20 +43,45 @@
         <p> At the beginning of 2026, an outpouring of donation has been made to <a href="https://www.wmrt.org.uk/", target="_blank">Wasdale Mountain Rescue Team</a> to help cover the cost of hotel fee after <a href="https://www.bbc.co.uk/news/articles/c9vx0jrnmejo#:~:text=Wasdale%20Mountain%20Rescue%20Team%20said,29%20December%2C%20in%20%22treacherous%22%20conditions.", target="_blank">news</a> of two walkers not paying the hotel that took them in after the team rescued them and arranged for them to spend the night in the hotel. 
             However, the cost of the rescue is not limited to the hotel fee.           
             According to the <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-mon-29th-dec-2025/", target="_blank">incident report</a>, the rescue
-            involved 8 team members who have spent their evening until after midnight (7.1 hours) to rescue the men. Of course the team did not get paid for their labour, which would be 57 hours in total, because mountain rescue teams in the UK are operated by volunteers. 
+            involved 8 team members who have spent their evening until after midnight (7.1 hours) to rescue the men. Of course the team did not get paid for their labour, which would be 8 x 7.1 = 57 hours in total, because mountain rescue teams in the UK are operated by volunteers. 
             Besides this recent incident, back in February 2021, a <a href="https://www.bbc.co.uk/news/uk-england-cumbria-55978537", target="_blank">headline</a> reported a mountain rescuer fell for 150m and suffered spinal fractures while out in a mission around midnight to assist a camper with chest pain.
-            This incident actually happened during Covid-19 lockdown when people were supposed to not mingle outside their bubbles. 
-            Despite these human cost and injuries, almost all the time, the mountain rescue teams have never been accusative of the victims for being ill-prepared or turning people off from the mountains.
+            This incident actually happened during Covid-19 lockdown when people were supposed not to mingle outside their bubbles. 
+            Despite these human cost and injuries, almost all the time, the mountain rescue teams have been continuing doing their good work, not to mention the ever-increasing incidents.
         </p> 
-                  
-     
-        <p> In this article, I am going to visualise with some quantitative information I gathered from the incident reports of the Wasdale Mountain Rescue Team to illustrate the tough work they have put in to keep us safe in Lake District. 
-        </p>
+                 
+        <div class="chartholder">
+            <div id="vis1"></div>
+        </div>
+
         <br>
-        <p> Mountain rescue in the UK are operated by volunteers, meaning they do not get paid for spending their time rescuing others, or assisting other civil services. 
+        <ul>
+            <li>Each bubble in this chart corresponding to each incident happening on a specific date in a month (x-axis) and in a year (y-axis). You could hover over them see more details of each incident and click to be brought to the incident reports, which would give you more understanding to each incident.</li>
+            <li>You could see overlapping bubble, which means that incidents happened in the same day or within days, which is quite common in summer months, where the bubbles cluttered. The emptiness at the start of 2020 corresponded to Covid-19 lockdown period when people in UK were not allowed to travel. </li>
+            <li>The size of the bubbles is proportionate to the total hours spent in the rescues, that is calculated by number of rescuers times hours spent. You could see quite a few big green bubbles, indicating incidents caused by Overdue have involved more rescuers and hours (10 out of 170 required more than 200 hours), even though Injured & Medical and Lost are the common causes (orange and red bubbles).</li>
+        </ul>
+
+            1. why 2017 is high (dec 0)
+            2. why 2019 cragfast increase
+            3. summer month more injury, while autumn more lost due to weather change
+            4. 2016 no overdue
+            5. december fluctuation due to holidy, nobody writes the report.
+   
+            Mountain rescue in the UK are operated by volunteers, meaning they do not get paid for spending their time rescuing others, or assisting other civil services. 
+            You could see more other visualisation <a href="appendix.html">here</a>
+
+            lost & overdue normally take longer due to uncertain locations
+            
+            things to illustrate the efforts involved
+            1. other agencies involved, number of total as well as each type
+            2. time spent, which go through overnight
+            3. staff
+            4. Weather
+            5. quantitative 
+            6. Staff victim ratios
 
         </p>
             <br>
+
         <p>
         <b>Most diverse areas tend to be in London and major cities in England, with the diversity decreasing further away from them.</b>
         </p>
@@ -60,12 +98,21 @@
         </ul>
         <h4>Methodology</h4>
         <ul>
-            <li>This visualisation is created with Python, with the interactive chropleth map generated by using Folium library while the charts in the popup and in the article by Vega-Altair.</li>
-            <li>The <strong>diversity</strong> score is calculated following the formula of <a href = "https://en.wikipedia.org/wiki/Entropy_(information_theory), target="_blank"">entropy</a> of information theory, which has been used in diversity research for ethnicity. It takes into account of the proportion of all the groups present rather than just simply using the proportion of a particular group, for example the majority group which is born in the UK in this case. The lowest score is 0, meaning that only one group of people are present, while the maximum score for 16 categories, as in the current analysis, is 2.77, when all of the groups have equal proportion. </li>
-            <li>Relevant code and data can be found at my <a href="https://github.com/Shiminc/UK_diversity_mapping" , target="_blank">github </a> repository.</li>
+            <li>I excluded Incident Type marked as 'Other' for simplicity. They are equally significant and taking time and effort from the team. These 'Other' events included assisting local emergency, saving dog in distress on mountains, rescuing people from lakes, clearing road during winter, assisting flood rescues.</li>   
+            <li>Relevant code, data and other analyses can be found at this <a href="https://github.com/Shiminc/mountain_rescue" , target="_blank">github repository</a> of mine.</li>
             <li>You could reach me at shiminc@gmail.com. </li>
         </ul>
     </div>
     </footer>
     </body>
+
+<!-- Script for other charts -->
+
+<script type="text/javascript">
+        var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/main_chart.json";
+        vegaEmbed('#vis1', spec).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+</script>
+           
 </html>

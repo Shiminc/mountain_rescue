@@ -17,7 +17,9 @@ def trend_year(data):
     df = aggregate_by_year_month(data)
     df = df[df.year>=2015]
 
-    selection = alt.selection_point(fields=['year'], value=[{'year': 2025},{'year':2023},{'year':2024}])
+    # selection = alt.selection_point(fields=['year'], value=[{'year': 2025},{'year':2023},{'year':2024}])
+    selection = alt.selection_point(fields=['year'], value=[{'year': 2025}])
+
     # selection = alt.selection_point(encodings=['color'], value=[{'year': 2025}], nearest=True, empty=False)
     color = (
         alt.when(selection)
@@ -34,7 +36,7 @@ def trend_year(data):
 
 
 
-    chart = alt.Chart(df).mark_line(point=True, size = 5).encode(
+    chart = alt.Chart(df).mark_line(point=True, size = 2).encode(
         alt.X('month:O'),
         alt.Y('sum(Incident):Q'),
         color = color,
@@ -72,6 +74,16 @@ def stacked_bar_chart(data):
 
     return (bar_chart + label)
 
+def heat_map(df):
+    data = aggregate_by_year_month(df)
+
+    heat_map = alt.Chart(data).mark_rect().encode(
+        alt.X('month:O'),
+        alt.Y('year:O',sort='descending'),
+        alt.Color('Incident:Q')
+    )   
+    return heat_map
+
 
 def main():
     set_up_altair()
@@ -80,9 +92,8 @@ def main():
 
     trend_chart = trend_year(data)
     bar_chart = stacked_bar_chart(data)
+    heatmap_chart = heat_map(data)
 
-    (trend_chart | bar_chart).resolve_scale(color='independent').show()
+    (trend_chart| bar_chart).resolve_scale(color='independent').show()
     print('finish')
-
-
 main()

@@ -8,6 +8,7 @@ import os
 
 def set_up_altair():
     alt.renderers.enable('browser')
+    alt.renderers.set_embed_options(loader={"target": "_blank"})
     #alt.renderers.enable('mimetype') # offline renderer
     alt.data_transformers.disable_max_rows()
 
