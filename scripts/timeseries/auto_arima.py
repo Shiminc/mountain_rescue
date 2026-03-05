@@ -50,7 +50,11 @@ def forecast_future(model, timepoints):
 
     return forecast_value, forecast_conf_int
 
-def draw_forecast(existing_series, predicted_series, conf_int_series):
+def draw_forecast(existing_series, fitted_series, predicted_series, conf_int_series):
+    fitted_df = fitted_series.reset_index()
+    fitted_df['category'] = 'fitted'
+    fitted_df.columns=['dateTime','Incident','category']
+
     conf_df = conf_int_series.reset_index()
     conf_df.columns=['dateTime','lower Incident','upper Incident']
 
@@ -71,7 +75,7 @@ def draw_forecast(existing_series, predicted_series, conf_int_series):
         alt.Y2('lower Incident')
     )
 
-    forecast_line = alt.Chart(pred_df).mark_line(strokeDash=[5,5], size = 2).encode(
+    forecast_line = alt.Chart(pred_df).mark_line(strokeDash=[5,5], size = 2, color='purple').encode(
         alt.X('yearmonth(dateTime)'),
         alt.Y('Incident')
     )
@@ -82,8 +86,13 @@ def draw_forecast(existing_series, predicted_series, conf_int_series):
         alt.Tooltip(['yearmonth(dateTime)','Incident'])
     )
 
+    fitted_line = alt.Chart(fitted_df).mark_line(color = 'purple').encode(
+        alt.X('yearmonth(dateTime)'),
+        alt.Y('Incident'),
+        alt.Tooltip(['yearmonth(dateTime)','Incident'])
+    )
 
-    return (band + forecast_line + existing_line).properties(
+    return (band + forecast_line + existing_line + fitted_line).properties(
     width=1000,
     height=100)
 
@@ -117,7 +126,8 @@ def main():
     # if this model is choosen, refit the model with the whole series, 2015-2025, then forecast 2026
     final_model = fit_final_model(order,seasonal_order, full_series)
     forecast_value, forecast_conf_int = forecast_future(final_model, 12)
-    draw_forecast(full_series, forecast_value, forecast_conf_int).show()
+    fitted_value = final_model.fittedvalues
+    draw_forecast(full_series, fitted_value, forecast_value, forecast_conf_int).show()
 
 
 
