@@ -14,6 +14,7 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 def auto_arima(timeseries):
     # the function return the best model so you don't need to create a new model with sarima with the params found. BUT realised the pdarima does not provide confidence level, so still better fit again with SARIMA
+    # the model selected fulfil observation from acf, pacf
     stepwise_model = pm.auto_arima(timeseries, start_p=1, start_q=1,
                             max_p=3, max_q=3, m=12,
                             start_P=0, seasonal=True,
@@ -63,13 +64,14 @@ def draw_forecast(existing_series, predicted_series, conf_int_series):
 
     line_df = pd.concat([existing_df, pred_df])
 
-    band = alt.Chart(conf_df).mark_area(opacity = 0.3, color = '#57A44C').encode(
+    band = alt.Chart(conf_df).mark_errorband().encode(
+    # band = alt.Chart(conf_df).mark_area(opacity = 0.3, color = '#57A44C').encode(
         alt.X('yearmonth(dateTime)'),
         alt.Y('upper Incident'),
         alt.Y2('lower Incident')
     )
 
-    forecast_line = alt.Chart(pred_df).mark_line(strokeDash=[12,6], size = 2).encode(
+    forecast_line = alt.Chart(pred_df).mark_line(strokeDash=[5,5], size = 2).encode(
         alt.X('yearmonth(dateTime)'),
         alt.Y('Incident')
     )
@@ -77,6 +79,7 @@ def draw_forecast(existing_series, predicted_series, conf_int_series):
     existing_line = alt.Chart(existing_df).mark_line().encode(
         alt.X('yearmonth(dateTime)'),
         alt.Y('Incident'),
+        alt.Tooltip(['yearmonth(dateTime)','Incident'])
     )
 
 

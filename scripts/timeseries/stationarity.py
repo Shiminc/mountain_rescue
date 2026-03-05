@@ -13,6 +13,7 @@ from statsmodels.tsa.stattools import kpss
 # adfuller test, reject hypothesis = stationary, null = non stationary
 # https://www.statsmodels.org/dev/examples/notebooks/generated/stationarity_detrending_adf_kpss.html
 # https://www.statsmodels.org/dev/generated/statsmodels.tsa.stattools.adfuller.html#statsmodels.tsa.stattools.adfuller-returns
+# TODO add chart to show rolling mean (window 12) and rolling variance are/are not stationary 
 
 def adf_test(timeseries):
     print("Results of Dickey-Fuller Test:")
