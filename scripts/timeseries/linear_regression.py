@@ -17,7 +17,7 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from statsmodels.graphics.gofplots import qqplot
 
-
+# performance worse than sarima
 
 def create_regression_pipeline():
 # tranforming data
