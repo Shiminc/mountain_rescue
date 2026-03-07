@@ -11,10 +11,10 @@ PATH = "../../data/ukbankholidays-jul19.csv"
 
 def create_season(df):
     df['season'] = 'season'
-    df['season'][df['month'].isin([12,1,2])] ='winter'
-    df['season'][df['month'].isin([3,4,5])] ='spring'
-    df['season'][df['month'].isin([6,7,8])] ='summer'
-    df['season'][df['month'].isin([9,10,11])] ='autumn'
+    df.loc[df['month'].isin([12,1,2]),'season'] ='winter'
+    df.loc[df['month'].isin([3,4,5]),'season'] ='spring'
+    df.loc[df['month'].isin([6,7,8]),'season'] ='summer'
+    df.loc[df['month'].isin([9,10,11]),'season'] ='autumn'
 
     return df
 
@@ -53,14 +53,20 @@ def count_weekenddays(start_date='2015-01-01', end_date='2025-12-31'):
     data = data.set_index('dateTime')
     return data 
 
+def create_time_lagged(data):
+    # only last year value as a practice.
+    data['last_year'] = data['Incident'].shift(12)
+  
+    return data.dropna(subset=['last_year'])
+
 def create_features(incident_count):
     data = create_season(incident_count)
-
     weekenddays = count_weekenddays()
     bankholidays = count_bank_holidays()
-
     data = data.merge(weekenddays, how = 'left', on = 'dateTime').merge(bankholidays, how = 'left', on = 'dateTime').sort_index().fillna(0)
+    data = create_time_lagged(data)
     return data 
+
 # def main():
 #     # set_up_altair()
 #     data = preprocess_data()

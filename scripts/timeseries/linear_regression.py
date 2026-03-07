@@ -18,6 +18,11 @@ import matplotlib.pyplot as plt
 from statsmodels.graphics.gofplots import qqplot
 
 # performance worse than sarima
+# no time lag features
+# to avoid using our own forecast as another input for the next forecast (doable but to keep it simple here)
+# I am only going to try one lag feature which won't depend on this, that is numbers of previous yeas same month, to run model then predict each month in a year
+# I could use time lag say rolling mean of past one year but that means could only forecast next month
+
 
 def create_regression_pipeline():
 # tranforming data
@@ -44,9 +49,9 @@ def create_data(data,year=2025):
     train_data = data[data['year']<2025]
     test_data = data[data['year'] == 2025]
     
-    X_train = train_data[['count_of_weekend_days','bankholidays','year','month','season']]
+    X_train = train_data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
     y_train = train_data[['Incident']]
-    X_test = test_data[['count_of_weekend_days','bankholidays','year','month','season']]
+    X_test = test_data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
     y_test = test_data[['Incident']]
 
     return X_train, X_test, y_train, y_test 
@@ -62,7 +67,7 @@ def run_scikitlearn_LR( X_train, X_test, y_train, y_test):
     print(f'MAE = {mae_score}')
 
 def preprocessing_for_statsmodels(data):
-    X = pd.get_dummies(data[['count_of_weekend_days','bankholidays','year','month','season']],
+    X = pd.get_dummies(data[['count_of_weekend_days','bankholidays','year','month','season','last_year']],
                             columns = ['season','month'],
                             drop_first = True,
                             dtype = int)
@@ -82,17 +87,16 @@ def run_ols(X_train, X_test, y_train, y_test):
     print(result.summary())
     residuals = result.resid
 
-    plt.subplot(2, 2, 1)
+    plt.subplot(2,1,1)
     residuals.plot()
-
-    plt.subplot(2, 2, 2)
-    qqplot(residuals)
-
-    plt.subplot(2, 2, 3)
+    plt.subplot(2,1,2)
     residuals.hist()
-
-
     plt.show()
+
+    qqplot(residuals, line='s').show()
+
+
+
     
 
 
