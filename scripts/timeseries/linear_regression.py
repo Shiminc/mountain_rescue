@@ -1,15 +1,13 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import altair as alt
 import numpy as np
-from features import create_features
+from utils_features import create_features
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.model_selection import RandomizedSearchCV
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.compose import ColumnTransformer
