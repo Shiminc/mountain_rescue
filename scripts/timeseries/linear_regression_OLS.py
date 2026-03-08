@@ -6,14 +6,10 @@ import pandas as pd
 import altair as alt
 import numpy as np
 from utils_features import create_features
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-from sklearn.compose import ColumnTransformer
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from statsmodels.graphics.gofplots import qqplot
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 # performance worse than sarima
 # no time lag features
@@ -22,25 +18,6 @@ from statsmodels.graphics.gofplots import qqplot
 # I could use time lag say rolling mean of past one year but that means could only forecast next month
 
 
-def create_regression_pipeline():
-# tranforming data
-    numeric_features = ['count_of_weekend_days','bankholidays','year']
-    categorical_features = ['month','season']
-
-    preprocessor = ColumnTransformer(
-        transformers = [
-            ('num', StandardScaler(), numeric_features),
-            ('cat', OneHotEncoder(), categorical_features)
-        ]
-    )
-
-    regression_pipeline = Pipeline(
-        steps = [('preprocessor',preprocessor),
-                 ('regressor',LinearRegression())
-                 ]
-    )
-
-    return regression_pipeline
 
 def create_data(data,year=2025):
     # use 2025 as test data, 2015-2024 as train data
@@ -54,15 +31,6 @@ def create_data(data,year=2025):
 
     return X_train, X_test, y_train, y_test 
 
-def run_scikitlearn_LR( X_train, X_test, y_train, y_test):
-    model = create_regression_pipeline()
-    model.fit(X_train,y_train)
-
-    mse_score = mean_squared_error(y_test, model.predict(X_test))
-    mae_score = mean_absolute_error(y_test, model.predict(X_test))
-    print('model score for test data fitted by SK LR')
-    print(f'MSE = {mse_score}')
-    print(f'MAE = {mae_score}')
 
 def preprocessing_for_statsmodels(data):
     X = pd.get_dummies(data[['count_of_weekend_days','bankholidays','year','month','season','last_year']],
@@ -93,9 +61,29 @@ def run_ols(X_train, X_test, y_train, y_test):
 
     qqplot(residuals, line='s').show()
 
+    return model
 
+# stats model doesn't work like sklearn
+# def run_evaluation(model,X_train, X_test, y_train, y_test):
+#     y_test_predict = model.predict(X_test)
 
-    
+#     mse_score = mean_squared_error(y_test, y_test_predict)
+#     mae_score = mean_absolute_error(y_test, y_test_predict)
+
+#     print('evaluation based on test data')
+#     print(f'mse:  {mse_score}')
+#     print('evaluation based on test data')
+#     print(f'mae:  {mae_score}')
+
+#     y_train_predict = model.predict(X_train)
+
+#     mse_score = mean_squared_error(y_train, y_train_predict)
+#     mae_score = mean_absolute_error(y_train, y_train_predict)
+
+#     print('evaluation based on train data')
+#     print(f'mse:  {mse_score}')
+#     print('evaluation based on train data')
+#     print(f'mae:  {mae_score}')
 
 
 def main():
@@ -107,11 +95,11 @@ def main():
     data = create_features(incident_count)
     
     X_train, X_test, y_train, y_test = create_data(data, 2025)
-    run_scikitlearn_LR( X_train, X_test, y_train, y_test)
 
     X_train, X_test, y_train, y_test = preprocessing_for_statsmodels(data)
-    run_ols(X_train, X_test, y_train, y_test)
+    model = run_ols(X_train, X_test, y_train, y_test)
 
+    # run_evaluation(model,X_train, X_test, y_train, y_test)
     
     print('finish')
 
