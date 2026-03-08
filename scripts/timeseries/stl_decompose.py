@@ -56,11 +56,31 @@ def line_chart(df, series_component, colour='purple', point: bool = False):
         alt.X('dateTime:T').axis(format = "%b %y").title(None),
         alt.Y('Incident:Q').title(series_component),
         tooltip=['yearmonth(dateTime)', 'Incident']
-    ).properties(
-    width=1000,
-    height=100)
+    )
 
-    return line
+# TODO need to make it more programmatic
+    rule_data = pd.DataFrame(
+    [
+        {"date": '01-01-2015'},
+        {"date": '01-01-2016'},
+        {"date": '01-01-2017'},
+        {"date": '01-01-2018'},
+        {"date": '01-01-2019'},
+        {"date": '01-01-2020'},
+        {"date": '01-01-2021'},
+        {"date": '01-01-2022'},
+        {"date": '01-01-2023'},
+        {"date": '01-01-2024'},
+        {"date": '01-01-2025'},
+
+    ]
+    )
+
+    year_rule = alt.Chart(rule_data).mark_rule(color='black',opacity=0.2).encode(
+        alt.X('yearmonth(date):T').title(None))
+
+
+    return (line + year_rule).properties(width=1000, height=100)
 
 def main():
     set_up_altair()
