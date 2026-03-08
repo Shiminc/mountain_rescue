@@ -10,6 +10,7 @@ import pmdarima as pm
 import statsmodels.tsa.stattools as ts
 from sklearn.metrics import mean_absolute_error as MAE
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+import pickle
 
 
 def auto_arima(timeseries):
@@ -127,6 +128,10 @@ def main():
     final_model = fit_final_model(order,seasonal_order, full_series)
     forecast_value, forecast_conf_int = forecast_future(final_model, 12)
     fitted_value = final_model.fittedvalues
+
+    # save the residuals for hybrid modelling.
+    final_model.resid.to_pickle('sarima_resid.pkl')
+
     draw_forecast(full_series, fitted_value, forecast_value, forecast_conf_int).show()
 
 
