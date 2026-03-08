@@ -25,7 +25,7 @@ def bubble(df):
     chart = alt.Chart(df, title='Incidents happened across the years').mark_circle(opacity=0.5, filled=True).encode(
         alt.X('monthdate(date):T').axis(format='%b').title(None),
         alt.Y('year(date):T').title(None),
-        alt.Color('Incident_Cause:N').title('Incident Cause').legend(orient='right'),
+        alt.Color('Incident_Cause:N').title('Incident Cause').legend(None),
         alt.Size('total_hrs').scale(bins=[0,50,100,200,400,800]).title('total hours').legend(orient='right'),
         alt.Tooltip(['Location','Incident_Cause','date','start_time','hrs','staff','Weather', 'Other Agencies']),
         href ='url'
@@ -50,6 +50,24 @@ def bubble(df):
 #         width = 1000
 #     )
 #     return chart
+
+def cause_bar(data):
+    chart = alt.Chart(data).mark_bar().encode(
+        alt.X('count()').title(None),
+        alt.Y('Incident_Cause:N').sort('-x').title(None),
+        alt.Color('Incident_Cause:N').legend(None),
+    )
+
+    return chart
+
+
+def week_bar(data):
+    chart = alt.Chart(data).mark_bar().encode(
+        alt.X('count()').title(None),
+        alt.Y('dayofweek_n', sort=['Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']).title(None),
+        alt.Color('Incident_Cause:N').legend(None),
+    )
+    return chart
 
 def stacked_horizon(data):
 
@@ -110,9 +128,12 @@ def main():
     # alt.concat(stacked_horizon(data),bubble(data),  spacing=5).show()
     # alt.concat((bubble(data) & monthly_bar(data)).resolve_scale(x='shared'), stacked_horizon(data) & stacked_horizon_caption(),spacing=-5).show()
     alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
-               (bubble(data) & monthly_bar(data)).resolve_scale(x='shared'),
-               spacing=-5).show()
+                (bubble(data) & monthly_bar(data)).resolve_scale(x='shared'),
+                (cause_bar(data) & week_bar(data)),
+                spacing=-2).show()
 
+
+    
     print('finish')
 
 
