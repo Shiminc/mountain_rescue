@@ -50,12 +50,24 @@ def run_grid_search(X_train, y_train, grid_search):
     return model.best_estimator_
 
 def run_evaluation(best_model,X_train, X_test, y_train, y_test):
-    y_predict = best_model.fit(X_train, y_train).predict(X_test)
+    y_test_predict = best_model.fit(X_train, y_train).predict(X_test)
 
-    mse_score = mean_squared_error(y_test, y_predict)
-    mae_score = mean_absolute_error(y_test, y_predict)
+    mse_score = mean_squared_error(y_test, y_test_predict)
+    mae_score = mean_absolute_error(y_test, y_test_predict)
 
     print('evaluation based on test data')
     print(f'mse:  {mse_score}')
     print('evaluation based on test data')
     print(f'mae:  {mae_score}')
+
+    y_train_predict = best_model.fit(X_train, y_train).predict(X_train)
+
+    mse_score = mean_squared_error(y_train, y_train_predict)
+    mae_score = mean_absolute_error(y_train, y_train_predict)
+
+    print('evaluation based on train data')
+    print(f'mse:  {mse_score}')
+    print('evaluation based on train data')
+    print(f'mae:  {mae_score}')
+
+
