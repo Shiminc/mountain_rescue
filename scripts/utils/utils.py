@@ -45,6 +45,21 @@ def read_json_to_df(path):
 
     return data_pd
 
+def convert_day_to_word(df):
+    conditions = [
+        (df['dayofweek'] == 0),
+        (df['dayofweek'] == 1),
+        (df['dayofweek'] == 2),
+        (df['dayofweek'] == 3),
+        (df['dayofweek'] == 4),
+        (df['dayofweek'] == 5),
+        (df['dayofweek'] == 6)
+    ]
+    values = ['Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    
+    df['dayofweek_n'] = np.select(conditions, values, 'NA')
+    return df
+
 def format_time_columns(df):
     df['date'] = pd.to_datetime(df['date'], format='%d %b %Y')
     # df.sort_values(by=['date'])
@@ -52,6 +67,10 @@ def format_time_columns(df):
     df['month'] = df['date'].dt.month.astype(int)
     # The day of the week with Monday=0, Sunday=6.
     df['dayofweek'] = df['date'].dt.dayofweek.astype(int)
+    df = convert_day_to_word(df)
+
+
+
     df['year_month'] = df['year'].astype(str) + '-' + df['month'].astype(str)
     df['year_month'] = pd.to_datetime(df['year_month'], format='%Y-%m')
 
