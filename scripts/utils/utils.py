@@ -7,8 +7,17 @@ import altair as alt
 import os 
 
 PATH = "../../data/all_incidents.json"
+HOLIDAY_PATH = "../../data/ukbankholidays-jul19.csv"
 
+def determine_bankholiday(df):
+    holidays = pd.read_csv(HOLIDAY_PATH)
+    holidays = holidays[['UK BANK HOLIDAYS']].dropna()
+    holidays.columns =['bankholidays']
+    holidays['bankholidays'] = pd.to_datetime(holidays['bankholidays'], format='%d-%b-%Y')
+    
+    df['holiday'] = np.where(df['date'].isin(holidays.bankholidays),1,0)
 
+    return df  
 
 def moving_averages(series, window):
     new_series = []
@@ -41,6 +50,8 @@ def format_time_columns(df):
     # df.sort_values(by=['date'])
     df['year'] = df['date'].dt.year.astype(int)
     df['month'] = df['date'].dt.month.astype(int)
+    # The day of the week with Monday=0, Sunday=6.
+    df['dayofweek'] = df['date'].dt.dayofweek.astype(int)
     df['year_month'] = df['year'].astype(str) + '-' + df['month'].astype(str)
     df['year_month'] = pd.to_datetime(df['year_month'], format='%Y-%m')
 
@@ -143,5 +154,6 @@ def preprocess_data():
     data = handling_problematic_data(data)
     data = calculating_other_agencies(data)
     data = determine_next_day(data)
+    data = determine_bankholiday(data)
     data = data[(data['year']>2014) & (data['year']<2026)]
     return data
