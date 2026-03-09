@@ -87,7 +87,7 @@ def draw_forecast(existing_series, fitted_series, predicted_series, conf_int_ser
         alt.Tooltip(['yearmonth(dateTime)','Incident'])
     )
 
-    fitted_line = alt.Chart(fitted_df).mark_line(color = 'purple').encode(
+    fitted_line = alt.Chart(fitted_df).mark_line(color = 'purple', opacity=0.2).encode(
         alt.X('yearmonth(dateTime)'),
         alt.Y('Incident'),
         alt.Tooltip(['yearmonth(dateTime)','Incident'])
@@ -98,6 +98,8 @@ def draw_forecast(existing_series, fitted_series, predicted_series, conf_int_ser
     height=100)
 
 
+def run_evaluation():
+    return ...
 
 
 def main():
@@ -120,9 +122,14 @@ def main():
 
     # predict based on the length of the test data and evaluate the model, mainly used to compare to other models, like prophet, ML. 
     test_predicted = model.predict(len(test_series))
+    train_fitted = model.fittedvalues()
+    train_fitted.index.freq = 'MS'
+
     print('')
     print('MAE of predicting 2025')
     print(MAE(test_series, test_predicted))
+    print('MAE of training data')
+    print(MAE(train_series, train_fitted))
 
     # if this model is choosen, refit the model with the whole series, 2015-2025, then forecast 2026
     final_model = fit_final_model(order,seasonal_order, full_series)
@@ -131,6 +138,7 @@ def main():
 
     # save the residuals for hybrid modelling.
     final_model.resid.to_pickle('sarima_resid.pkl')
+    final_model.fittedvalues.to_pickle('sarima_fitted.pkl')
 
     draw_forecast(full_series, fitted_value, forecast_value, forecast_conf_int).show()
 
