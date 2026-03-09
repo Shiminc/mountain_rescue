@@ -15,15 +15,21 @@ def create_data(data,year=2025):
     # use 2025 as test data, 2015-2024 as train data
     train_data = data[data['year']<2025]
     test_data = data[data['year'] == 2025]
-    
-    X_train = train_data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
     y_train = train_data[['Incident']]
-    X_test = test_data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
     y_test = test_data[['Incident']]
 
     preprocessor = transform_features()
 
-    return  preprocessor.fit_transform(X_train),  preprocessor.fit_transform(X_test), np.ravel(y_train), np.ravel(y_test) 
+    X = data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
+    X = preprocessor.fit_transform(X)
+
+    X_train = X[:X.shape[0]-12]
+    X_test = X[X.shape[0]-12:]
+    y_train = train_data[['Incident']]
+    y_test = test_data[['Incident']]
+
+
+    return  X_train,  X_test, np.ravel(y_train), np.ravel(y_test) 
 
 
 def transform_features():
