@@ -9,11 +9,11 @@ from sklearn.model_selection import RandomizedSearchCV
 from scipy import stats
 
 from xgboost import XGBRegressor
-from utils_ML import create_data, run_grid_search, run_evaluation
+from utils_ML import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
 
 # https://xgboost.readthedocs.io/en/latest/parameter.html
 
-def create_random_forest_gridsearch():
+def create_xgboost_gridsearch():
     """
     Create the gridsearch of the pipeline, for use in the training, as well as later fitting of whole dataset if the
     model is selected for forecasting.
@@ -45,11 +45,12 @@ def main():
     
     X_train, X_test, y_train, y_test = create_data(data, 2025)
 
-    grid_search = create_random_forest_gridsearch()
-
+    grid_search = create_xgboost_gridsearch()
+    print('')
+    print('xgboost on raw data')
     best_model = run_grid_search(X_train, y_train, grid_search)
-
-    run_evaluation(best_model,X_train, X_test, y_train, y_test)
+    y_test_predict, y_train_predict = get_predicted_train_test_from_best_model(best_model,X_train, y_train, X_test)
+    run_evaluation(y_train, y_test, y_train_predict,y_test_predict)
 
 
     print('finish')

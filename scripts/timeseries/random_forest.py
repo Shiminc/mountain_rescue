@@ -8,7 +8,7 @@ from utils_features import create_features
 from sklearn.model_selection import RandomizedSearchCV
 
 from sklearn.ensemble import RandomForestRegressor
-from utils_ML import create_data, run_grid_search, run_evaluation
+from utils_ML import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
 
 
 
@@ -48,9 +48,11 @@ def main():
 
     grid_search = create_random_forest_gridsearch()
 
+    print('')
+    print('Random forest on raw data')
     best_model = run_grid_search(X_train, y_train, grid_search)
-
-    run_evaluation(best_model,X_train, X_test, y_train, y_test)
+    y_test_predict, y_train_predict = get_predicted_train_test_from_best_model(best_model,X_train, y_train, X_test)
+    run_evaluation(y_train, y_test, y_train_predict,y_test_predict)
 
 
     print('finish')

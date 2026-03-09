@@ -5,10 +5,9 @@ from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import numpy as np
 from utils_features import create_features
-from sklearn.model_selection import RandomizedSearchCV
 
 from sklearn.linear_model import LinearRegression
-from utils_ML import create_data, run_grid_search, run_evaluation
+from utils_ML import create_data, run_evaluation
 
 
 

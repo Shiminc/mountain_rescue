@@ -9,7 +9,7 @@ from sklearn.model_selection import RandomizedSearchCV
 
 from sklearn.svm import SVR
 # Epsilon-Support Vector Regression.
-from utils_ML import create_data, run_grid_search, run_evaluation
+from utils_ML import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
 
 
 
@@ -32,6 +32,13 @@ def create_svm_gridsearch():
     
     return grid_search
 
+def run_svm(X_train, X_test, y_train, y_test):
+    grid_search = create_svm_gridsearch()
+    best_model = run_grid_search(X_train, y_train, grid_search)
+    y_test_predict, y_train_predict = get_predicted_train_test_from_best_model(best_model,X_train, y_train, X_test)
+    run_evaluation(y_train, y_test, y_train_predict,y_test_predict)
+
+
 def main():
     # set_up_altair()
     data = preprocess_data()
@@ -42,12 +49,11 @@ def main():
     
     X_train, X_test, y_train, y_test = create_data(data, 2025)
 
-    grid_search = create_svm_gridsearch()
+    print('')
 
-    best_model = run_grid_search(X_train, y_train, grid_search)
+    print('SVM on raw values')
 
-    run_evaluation(best_model,X_train, X_test, y_train, y_test)
-
+    run_svm(X_train, X_test, y_train, y_test)
 
     print('finish')
 
