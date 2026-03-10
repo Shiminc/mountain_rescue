@@ -25,7 +25,7 @@ def bubble(df):
     chart = alt.Chart(df, title='Incidents happened across the years').mark_circle(opacity=0.5, filled=True).encode(
         alt.X('monthdate(date):T').axis(format='%b').title(None),
         alt.Y('year(date):T').title(None),
-        alt.Color('Incident_Cause:N').title('Incident Cause').legend(None),
+        alt.Color('Incident_Cause:N').title('Incident Cause').legend(),
         alt.Size('total_hrs').scale(bins=[0,50,100,200,400,800]).title('total hours').legend(orient='right'),
         alt.Tooltip(['Location','Incident_Cause','date','start_time','hrs','staff','Weather', 'Other Agencies']),
         href ='url'
@@ -125,15 +125,30 @@ def monthly_bar(data):
     )
     return bar
 
+def monthly_bar_caption():
+    caption = alt.Chart().mark_text(
+        align =  "left",
+        baseline = "bottom",
+        fontStyle='italic'
+    ).encode(
+
+        text = alt.value(['The number of incidents jumped in 2021 and generally',
+                          'attributed to revenge tourism after Covid lockdown.',
+                           'However it never regressed to pre-Covid times.'])
+                          
+    )
+    return caption
+    
 def main():
     set_up_altair()
     data = preprocess_data()
-    # bubble(data).save('main_chart.json')
+    # bubble(data).save('../../charts/main_chart.json')
     # alt.concat(stacked_horizon(data),bubble(data),  spacing=5).show()
     # alt.concat((bubble(data) & monthly_bar(data)).resolve_scale(x='shared'), stacked_horizon(data) & stacked_horizon_caption(),spacing=-5).show()
     alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
-                 (bubble(data) & monthly_bar(data)).resolve_scale(x='shared'),
-                 (cause_bar(data) & week_bar(data)),
+                 (bubble(data) & (monthly_bar(data))).resolve_scale(x='shared'),
+                #  (monthly_bar_caption()),
+                #  (cause_bar(data) & week_bar(data)),
                  spacing=-2).save('../../charts/main_chart.json')
 
     # ((bubble(data)|(stacked_horizon(data) & stacked_horizon_caption())) & monthly_bar(data)).resolve_scale(x='shared').show()
