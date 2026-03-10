@@ -66,6 +66,10 @@ def week_bar(data):
         alt.X('count()').title(None),
         alt.Y('dayofweek_n', sort=['Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']).title(None),
         alt.Color('Incident_Cause:N').legend(None),
+        tooltip =[
+            alt.Tooltip(field="Incident_Cause"),
+            alt.Tooltip('count()', title='Count of Incidents')  
+        ],
     )
     return chart
 
@@ -128,11 +132,12 @@ def main():
     # alt.concat(stacked_horizon(data),bubble(data),  spacing=5).show()
     # alt.concat((bubble(data) & monthly_bar(data)).resolve_scale(x='shared'), stacked_horizon(data) & stacked_horizon_caption(),spacing=-5).show()
     alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
-                (bubble(data) & monthly_bar(data)).resolve_scale(x='shared'),
-                (cause_bar(data) & week_bar(data)),
-                spacing=-2).show()
+                 (bubble(data) & monthly_bar(data)).resolve_scale(x='shared'),
+                 (cause_bar(data) & week_bar(data)),
+                 spacing=-2).save('../../charts/main_chart.json')
 
-
+    # ((bubble(data)|(stacked_horizon(data) & stacked_horizon_caption())) & monthly_bar(data)).resolve_scale(x='shared').show()
+ 
     
     print('finish')
 
