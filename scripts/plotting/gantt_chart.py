@@ -23,28 +23,59 @@ def format_end_time(df):
     # this_is_not_the_df = [row['end_time'] + pd.Timedelta(days=1) for row in df.iterrows() if row['next_day']]
     return df
 
+
+
+
 def gantt_chart(df):
-    data = df[df['year']==2025]
-    chart = alt.Chart(data).mark_bar(opacity=0.5).encode(
-        alt.X('start_time_obj:T'),
-        alt.X2('end_time_obj:T'),
-        alt.Y('monthdate(date):T'),
+    # data = df[df['year']==2025]
+    year_list = [2025,2024,2023,2022,2021, 2020,2019,2018,2017,2016,2015]
+    year_dropdown = alt.binding_select(options=year_list, name='Year')
+    year_select = alt.selection_point(fields=['year'],bind=year_dropdown)
+    axis_labels = ("datum.label == 0 ? '0 AM' : datum.label == 6 ? '6 AM' : datum.label == 12 ? '12 Noon' : datum.label == 18 ? '6 PM' : datum.label == 24 ? 'Next day' : datum.label == 30 ? '6 AM' : datum.label == 36 ? '12 Noon' : datum.label == 42 ? '6 PM' : datum.label == 48 ? '0 AM' : 'Others'") 
+
+    base = alt.Chart(df).mark_line(size=2,opacity=0.5).encode(
+        alt.X('start_hour', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])).title(None),
+        alt.X2('end_hour').title(None),
+        alt.Y('monthdate(date):T').axis(format='%b').title(None),
         alt.Color('Incident_Cause:N'),
-        alt.Size('staff').legend(None)
+        # alt.Size('staff').legend(None)
 
     ).properties(
-        width = 1000,
-        height = 1000
+        height = 200,
+        width = 200
     )
 
-    return chart
+    next_day_rule = alt.Chart().mark_rule(color='grey',opacity=0.5).encode(
+       x=alt.datum(24)
+    )
+
+    chart = base.add_params(
+        year_select
+    ).transform_filter(
+        year_select
+    )
+    return chart + next_day_rule
+
+def top_20_hrs(data):
+    year_list = list(data['year'].unique())
+    for i, year in enumerate(year_list):
+        temp_df = data[data['year'] == year]
+        temp_df_top = temp_df.sort_values(by=['hrs'], ascending = False).head(20)
+        if i == 0:
+            df = temp_df_top
+        else:
+            df = pd.concat([df,temp_df_top])
+
+    return df
 
 def main():
     set_up_altair()
     data = preprocess_data()
-
+        
+    data=top_20_hrs(data)
 
     gantt_chart(data).show()
+
     print('finish')
 
 
