@@ -29,32 +29,46 @@ def format_end_time(df):
 def gantt_chart(df):
     # data = df[df['year']==2025]
     year_list = [2025,2024,2023,2022,2021, 2020,2019,2018,2017,2016,2015]
-    year_dropdown = alt.binding_select(options=year_list, name='Year')
-    year_select = alt.selection_point(fields=['year'],bind=year_dropdown)
+    # year_dropdown = alt.binding_select(options=year_list, name='Year')
+    # year_select = alt.selection_point(fields=['year'],bind=year_dropdown)
     axis_labels = ("datum.label == 0 ? '0 AM' : datum.label == 6 ? '6 AM' : datum.label == 12 ? '12 Noon' : datum.label == 18 ? '6 PM' : datum.label == 24 ? 'Next day' : datum.label == 30 ? '6 AM' : datum.label == 36 ? '12 Noon' : datum.label == 42 ? '6 PM' : datum.label == 48 ? '0 AM' : 'Others'") 
+    selection = alt.selection_point(fields=['year'], value=[{'year': 2025}])
+
+
+    color = (
+        alt.when(selection)
+        .then(alt.Color('Incident_Cause:N').legend(None))
+        .otherwise(alt.value("lightgray"))
+        )
+    
+    legend = alt.Chart(df).mark_rect().encode(
+        alt.Y('year:N').axis(title = 'Year', titleAngle = 0, titleY=-2, titleAlign="left",labelAlign='left', offset=-35,ticks=False, grid=False, domainColor='transparent'),   
+        color = alt.Color('year').legend(None)     
+    ).add_params(
+        selection,
+    ).resolve_legend(color = 'independent')
+
 
     base = alt.Chart(df).mark_line(size=2,opacity=0.5).encode(
         alt.X('start_hour', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])).title(None),
         alt.X2('end_hour').title(None),
         alt.Y('monthdate(date):T').axis(format='%b').title(None),
-        alt.Color('Incident_Cause:N'),
+        color = color,
         # alt.Size('staff').legend(None)
 
     ).properties(
         height = 200,
         width = 200
+    ).add_params(
+        selection,
     )
 
     next_day_rule = alt.Chart().mark_rule(color='grey',opacity=0.5).encode(
        x=alt.datum(24)
     )
 
-    chart = base.add_params(
-        year_select
-    ).transform_filter(
-        year_select
-    )
-    return chart + next_day_rule
+
+    return (base + next_day_rule)|legend
 
 def top_20_hrs(data):
     year_list = list(data['year'].unique())
