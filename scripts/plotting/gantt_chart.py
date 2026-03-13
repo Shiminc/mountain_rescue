@@ -23,31 +23,57 @@ def format_end_time(df):
     # this_is_not_the_df = [row['end_time'] + pd.Timedelta(days=1) for row in df.iterrows() if row['next_day']]
     return df
 
-
+# TODO add mean/median line 
 
 
 def gantt_chart(df):
-    # data = df[df['year']==2025]
-    year_list = [2025,2024,2023,2022,2021, 2020,2019,2018,2017,2016,2015]
-    # year_dropdown = alt.binding_select(options=year_list, name='Year')
-    # year_select = alt.selection_point(fields=['year'],bind=year_dropdown)
     axis_labels = ("datum.label == 0 ? '0 AM' : datum.label == 6 ? '6 AM' : datum.label == 12 ? '12 Noon' : datum.label == 18 ? '6 PM' : datum.label == 24 ? 'Next day' : datum.label == 30 ? '6 AM' : datum.label == 36 ? '12 Noon' : datum.label == 42 ? '6 PM' : datum.label == 48 ? '0 AM' : 'Others'") 
     selection = alt.selection_point(fields=['year'], value=[{'year': 2025}])
+    selection_cause = alt.selection_point(fields=['Incident_Cause'], value=[{'Incident_Cause': 'Lost'}])
+    selection_type = alt.selection_point(fields=['Incident_Type'], value=[{'Incident_Type': 'Full Callout'}])
     
-
-    color = (
+    color_year = (
         alt.when(selection)
         # .then(alt.Color('year:N').legend(None))
-        .then(alt.value("yellow"))
+        .then(alt.value("darkgrey"))
         .otherwise(alt.value("lightgray"))
         )
     
-    legend = alt.Chart(df).mark_rect().encode(
+    color_cause = (
+        alt.when(selection_cause)
+        .then(alt.Color('Incident_Cause:N').legend(None))
+        .otherwise(alt.value("lightgray"))
+        )
+    
+    color_type = (
+        alt.when(selection_type)
+        .then(alt.value("darkgrey"))
+        .otherwise(alt.value("lightgray"))
+        )
+    
+    legend_year = alt.Chart(df).mark_rect().encode(
         alt.Y('year:N').axis(title = 'Year', titleAngle = 0, titleY=-2, titleAlign="left",labelAlign='left', offset=-35,ticks=False, grid=False, domainColor='transparent'),   
         # color = alt.Color('year').legend(None)
-        color=color
+        color=color_year
     ).add_params(
         selection,
+    ).resolve_legend(color = 'independent')
+
+
+    legend_cause = alt.Chart(df).mark_rect().encode(
+        alt.Y('Incident_Cause:N').axis(title = 'Incident Cause', titleAngle = 0, titleY=-2, titleAlign="left",labelAlign='left', offset=-35,ticks=False, grid=False, domainColor='transparent'),   
+        # color = alt.Color('year').legend(None)
+        color=color_cause
+    ).add_params(
+        selection_cause,
+    ).resolve_legend(color = 'independent')
+
+    legend_type = alt.Chart(df).mark_rect().encode(
+        alt.Y('Incident_Type:N').axis(title = 'Incident Type', titleAngle = 0, titleY=-2, titleAlign="left",labelAlign='left', offset=-35,ticks=False, grid=False, domainColor='transparent'),   
+        # color = alt.Color('year').legend(None)
+        color=color_type
+    ).add_params(
+        selection_type,
     ).resolve_legend(color = 'independent')
 
 
@@ -55,24 +81,44 @@ def gantt_chart(df):
         alt.X('start_hour', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])).title(None),
         alt.X2('end_hour').title(None),
         # alt.Y('monthdate(date):T').axis(format='%b').title(None),
-        alt.Y('start_hour').sort('ascending'),
+        alt.Y('start_hour', axis=alt.Axis(values=[0,6,12,18,24])).sort('ascending').title('Start Time'),
         alt.Tooltip(['Location','Incident_Cause','date','start_time','end_time','hrs','staff']),
         href ='url',
         color = alt.Color('Incident_Cause:N')
-
-
     ).properties(
         height = 200,
         width = 200
     ).transform_filter(
-    selection
+    selection & selection_cause & selection_type
     )
+
+
     next_day_rule = alt.Chart().mark_rule(color='grey',opacity=0.5).encode(
        x=alt.datum(24)
     )
 
+    # mean_value = alt.Chart(df).mark_text(dx=100).encode(
+    #     text = alt.Text('label:N')
+    # ).transform_filter(
+    # selection & selection_cause & selection_type
+    # ).transform_joinaggregate(
+    #     hours = 'mean(hrs)'
+    # ).transform_calculate(
+    #     label = 'Mean numbers of hours: ' + alt.datum.hours
+    # )
 
-    return (base + next_day_rule)|legend
+    mean_value = alt.Chart(df,title=alt.Title('Mean numbers of hours',
+                                              anchor='start',
+                                            frame='group',
+                                            fontSize=12,
+       offset=20)).mark_text(dx=150,dy=-800,color='red').encode(
+        text = alt.Text('mean(hrs)',format = '.2')
+    ).transform_filter(
+    selection & selection_cause & selection_type
+    )
+
+
+    return ((base + next_day_rule) & mean_value)|legend_year| (legend_cause & legend_type)
 
 
 
