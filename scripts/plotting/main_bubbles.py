@@ -22,7 +22,8 @@ def tick_dash(df):
 
 def bubble(df):
    
-    chart = alt.Chart(df, title='Incidents happened across the years').mark_circle(opacity=0.5, filled=True).encode(
+    chart = alt.Chart(df, title='Incidents happened across the years',
+                      ).mark_circle(opacity=0.5, filled=True).encode(
         alt.X('monthdate(date):T').axis(format='%b').title(None),
         alt.Y('year(date):T').title(None),
         alt.Color('Incident_Cause:N').title('Incident Cause').legend(),
@@ -34,23 +35,6 @@ def bubble(df):
     )
     return chart
 
-# def bubble_other(df):
-#     chart = alt.Chart(df).mark_circle(opacity=0.5, filled=True).encode(
-#         alt.X('hrs'),
-#         alt.Y('year(date):T'),
-#         alt.Color('Incident_Cause:N'),
-#         # alt.Size('total_hrs').scale(bins=[0,50,100,200,400,800]),
-#         alt.Size('staff'),
-#         alt.Tooltip(['Location','date','start_time','hrs','staff','Weather', 'Other Agencies']),
-#         href ='url'
-#     ).transform_calculate(
-#     # Generate Gaussian jitter with a Box-Muller transform
-#     jitter="sqrt(-2*log(random()))*cos(2*PI*random())"
-#     ).properties(
-#         width = 1000
-#     )
-#     return chart
-
 def cause_bar(data):
     chart = alt.Chart(data).mark_bar().encode(
         alt.X('count()').title(None),
@@ -61,22 +45,11 @@ def cause_bar(data):
     return chart
 
 
-def week_bar(data):
-    chart = alt.Chart(data).mark_bar().encode(
-        alt.X('count()').title(None),
-        alt.Y('dayofweek_n', sort=['Monday', 'Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']).title(None),
-        alt.Color('Incident_Cause:N').legend(None),
-        tooltip =[
-            alt.Tooltip(field="Incident_Cause"),
-            alt.Tooltip('count()', title='Count of Incidents')  
-        ],
-    )
-    return chart
 
 def stacked_horizon(data):
 
     stacked_bar = alt.Chart(data,
-                            title = alt.Title('Total number of Incidents in each year',
+                            title = alt.Title('Number of Incidents in each year',
                                               orient = 'bottom')
                             ).mark_bar().encode(
         alt.X('count()').sort('descending').title(None),
@@ -88,6 +61,8 @@ def stacked_horizon(data):
             alt.Tooltip(field="Incident_Cause"),
             alt.Tooltip('count()', title='Count of Incidents')  
         ],
+    ).properties(
+        width = 300
     )
     return (stacked_bar)
 
@@ -98,9 +73,14 @@ def stacked_horizon_caption():
         fontStyle='italic'
     ).encode(
 
-        text = alt.value(['The number of incidents jumped in 2021 and generally',
-                          'attributed to revenge tourism after Covid lockdown.',
-                           'However it never regressed to pre-Covid times.'])
+       text = alt.value(['The number of incidents jumped in',
+                          '2021 and generally attributed to' ,
+                          'revenge tourism after Covid lockdown.',
+                          'However it never regressed to',
+                          'pre-Covid times. Prior to that,',
+                          'incidents peaked in 2017, driven',
+                          'by unusually high number in Sep &',
+                          'Oct (see heatmap below).'])
                           
     )
     return caption
@@ -108,7 +88,7 @@ def stacked_horizon_caption():
 def monthly_bar(data):
     bar = alt.Chart(data,
                     title = alt.Title(
-                        'Total numbers of incident in months',
+                        'Total numbers of incident in each months',
                         subtitle = 'Summing across 2015-2025',
                         orient = 'bottom'
                     )
@@ -132,9 +112,10 @@ def monthly_bar_caption():
         fontStyle='italic'
     ).encode(
 
-        text = alt.value(['The number of incidents jumped in 2021 and generally',
-                          'attributed to revenge tourism after Covid lockdown.',
-                           'However it never regressed to pre-Covid times.'])
+        text = alt.value(['The number of incidents jumped in 2021',
+                          'and generally attributed to revenge',
+                          'tourism after Covid lockdown. However',
+                          'it never regressed to pre-Covid times.'])
                           
     )
     return caption
@@ -145,15 +126,16 @@ def main():
     # bubble(data).save('../../charts/main_chart.json')
     # alt.concat(stacked_horizon(data),bubble(data),  spacing=5).show()
     # alt.concat((bubble(data) & monthly_bar(data)).resolve_scale(x='shared'), stacked_horizon(data) & stacked_horizon_caption(),spacing=-5).show()
-    alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
-                 (bubble(data) & (monthly_bar(data))).resolve_scale(x='shared'),
-                #  (monthly_bar_caption()),
-                #  (cause_bar(data) & week_bar(data)),
-                 spacing=-2).save('../../charts/main_chart.json')
-
     # ((bubble(data)|(stacked_horizon(data) & stacked_horizon_caption())) & monthly_bar(data)).resolve_scale(x='shared').show()
- 
-    
+
+    alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
+                  (bubble(data) & (monthly_bar(data))).resolve_scale(x='shared'),
+    #             #  (monthly_bar_caption()),
+    #             #  (cause_bar(data) & week_bar(data)),
+                  spacing=-2).save('../../charts/main_chart.json')
+
+    # week_bar(data).save('../../charts/week.json')
+    # (stacked_horizon(data)|bubble(data)).resolve_scale(y='shared').show()
     print('finish')
 
 

@@ -60,15 +60,36 @@ def convert_day_to_word(df):
     df['dayofweek_n'] = np.select(conditions, values, 'NA')
     return df
 
+def convert_month_to_word(df):
+    conditions = [
+        (df['month'] == 1),
+        (df['month'] == 2),
+        (df['month'] == 3),
+        (df['month'] == 4),
+        (df['month'] == 5),
+        (df['month'] == 6),
+        (df['month'] == 7),
+        (df['month'] == 8),
+        (df['month'] == 9),
+        (df['month'] == 10),
+        (df['month'] == 11),
+        (df['month'] == 12)
+    ]
+    values = ['Jan', 'Feb','Mar', 'Apr', 'May', 'Jun', 'Jul','Aug', 'Sep','Oct','Nov','Dec']
+    
+    df['month_n'] = np.select(conditions, values, 'NA')
+    return df
+
 def format_time_columns(df):
     df['date'] = pd.to_datetime(df['date'], format='%d %b %Y')
     # df.sort_values(by=['date'])
     df['year'] = df['date'].dt.year.astype(int)
     df['month'] = df['date'].dt.month.astype(int)
+    # df = convert_month_to_word(df)
     # The day of the week with Monday=0, Sunday=6.
     df['dayofweek'] = df['date'].dt.dayofweek.astype(int)
-    df = convert_day_to_word(df)
-
+    # df = convert_day_to_word(df)
+    df['day']=df['date'].dt.day.astype(int)
 
 
     df['year_month'] = df['year'].astype(str) + '-' + df['month'].astype(str)
