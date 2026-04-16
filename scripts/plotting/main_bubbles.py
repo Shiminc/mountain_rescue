@@ -6,7 +6,7 @@ from utils.utils import preprocess_data,  aggregate_by_year_month
 
 import pandas as pd
 import altair as alt
-
+# zoom in zoom out
 # various plot to show trends with month and year as x, y axis, heatmap, bubble, tick-dash
 
 def tick_dash(df):
@@ -21,7 +21,6 @@ def tick_dash(df):
 # TODO colourblind colour, legend to show bar chart about how many cases in each cause, and side bar to show each year total 
 
 def bubble(df):
-   
     chart = alt.Chart(df, title='Incidents happened across the years',
                       ).mark_circle(opacity=0.5, filled=True).encode(
         alt.X('monthdate(date):T').axis(format='%b').title(None),
@@ -132,7 +131,8 @@ def main():
                   (bubble(data) & (monthly_bar(data))).resolve_scale(x='shared'),
     #             #  (monthly_bar_caption()),
     #             #  (cause_bar(data) & week_bar(data)),
-                  spacing=-2).save('../../charts/main_chart.json')
+                  spacing=-2).show()
+    # save('../../charts/main_chart.json')
 
     # week_bar(data).save('../../charts/week.json')
     # (stacked_horizon(data)|bubble(data)).resolve_scale(y='shared').show()
