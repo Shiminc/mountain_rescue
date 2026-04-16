@@ -29,8 +29,12 @@ def format_end_time(df):
 def gantt_chart(df):
     axis_labels = "datum.label == 0 ? '0 AM' : datum.label == 6 ? '6 AM' : datum.label == 12 ? '12 Noon' : datum.label == 18 ? '6 PM' : datum.label == 24 ? 'Next day' : datum.label == 30 ? '6 AM' : datum.label == 36 ? '12 Noon' : datum.label == 42 ? '6 PM' : datum.label == 48 ? '0 AM' : 'Others'" 
     selection = alt.selection_point(fields=['year'], value=[{'year': 2025}])
-    selection_cause = alt.selection_point(fields=['Incident_Cause'], value=[{'Incident_Cause': 'Lost'}])
-    selection_type = alt.selection_point(fields=['Incident_Type'], value=[{'Incident_Type': 'Full Callout'}])
+    selection_cause = alt.selection_point(fields=['Incident_Cause'], value=[{'Incident_Cause': 'Lost'},
+                                                                            {'Incident_Cause': 'Injured & Medical'},
+                                                                            {'Incident_Cause': 'Other'},
+                                                                            {'Incident_Cause': 'Cragfast'},
+                                                                            {'Incident_Cause': 'Overdue'}])
+    selection_type = alt.selection_point(fields=['Incident_Type'], value=[{'Incident_Type': 'Full Callout'}, {'Incident_Type': 'Limited Callout'}])
     
     color_year = (
         alt.when(selection)
@@ -77,7 +81,7 @@ def gantt_chart(df):
     ).resolve_legend(color = 'independent')
 
 
-    base = alt.Chart(df).mark_line(size=2,opacity=0.5).encode(
+    base = alt.Chart(df).mark_line(size=3,opacity=0.5).encode(
         alt.X('start_hour', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])).title(None),
         alt.X2('end_hour').title(None),
         # alt.Y('monthdate(date):T').axis(format='%b').title(None),
@@ -85,12 +89,12 @@ def gantt_chart(df):
         alt.Tooltip(['Location','Incident_Cause','date','start_time','end_time','hrs','staff']),
         href ='url',
         color = alt.Color('Incident_Cause:N')
-    ).properties(
-        height = 200,
-        width = 200
+    # ).properties(
+    #     height = 200,
+    #     width = 200
     ).transform_filter(
-    selection & selection_cause 
-    # selection & selection_cause & selection_type
+    # selection & selection_cause 
+    selection & selection_cause & selection_type
 
     )
 
@@ -116,8 +120,10 @@ def gantt_chart(df):
        offset=20)).mark_text(xOffset = 50,yOffset=-200,color='black',fontWeight='bold', fontSize=40).encode(
         text = alt.Text('mean(hrs)',format = '.2')
     ).transform_filter(
-    selection & selection_cause 
-    # selection & selection_cause & selection_type
+    # selection & selection_cause 
+    selection & selection_cause & selection_type
+    ).properties(
+        height = 5
     )
 
     next_day = alt.Chart(df[df.next_day==True],title=alt.Title('Number of overnight operations',
@@ -125,55 +131,90 @@ def gantt_chart(df):
                                             frame='group',
                                             fontSize=12,
        offset=20)).mark_text(xOffset = 50,yOffset=-200,color='black',fontWeight='bold', fontSize=40).encode(
-        text = alt.Text('count(next_day)',format = '.2')
+        text = alt.Text('count(next_day)')
     ).transform_filter(
-    selection & selection_cause 
-    # selection & selection_cause & selection_type
+    # selection & selection_cause 
+    selection & selection_cause & selection_type
+    ).properties(
+        height = 5,
     )
+    
+    operation_count = alt.Chart(df,title=alt.Title('Number of operations',
+                                              anchor='start',
+                                            frame='group',
+                                            fontSize=12,
+       offset=20)).mark_text(xOffset = 50,yOffset=-200,color='black',fontWeight='bold', fontSize=40).encode(
+        text = alt.Text('count(next_day)')
+    ).transform_filter(
+    # selection & selection_cause 
+    selection & selection_cause & selection_type
+    ).properties(
+        height = 5,
+    )
+    
 
-    calculation = mean_value & next_day
-    legend = legend_year| legend_cause
-    side = (legend & calculation)
-    main = (base + next_day_rule).properties(width=400, height=600)
-    # return ((base + next_day_rule) & mean_value)|legend_year| (legend_cause & legend_type)
-    return (main|side)
-
-def caption():
     caption =  alt.Chart().mark_text(
         align =  "left",
-        # baseline = "bottom",
+        baseline = "bottom",
         fontStyle='italic'
     ).encode(
 
-        text = alt.value(['The mean number of hours refers to mean number of hours the selected operations took, not the total (human) hours.',
-                          '',
-                        'To select incident cause or year, click the square besides each label.',
-                        'To multi-select, press shift while clicking the squares.',
+        text = alt.value([
+                        'The default shows all incidents in 2025,',
+                        'ordered by the start time of the operation',
+                        'on the y-axis, and the bar length indicates',
+                        'start and end time on the x-axis.',
+                        '',
+                        'To select a particular incident cause',
+                        'or year, click the square beside the label.',
+                        'To multi-select, press shift while',
+                        'clicking the squares.',
                         'To select all, double click any squares.',
                         '',
-                        'You could click on the bar in the chart to be brought to the incident report'])
+                        'You could click on the bar in the chart',
+                        'to be brought to the incident report',
+                        '',
+                        'The mean number of hours refers to the',
+                        'average number of hours the selected',
+                        'operations took, not the total (human)',
+                        'hours.',
+                        '',
+                        'Overnight operations were those that',
+                        'went on till the next day.',
+                        ])
                           
     )
-    return caption
 
-def top_20_hrs(data):
-    year_list = list(data['year'].unique())
-    for i, year in enumerate(year_list):
-        temp_df = data[data['year'] == year]
-        temp_df_top = temp_df.sort_values(by=['hrs'], ascending = False).head(20)
-        if i == 0:
-            df = temp_df_top
-        else:
-            df = pd.concat([df,temp_df_top])
 
-    return df
+    calculation = next_day | operation_count | mean_value  
+    legend = legend_year| (legend_cause & legend_type)
+    
+    main = (base + next_day_rule).properties(width=400, height=500)
+    # return ((base + next_day_rule) & mean_value)|legend_year| (legend_cause & legend_type)
+    return (main| (legend & caption) ) & calculation
+
+
+
+# def top_20_hrs(data):
+#     year_list = list(data['year'].unique())
+#     for i, year in enumerate(year_list):
+#         temp_df = data[data['year'] == year]
+#         temp_df_top = temp_df.sort_values(by=['hrs'], ascending = False).head(20)
+#         if i == 0:
+#             df = temp_df_top
+#         else:
+#             df = pd.concat([df,temp_df_top])
+
+#     return df
 
 def main():
     set_up_altair()
     data = preprocess_data()
         
     # data=top_20_hrs(data)
-    gantt_chart(data).show()
+    chart = gantt_chart(data)
+    chart.show()
+    chart.save('gantt.json')
     # alt.vconcat(gantt_chart(data), caption()).show()
 
     print('finish')
