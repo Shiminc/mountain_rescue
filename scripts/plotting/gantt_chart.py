@@ -103,42 +103,56 @@ def gantt_chart(df):
        x=alt.datum(24)
     )
 
-    mean_value = alt.Chart(df,title=alt.Title('Mean numbers of hours',
+    mean_hours = alt.Chart(df,title=alt.Title('Mean numbers of hours',
                                               anchor='start',
                                             frame='group',
                                             fontSize=12,
-       offset=20)).mark_text(xOffset = 50,yOffset=-200,color='black',fontWeight='bold', fontSize=40).encode(
+       offset=20)).mark_text(xOffset = 50,color='black',fontWeight='bold', fontSize=40).encode(
         text = alt.Text('mean(hrs)',format = '.2')
     ).transform_filter(
     # selection & selection_cause 
     selection & selection_cause & selection_type
-    ).properties(
-        height = 5
+    # ).properties(
+    #     height = 5
     )
+
+    mean_staff = alt.Chart(df,title=alt.Title('Mean numbers of rescuers',
+                                              anchor='start',
+                                            frame='group',
+                                            fontSize=12,
+       offset=20)).mark_text(xOffset = 50,color='black',fontWeight='bold', fontSize=40).encode(
+        text = alt.Text('mean(staff)',format = '.2')
+    ).transform_filter(
+    # selection & selection_cause 
+    selection & selection_cause & selection_type
+    # ).properties(
+    #     height = 5
+    )
+
 
     next_day = alt.Chart(df,title=alt.Title('Number of overnight operations',
                                               anchor='start',
                                             frame='group',
                                             fontSize=12,
-       offset=20)).mark_text(xOffset = 50,yOffset=-200,color='black',fontWeight='bold', fontSize=40).encode(
+       offset=20)).mark_text(xOffset = 50,color='black',fontWeight='bold', fontSize=40).encode(
         text = alt.Text('sum(next_day)', format='.0f')
     ).transform_filter(
     # selection & selection_cause 
     selection & selection_cause & selection_type
-    ).properties(
-        height = 5,
+    # ).properties(
+    #     height = 5,
     )
     operation_count = alt.Chart(df,title=alt.Title('Number of operations',
                                               anchor='start',
                                             frame='group',
                                             fontSize=12,
-       offset=20)).mark_text(xOffset = 50,yOffset=-200,color='black',fontWeight='bold', fontSize=40).encode(
+       offset=20)).mark_text(xOffset = 50,color='black',fontWeight='bold', fontSize=40).encode(
         text = alt.Text('count(next_day)')
     ).transform_filter(
     # selection & selection_cause 
     selection & selection_cause & selection_type
-    ).properties(
-        height = 5,
+    # ).properties(
+    #     height = 5,
 
     )
     
@@ -164,10 +178,10 @@ def gantt_chart(df):
                         'You could click on the bar in the chart',
                         'to be brought to the incident report',
                         '',
-                        'The mean number of hours refers to the',
-                        'average number of hours the selected',
-                        'operations took, not the total (human)',
-                        'hours.',
+                        'The mean number of hours and rescuers',
+                        'refers to the average number of hours and',
+                        'rescuers the selected operations involved', 
+                        'not the total (human) hours.',
                         '',
                         'Overnight operations were those that',
                         'went on till the next day.',
@@ -176,7 +190,7 @@ def gantt_chart(df):
     )
 
 
-    calculation = next_day | operation_count | mean_value  
+    calculation = next_day | operation_count | mean_hours | mean_staff
     legend = legend_year| (legend_cause & legend_type)
     
     main = (base + next_day_rule).properties(width=400, height=500)
@@ -203,7 +217,8 @@ def main():
     # data=top_20_hrs(data)
     chart = gantt_chart(data)
     chart.show()
-    chart.save('gantt.json')
+    chart.save('../../charts/gantt.json')
+    chart.save('../../charts/gantt.png')
 
     print('finish')
 
