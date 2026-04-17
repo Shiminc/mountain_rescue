@@ -16,6 +16,8 @@
     <meta property="og:url" content="https://shiminc.github.io/UK_diversity_mapping/">
     <meta property="og:description" content="Choropleth map illustrating diversity in England/Wales based on ONS country of birth data"> -->
     <meta property="og:locale" content="en_UK">
+    <base target="_blank">
+
     <link rel="stylesheet" href="styles.css">
 
        <script>
@@ -35,41 +37,65 @@
 
   <body>
     <header>
-    <h1>Mountain Rescue Team works for free for your leisure and safety</h1>
+    <h1>Mountain Rescue Team works for free for our leisure and safety</h1>
     <p>SHI MIN CHUA</p>
-    </header>
 
+    </header>
     <section id="introduction">
-        <p> At the beginning of 2026, an outpouring of donation has been made to <a href="https://www.wmrt.org.uk/", target="_blank">Wasdale Mountain Rescue Team</a> to help cover the cost of hotel fee after <a href="https://www.bbc.co.uk/news/articles/c9vx0jrnmejo#:~:text=Wasdale%20Mountain%20Rescue%20Team%20said,29%20December%2C%20in%20%22treacherous%22%20conditions.", target="_blank">news</a> of two walkers not paying the hotel that took them in after the team rescued them and arranged for them to spend the night in the hotel. 
+        <p> At the beginning of 2026, an outpouring of donation has been made to <a href="https://www.wmrt.org.uk/", target="_blank">Wasdale Mountain Rescue Team</a> to help cover the cost of hotel fee after <a href="https://www.bbc.co.uk/news/articles/c9vx0jrnmejo#:~:text=Wasdale%20Mountain%20Rescue%20Team%20said,29%20December%2C%20in%20%22treacherous%22%20conditions.", target="_blank">news</a> of two walkers not paying the hotel after the team rescued them and arranged for them to spend the night in the hotel. 
             However, the cost of the rescue is not limited to the hotel fee.           
             According to the <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-mon-29th-dec-2025/", target="_blank">incident report</a>, the rescue
             involved 8 team members who have spent their evening until after midnight (7.1 hours) to rescue the men. Of course the team did not get paid for their labour, which would be 8 x 7.1 = 57 hours in total, because mountain rescue teams in the UK are operated by volunteers. 
             Besides this recent incident, back in February 2021, a <a href="https://www.bbc.co.uk/news/uk-england-cumbria-55978537", target="_blank">headline</a> reported a mountain rescuer fell for 150m and suffered spinal fractures while out in a mission around midnight to assist a camper with chest pain.
-            This incident actually happened during Covid-19 lockdown when people were supposed not to mingle outside their bubbles. 
-            Despite these human cost and injuries, almost all the time, the mountain rescue teams have been continuing doing their good work, not to mention the ever-increasing incidents.
-        </p> 
-                 
+            <!-- This incident actually happened during Covid-19 lockdown when people were supposed not to mingle outside their bubbles.  -->
+            Despite these human cost and injuries, the mountain rescue teams continue doing their good work to save life, not to mention the ever-increasing incidents.
+
+        <p>To have an overview of the tough work the team has undertaken, I have designed some visualisations to illustrate the team effort in the past ten years (2015-2025). </p>
+
+        <h2>When do incidents happen?</h2>
+        <p> In the bubble chart below, <b>each bubble represents each incident</b> happening on a specific date in a month (x-axis) and in a year (y-axis). Also shown at the margin of the chart is the sum of the number of the incidents for each year and each month summing across the years. The <b>size</b> of the bubbles is proportionate to the <b>total hours</b> spent in the rescues, that is calculated by number of rescuers times hours spent. </p>
+        <p> You could hover over them to see more details of each incident and click to be brought to the incident reports, which would give you more understanding of each incident. For example, the biggest green bubble in May 2024 is an overdue <a href="https://www.wmrt.org.uk/incidents/scafell-pike-thu-9th-may-2024/">incident</a> that sadly ended in death despite an overnight search involving multi agency team effort. </p>
+        <p><b> The bubbles and bars are coloured based on the incident causes</b></p>
+        <p><div class = "square" style=" background-color: #5778a4"></div> Cragfast - walkers being stuck at a spot and could not move out of it, it could be on a steep slope, a craggy ravine or unstable screes</p>
+        <p><div class = "square" style="background-color: #e49444;"></div> Injury & Medical - walkers, their company, or passers-by calling for help when there is injury or medical conditions </p>
+        <p><div class = "square" style="background-color: #d1615d;"></div> Lost - walkers calling for help when they could not find their way</p>
+        <p><div class = "square" style="background-color: #85b6b2;"></div> Other - assisting local emergency, saving dog in distress on mountains, rescuing people from lakes, clearing road during winter, assisting flood rescues and other events not directly related to walkers</p>
+        <p><div class = "square" style="background-color: #6a9f58;"></div> Overdue - triggered when people reporting the walker(s) do not come back in time.</p>
+      
+        <br>
         <div class="chartholder">
-            <div id="vis1"></div>
+            <div id="bubble"></div>
         </div>
+        <br>
+        <p><b>Overlapping and clustering bubbles</b> indicate incidents happened in the same day or within days. This is quite common in <b>summer months (Jun - Aug)</b>, however there are also increasing incidents in the winter month (Dec - Feb) since 2021. It should be noted the lack of bubbles at the beginning of 2020 and 2021 corresponds to Covid-19 lockdown that restricted travelling or mingling with others (see also the heatmap below for the total numbers in each month in each year). Although the bubble chart does not allow for precise visualisation of the day that an incident happened, the following bar chart shows that <b>weekends also tend to be busier</b> for the team. This time-wise analysis shows that <b>holidays become the working days for the rescue team.</b> </p>
+        <div class="chartholder">
+            <div id="week"></div>
+        </div>
+        <p><b>Injured & Medical and Lost</b> are the common causes (orange and red bubbles) that mountain rescue team was called. However, there are also a few <b>big green bubbles</b>, indicating incidents caused by <b>Overdue</b> have involved more rescuers and hours (10 out of 170 required more than 200 hours). It is likely that Overdue takes more effort and time because the walkers were missing and losing contact with the others, so time is spent locating them. The other three causes are typically reported by the walkers themselves or their company, so it is easier for the team to locate them, although <a href="https://www.wmrt.org.uk/incidents/scafell-pike-mon-20th-feb-2023/">sometimes</a> phone reception and declining battery could cause challenges. </p>
+        <p> Nonetheless, there are also a few incidents of Injured & Medical and Cragfast that involved large amount of rescue hours, likely due to the complication of reaching the walkers in the Cragfast <a href="https://www.wmrt.org.uk/incidents/wastwater-screes-mon-15th-jul-2019/">cases</a>, and the procedures to fetch the injured or sick walkers who could not move themselves from the remote mountain <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-mon-7th-apr-2025/">areas</a>. Some of these cases require helicopters. We will visit the association between cause of incident later and time spent and other variables later.</p>
+        <p> Although Injured & Medical are the most common cause of incidents, there are some months <b>(Oct - Feb ) when there are more Lost incidents</b>. It is likely due to the <a href="https://www.wmrt.org.uk/incidents/high-scarth-crag-eskdale-sun-24th-jan-2016/">shorter day time</a> and less visibilities during those months such that people are more susceptible to losing their route. </p>
 
         <br>
-        <ul>
-            <li>Each bubble in this chart corresponding to each incident happening on a specific date in a month (x-axis) and in a year (y-axis). You could hover over them see more details of each incident and click to be brought to the incident reports, which would give you more understanding to each incident.</li>
-            <li>You could see overlapping bubble, which means that incidents happened in the same day or within days, which is quite common in summer months, where the bubbles cluttered. The emptiness at the start of 2020 corresponded to Covid-19 lockdown period when people in UK were not allowed to travel. </li>
-            <li>The size of the bubbles is proportionate to the total hours spent in the rescues, that is calculated by number of rescuers times hours spent. You could see quite a few big green bubbles, indicating incidents caused by Overdue have involved more rescuers and hours (10 out of 170 required more than 200 hours), even though Injured & Medical and Lost are the common causes (orange and red bubbles).</li>
-        </ul>
 
+        <h2>How long do rescue operations take?</h2>
+        <p>In the gannt chart below, <b>each bar represents an incident</b> in the context of the day it happened to illustrate how long a rescue operation could take, sometimes overnight until next day</p> The default chart shows all the incidents requiring callout in 2025. In the data, there are two types of callout - <b>Full Callout</b> that involves on average 15 rescuers and takes 4.8 hours; <b>Limited Callout</b> 7 rescuers 4.7 hours. Beside callout, sometimes <b>Alert</b> is logged, when the team is not mobilised, either because it could be resolved on <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-fri-26th-sep-2025/">phone</a> or the team leader could not get sufficient <a href="https://www.wmrt.org.uk/incidents/great-gable-sun-20th-apr-2025/">evidence</a> or the incident is <a href="https://www.wmrt.org.uk/incidents/upper-eskdale-sat-18th-jan-2025/">resolved</a> before the team is mobilized. Alert on average involves 1-2 members and takes 2.2 hours. 
+        <div class="chartholder">
+            <div id="gantt"></div>
+        </div>
+        
+        <h2>Who else are involved in the rescue operations?</h2>
+
+        <h2>How are the weather conditions during the rescue operations?</h2>
+
+    </section>
             1. why 2017 is high (dec 0)
             2. why 2019 cragfast increase
             3. summer month more injury, while autumn more lost due to weather change
             4. 2016 no overdue
             5. december fluctuation due to holidy, nobody writes the report.
    
-            Mountain rescue in the UK are operated by volunteers, meaning they do not get paid for spending their time rescuing others, or assisting other civil services. 
-            You could see more other visualisation <a href="appendix.html">here</a>
+            You could see more other visualisation <a href="https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/appendix.html">here</a>
 
-            lost & overdue normally take longer due to uncertain locations
             
             things to illustrate the efforts involved
             1. other agencies involved, number of total as well as each type
@@ -83,21 +109,25 @@
             <br>
 
         <p>
-        <b>Most diverse areas tend to be in London and major cities in England, with the diversity decreasing further away from them.</b>
         </p>
-    </section>
 
 
     <footer>
     <div id="appendix">
+    <img
+    src="https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/photo.jpg"
+    alt="Me at the top of Red Pike in Buttermere"
+    width="230"
+    height="170" />
         <h4>Disclaimer</h4>
         <ul>
-            <li> The opinion expressed here is my own and does not represent any mountain rescue team. Despite me having read quite a lot of the incident reports and conducting the analyses presented here,  My understandding on mountain rescue is highly likely different from the team members who have done all the hardwork.</li>
+            <li> The opinion expressed here is my own and does not represent any mountain rescue team. Despite me having read quite a lot of the incident reports and conducting the analyses presented here,  my understandding on mountain rescue is highly likely different from the team members who have done all the hardwork.</li>
             <li> As a leisure hiker who goes to Lake District every year, I did this piece to express my personal admiration to these unsung heroes who sacrificed their time and sometimes put themselves at risk to ensure all walkers could enjoy the beautiful scenery in Lake District safely. I am in awe with their selfless efforts, whether during summer when everybody is enjoying holiday except them, or during cold winter night when visibility is low on the mountains, or during rainy days when walking paths become flowing streams.  </li>
             <li> I hope this piece will raise awareness in future hikers such that when they set up for a walk, they would have the mountain rescue team in their mind and they do not risk their own safety that in turn requires the team risking theirs. </li>
         </ul>
         <h4>Methodology</h4>
         <ul>
+            <li>I only presented data from the past 10 year for simplicity and recency purposes, while the records of incident reports on the team website started from 1968. </li>
             <li>I excluded Incident Type marked as 'Other' for simplicity. They are equally significant and taking time and effort from the team. These 'Other' events included assisting local emergency, saving dog in distress on mountains, rescuing people from lakes, clearing road during winter, assisting flood rescues.</li>   
             <li>Relevant code, data and other analyses can be found at this <a href="https://github.com/Shiminc/mountain_rescue" , target="_blank">github repository</a> of mine.</li>
             <li>You could reach me at shiminc@gmail.com. </li>
@@ -110,7 +140,21 @@
 
 <script type="text/javascript">
         var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/main_chart.json";
-        vegaEmbed('#vis1', spec).then(function(result) {
+        vegaEmbed('#bubble', spec,{'loader':{'target':'_blank'}}).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+</script>
+
+<script type="text/javascript">
+        var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/week.json";
+        vegaEmbed('#week', spec).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+</script>
+
+<script type="text/javascript">
+        var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/gantt.json";
+        vegaEmbed('#gantt', spec,{'loader':{'target':'_blank'}}).then(function(result) {
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         }).catch(console.error);
 </script>

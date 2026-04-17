@@ -9,7 +9,7 @@ header {
     position: relative;
     width: 80.0%;
     left: 7.5%;
-    padding: 1.5%;
+    padding: 1%;
 
 }
 
@@ -17,22 +17,26 @@ section, footer {
     position: relative;
     width: 80.0%;
     left: 7.5%;
-    padding: 1.5%;
+    padding: 1%;
 
-}
-
-#vis1 {
-    position: relative;
-    width: 85.0%;
-    height: 85.0%;
-    left: 7.5%;
-    top: 0.0%;
 }
 
 
 .chartholder {
     position: relative;
     display: flex;
-    justify-content: center
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    left: 0.0%;
+    top: 0.0%;
 
 }
+
+.square {
+    width:16px;
+    height:16px; 
+    display: inline-block;
+
+}
+
