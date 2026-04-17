@@ -103,16 +103,6 @@ def gantt_chart(df):
        x=alt.datum(24)
     )
 
-    # mean_value = alt.Chart(df).mark_text(dx=100).encode(
-    #     text = alt.Text('label:N')
-    # ).transform_filter(
-    # selection & selection_cause & selection_type
-    # ).transform_joinaggregate(
-    #     hours = 'mean(hrs)'
-    # ).transform_calculate(
-    #     label = 'Mean numbers of hours: ' + alt.datum.hours
-    # )
-
     mean_value = alt.Chart(df,title=alt.Title('Mean numbers of hours',
                                               anchor='start',
                                             frame='group',
@@ -126,19 +116,18 @@ def gantt_chart(df):
         height = 5
     )
 
-    next_day = alt.Chart(df[df.next_day==True],title=alt.Title('Number of overnight operations',
+    next_day = alt.Chart(df,title=alt.Title('Number of overnight operations',
                                               anchor='start',
                                             frame='group',
                                             fontSize=12,
        offset=20)).mark_text(xOffset = 50,yOffset=-200,color='black',fontWeight='bold', fontSize=40).encode(
-        text = alt.Text('count(next_day)')
+        text = alt.Text('sum(next_day)', format='.0f')
     ).transform_filter(
     # selection & selection_cause 
     selection & selection_cause & selection_type
     ).properties(
         height = 5,
     )
-    
     operation_count = alt.Chart(df,title=alt.Title('Number of operations',
                                               anchor='start',
                                             frame='group',
@@ -150,6 +139,7 @@ def gantt_chart(df):
     selection & selection_cause & selection_type
     ).properties(
         height = 5,
+
     )
     
 
@@ -160,7 +150,7 @@ def gantt_chart(df):
     ).encode(
 
         text = alt.value([
-                        'The default shows all incidents in 2025,',
+                        'The default shows all Callout incidents in 2025,',
                         'ordered by the start time of the operation',
                         'on the y-axis, and the bar length indicates',
                         'start and end time on the x-axis.',
@@ -190,7 +180,6 @@ def gantt_chart(df):
     legend = legend_year| (legend_cause & legend_type)
     
     main = (base + next_day_rule).properties(width=400, height=500)
-    # return ((base + next_day_rule) & mean_value)|legend_year| (legend_cause & legend_type)
     return (main| (legend & caption) ) & calculation
 
 
@@ -215,7 +204,6 @@ def main():
     chart = gantt_chart(data)
     chart.show()
     chart.save('gantt.json')
-    # alt.vconcat(gantt_chart(data), caption()).show()
 
     print('finish')
 
