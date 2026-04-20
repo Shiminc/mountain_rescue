@@ -78,7 +78,8 @@ def draw_forecast(existing_series, fitted_series, predicted_series, conf_int_ser
 
     forecast_line = alt.Chart(pred_df).mark_line(strokeDash=[5,5], size = 2, color='purple').encode(
         alt.X('yearmonth(dateTime)'),
-        alt.Y('Incident')
+        alt.Y('Incident'),
+        alt.Tooltip(['yearmonth(dateTime)','Incident'])
     )
 
     existing_line = alt.Chart(existing_df).mark_line().encode(
@@ -134,6 +135,9 @@ def main():
     # if this model is choosen, refit the model with the whole series, 2015-2025, then forecast 2026
     final_model = fit_final_model(order,seasonal_order, full_series)
     forecast_value, forecast_conf_int = forecast_future(final_model, 12)
+    forecast_value.to_pickle('forecast_value.pkl')
+    forecast_conf_int.to_pickle('forecast_conf_int.pkl')
+
     fitted_value = final_model.fittedvalues
 
     # save the residuals for hybrid modelling.
