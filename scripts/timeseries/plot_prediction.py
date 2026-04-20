@@ -12,7 +12,22 @@ from sklearn.metrics import mean_absolute_error as MAE
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import pickle
 
+rule_data = pd.DataFrame(
+    [
+        {"date": '01-01-2015'},
+        {"date": '01-01-2016'},
+        {"date": '01-01-2017'},
+        {"date": '01-01-2018'},
+        {"date": '01-01-2019'},
+        {"date": '01-01-2020'},
+        {"date": '01-01-2021'},
+        {"date": '01-01-2022'},
+        {"date": '01-01-2023'},
+        {"date": '01-01-2024'},
+        {"date": '01-01-2025'},
 
+    ]
+    )
 
 def draw_forecast(existing_series,  predicted_series, conf_int_series):
     conf_df = conf_int_series.reset_index()
@@ -71,9 +86,11 @@ def draw_forecast(existing_series,  predicted_series, conf_int_series):
         ]
     )
 
+    year_rule = alt.Chart(rule_data).mark_rule(color='black',opacity=0.2).encode(
+        alt.X('yearmonth(date):T').title(None))
 
 
-    return (band + forecast_line + forecast_point + existing_line ).properties(
+    return (band + forecast_line + forecast_point + existing_line + year_rule).properties(
     width=1500,
     height=300)
 
