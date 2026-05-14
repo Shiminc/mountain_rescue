@@ -7,6 +7,9 @@ import pandas as pd
 import altair as alt
 import json
 
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from collections import Counter
 import spacy
 
@@ -21,8 +24,14 @@ nlp = spacy.load('en_core_web_sm')
 # to disable some of the tokeniser
 # nlp = spacy.load('en_core_web_sm', disable=nlp.pipe_names)
 
-def createWordVector(tokenized_docs,lemmatized=False):
+def createSkVector(docs):
+    vectorizer = CountVectorizer().fit(docs)
+    count_vectors = vectorizer.transform(docs)
+    return count_vectors
 
+
+def createWordVector(tokenized_docs,lemmatized=False):
+# manually create vector
     # to collect word_counts of every doc
     word_counts = []
     # go through each doc
@@ -46,6 +55,8 @@ def createWordVector(tokenized_docs,lemmatized=False):
         word_counts.append(Counter(tokens))
 
     df = pd.DataFrame(word_counts)
+    # transpose so word is the index then sort it then transpose back
+    df = df.T.sort_index().T
     df = df.fillna(0).astype(int)
 
     return df
@@ -54,9 +65,15 @@ def main():
     set_up_altair()
     data = preprocess_data()
     docs = data.main_text.iloc[0:5]
-    tokenized_docs = [nlp(doc) for doc in docs]
 
-    createWordVector(tokenized_docs,lemmatized=False)
+    # sklearn, subjected to default setting/pipelines
+    skVector_matrix = createSkVector(docs)
+    cf0n1 = cosine_similarity(skVector_matrix[0,:],skVector_matrix[1,:])
+    print(cf0n1)
+    # spacy and manual vectorizing 
+    tokenized_docs = [nlp(doc) for doc in docs]
+    wordVector_df = createWordVector(tokenized_docs,lemmatized=False)
+    
     print('finish')
 
 
