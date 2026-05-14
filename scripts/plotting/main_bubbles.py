@@ -25,7 +25,7 @@ def bubble(df):
                       ).mark_circle(opacity=0.5, filled=True).encode(
         alt.X('monthdate(date):T').axis(format='%b').title(None),
         alt.Y('year(date):T').title(None),
-        alt.Color('Incident_Cause:N').title('Incident Cause').legend(),
+        alt.Color('Incident_Cause:N').title('Incident Cause').legend(None),
         alt.Size('total_hrs').scale(bins=[0,50,100,200,400,800]).title('total hours').legend(orient='right'),
         alt.Tooltip(['Location','Incident_Cause','date','start_time','hrs','staff','Weather', 'Other Agencies']),
         href ='url'
@@ -132,11 +132,11 @@ def main():
     #             #  (monthly_bar_caption()),
     #             #  (cause_bar(data) & week_bar(data)),
                   spacing=-2).show()
-    # save('../../charts/main_chart.json')
+    # .save('../../charts/main_chart.json')
 
     # week_bar(data).save('../../charts/week.json')
     # (stacked_horizon(data)|bubble(data)).resolve_scale(y='shared').show()
     print('finish')
 
 
-main()
+main()    

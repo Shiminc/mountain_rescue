@@ -1,0 +1,22 @@
+[
+  { "season": "Winter", "Incident_Cause": "Lost", "count": 58 },
+  { "season": "Winter", "Incident_Cause": "Injured & Medical", "count": 42 },
+  { "season": "Winter", "Incident_Cause": "Overdue", "count": 30 },
+  { "season": "Winter", "Incident_Cause": "Other", "count": 24 },
+  { "season": "Winter", "Incident_Cause": "Cragfast", "count": 12 },
+  { "season": "Summer", "Incident_Cause": "Injured & Medical", "count": 227 },
+  { "season": "Summer", "Incident_Cause": "Lost", "count": 94 },
+  { "season": "Summer", "Incident_Cause": "Overdue", "count": 63 },
+  { "season": "Summer", "Incident_Cause": "Other", "count": 51 },
+  { "season": "Summer", "Incident_Cause": "Cragfast", "count": 46 },
+  { "season": "Spring", "Incident_Cause": "Injured & Medical", "count": 121 },
+  { "season": "Spring", "Incident_Cause": "Lost", "count": 55 },
+  { "season": "Spring", "Incident_Cause": "Overdue", "count": 34 },
+  { "season": "Spring", "Incident_Cause": "Cragfast", "count": 26 },
+  { "season": "Spring", "Incident_Cause": "Other", "count": 20 },
+  { "season": "Autumn", "Incident_Cause": "Lost", "count": 111 },
+  { "season": "Autumn", "Incident_Cause": "Injured & Medical", "count": 96 },
+  { "season": "Autumn", "Incident_Cause": "Overdue", "count": 43 },
+  { "season": "Autumn", "Incident_Cause": "Other", "count": 40 },
+  { "season": "Autumn", "Incident_Cause": "Cragfast", "count": 23 }
+]

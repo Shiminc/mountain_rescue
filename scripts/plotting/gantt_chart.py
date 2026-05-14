@@ -81,7 +81,7 @@ def gantt_chart(df):
     ).resolve_legend(color = 'independent')
 
 
-    base = alt.Chart(df).mark_line(size=3,opacity=0.5).encode(
+    base = alt.Chart(df, title = 'Start and end time of each rescue operation').mark_line(size=3,opacity=0.5).encode(
         alt.X('start_hour', axis=alt.Axis(values=[0,6,12,18,24,30,36,42,48], labelExpr=axis_labels), scale = alt.Scale(domain=[0,48])).title(None),
         alt.X2('end_hour').title(None),
         # alt.Y('monthdate(date):T').axis(format='%b').title(None),

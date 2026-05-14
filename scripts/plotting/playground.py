@@ -28,7 +28,7 @@ def bubble(data):
 
 def heatmap(data):
     chart = alt.Chart(data).mark_rect().encode(
-        alt.X('day'),
+        alt.X('dayofweek'),
         alt.Y('month'),
         alt.Color('total_hrs'),
     )
@@ -41,7 +41,7 @@ def main():
 
     trial = generate_calendar()
 
-    bubble(data).show()
+    heatmap(data).show()
     print('finish')
 
 main()

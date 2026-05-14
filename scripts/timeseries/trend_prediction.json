@@ -1,0 +1,1010 @@
+[
+  {
+    "dateTime": "2015-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 1.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 12.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 9.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2015-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 1.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 4.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 18.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 4.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2016-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 4.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 16.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 18.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 17.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 19.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2017-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 0.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 9.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 9.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 18.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2018-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 17.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2019-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 1.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 4.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 0.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 19.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 20.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 3.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2020-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 1.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 0.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 4.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 20.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 11.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 16.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 17.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 27.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 15.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2021-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 9.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 20.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 17.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 13.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 12.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2022-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 2.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 13.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 15.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 24.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 18.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 25.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 16.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 11.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2023-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 11.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 11.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 13.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 19.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 16.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 20.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 25.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 14.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 12.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 10.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2024-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-01-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 6.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-02-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-03-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 13.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-04-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 13.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-05-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 19.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-06-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 18.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-07-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 23.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-08-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 19.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-09-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 13.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-10-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 8.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-11-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 7.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2025-12-01",
+    "lower Incident": 0.0,
+    "upper Incident": 0.0,
+    "Incident": 5.0,
+    "category": "past"
+  },
+  {
+    "dateTime": "2026-01-01",
+    "lower Incident": -2.3096655618,
+    "upper Incident": 16.7740101955,
+    "Incident": 7.2321723168,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-02-01",
+    "lower Incident": -0.2367359715,
+    "upper Incident": 19.9818654377,
+    "Incident": 9.8725647331,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-03-01",
+    "lower Incident": 0.8920732495,
+    "upper Incident": 21.2453292926,
+    "Incident": 11.068701271,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-04-01",
+    "lower Incident": 3.3592180896,
+    "upper Incident": 23.7289052881,
+    "Incident": 13.5440616888,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-05-01",
+    "lower Incident": 10.1857618499,
+    "upper Incident": 30.5574606062,
+    "Incident": 20.371611228,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-06-01",
+    "lower Incident": 7.2707785449,
+    "upper Incident": 27.6427236608,
+    "Incident": 17.4567511029,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-07-01",
+    "lower Incident": 12.5492800432,
+    "upper Incident": 32.9212553328,
+    "Incident": 22.735267688,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-08-01",
+    "lower Incident": 9.6176335979,
+    "upper Incident": 29.9896125831,
+    "Incident": 19.8036230905,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-09-01",
+    "lower Incident": 2.5358899697,
+    "upper Incident": 22.9078694075,
+    "Incident": 12.7218796886,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-10-01",
+    "lower Incident": -0.551416611,
+    "upper Incident": 19.8205628823,
+    "Incident": 9.6345731356,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-11-01",
+    "lower Incident": -1.5480131414,
+    "upper Incident": 18.8239663587,
+    "Incident": 8.6379766087,
+    "category": "forecast"
+  },
+  {
+    "dateTime": "2026-12-01",
+    "lower Incident": -4.3686994865,
+    "upper Incident": 16.0032800144,
+    "Incident": 5.817290264,
+    "category": "forecast"
+  }
+]

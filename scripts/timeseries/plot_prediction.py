@@ -101,6 +101,8 @@ def main():
 
 
     incident_count = aggregate_by_year_month(data)
+    # incident_count.to_json('trend.json', orient='records')
+
     incident_count.set_index('dateTime', inplace=True)
     full_series = incident_count.Incident
 

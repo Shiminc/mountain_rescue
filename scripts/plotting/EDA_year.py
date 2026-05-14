@@ -64,7 +64,7 @@ def main():
 
 
     create_bar_line(data).show()
-    create_stacked_bar(data).show()
+    # create_stacked_bar(data).show()
     # create_stacked_area(data).show()
 
     print('finish')

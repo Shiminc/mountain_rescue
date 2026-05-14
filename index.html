@@ -12,9 +12,9 @@
 
     <meta property="og:title" content="Mountain Rescue">
     <meta property="og:type" content="website">
-    <!-- <meta property='og:image' content='https://raw.githubusercontent.com/Shiminc/UK_diversity_mapping/main/preview.PNG'>
-    <meta property="og:url" content="https://shiminc.github.io/UK_diversity_mapping/">
-    <meta property="og:description" content="Choropleth map illustrating diversity in England/Wales based on ONS country of birth data"> -->
+    <meta property='og:image' content='https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/gantt.png'>
+    <meta property="og:url" content="https://mountain-rescue.netlify.app/">
+    <meta property="og:description" content="Interactive visualisation of Mountain Rescue Team in Lake District"> 
     <meta property="og:locale" content="en_UK">
     <base target="_blank">
 
@@ -23,6 +23,8 @@
        <script>
             L_NO_TOUCH = false;
             L_DISABLE_3D = false;
+
+
         </script>
 
 
@@ -32,7 +34,57 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <!-- Import vega-embed -->
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
+        header {
+            position: relative;
+            width: 80.0%;
+            left: 7.5%;
+            padding: 1%;
+
+        }
+
+        section, footer {
+            position: relative;
+            width: 80.0%;
+            left: 7.5%;
+            padding: 1%;
+
+        }
+
+
+        .chartholder {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            left: 5%;
+            top: 0.0%;
+
+        }
+
+        .square {
+            width:16px;
+            height:16px; 
+            display: inline-block;
+
+        }
+
+        .myImage {
+            float: right;
+            margin: 50px 50px 15px 20px;
+
+
+        }
+
+    </style>
   </head>
 
   <body>
@@ -54,7 +106,7 @@
 
         <h2>When do incidents happen?</h2>
         <p> In the bubble chart below, <b>each bubble represents each incident</b> happening on a specific date in a month (x-axis) and in a year (y-axis). Also shown at the margin of the chart is the sum of the number of the incidents for each year and each month summing across the years. The <b>size</b> of the bubbles is proportionate to the <b>total hours</b> spent in the rescues, that is calculated by number of rescuers times hours spent. </p>
-        <p> You could hover over them to see more details of each incident and click to be brought to the incident reports, which would give you more understanding of each incident. For example, the biggest green bubble in May 2024 is an overdue <a href="https://www.wmrt.org.uk/incidents/scafell-pike-thu-9th-may-2024/">incident</a> that sadly ended in death despite an overnight search involving multi agency team effort. </p>
+        <p> You could hover over them to see more details of each incident and click to be brought to the incident reports and pictures, which would give you more understanding of each incident. For example, the biggest green bubble in May 2024 is an overdue <a href="https://www.wmrt.org.uk/incidents/scafell-pike-thu-9th-may-2024/">incident</a> that sadly ended in death despite an overnight search involving multi agency team effort. </p>
         <p><b> The bubbles and bars are coloured based on the incident causes</b></p>
         <p><div class = "square" style=" background-color: #5778a4"></div> Cragfast - walkers being stuck at a spot and could not move out of it, it could be on a steep slope, a craggy ravine or unstable screes</p>
         <p><div class = "square" style="background-color: #e49444;"></div> Injury & Medical - walkers, their company, or passers-by calling for help when there is injury or medical conditions </p>
@@ -84,22 +136,33 @@
           For example, by selecting Overdue, and all the years, then you could see that there are 170 operations, with average hours of operation of 3.4 hours and involved on average 6.3 rescuers. Similarly, by selecting all incident causes and year 2020, you could see there were 77 operations with an average of 4 hours of rescue time, and 9.6 of rescuers. 
           You could also select all, and you would see <b>there are 1216 rescues between 2015 and 2025, 20% of them were overnight operations, and on average took 4.1 hours and involved 10 rescuers.</b>
           The default chart shows all the incidents requiring callout in 2025.</p>
-        <p> There are two types of callout - <b>Full Callout</b> that involves on average 15 rescuers and takes 4.8 hours; <b>Limited Callout</b> 7 rescuers 4.7 hours. Beside callout, sometimes <b>Alert</b> is logged, when the team is not mobilised, either because it could be resolved on
+        <p> There are two types of callout - <b>Full Callout</b> that involves on average <b>15 rescuers</b> and takes 4.8 hours; <b>Limited Callout 7 rescuers</b> 4.7 hours. Beside callout, sometimes <b>Alert</b> is logged, when the team is not mobilised, either because it could be resolved on
           <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-fri-26th-sep-2025/">phone</a> or the team leader could not get sufficient <a href="https://www.wmrt.org.uk/incidents/great-gable-sun-20th-apr-2025/">evidence</a> or <a href="https://www.wmrt.org.uk/incidents/great-gable-sat-16th-sep-2017/">triage</a> it to another mountain rescue team, or the incident is <a href="https://www.wmrt.org.uk/incidents/upper-eskdale-sat-18th-jan-2025/">resolved</a> before
-           the team is mobilized. Alert on average involves 1-2 members and takes 2.2 hours, but it could be longer as the team leader would wait or keep track with the walkers until they reached <a href="https://www.wmrt.org.uk/incidents/scafell-pike-fri-12th-jul-2024/">safety</a>. 
+           the team is mobilized. Alert on average involves 1-2 members and takes 2.2 hours, but it could be longer as the team leader would wait or keep track with the walkers until they reached <a href="https://www.wmrt.org.uk/incidents/scafell-pike-fri-12th-jul-2024/">safety</a>. You could see more details about each type of callout and alert by selecting them in the chart.
             <div class="chartholder">
             <div id="gantt"></div>
             </div>
-        <p> Overall, although 86% of the incidents occurred after 12 noon, <b>20% of them going on until the next day and five percent of all the cases started in the unearthly hour before 6am.</b> These overnight and unearthly operations typically require rescuers to walk in the dark, and perhaps cold night, further increasing the difficulty of the rescue.
-        <b>Overdue</b> and <b>Lost</b> seems to happen more often in the early morning and late night and take longer for the rescue. In each year, there seem to be a couple of operations that stretch over two grids, meaning taking 12 hours to complete. This is obvious in year 2015 and 2023. The average number of rescuers involved in callout fluctuate between 12 and 15. 
+        <p> Overall, although 86% of the incidents occurred after 12 noon, <b>20% of them going on until the next day and five percent of all the cases started in the unearthly hour before 6am.</b> These overnight and unearthly operations typically require rescuers to walk in the dark, and perhaps cold night, further increasing the difficulty of the rescue.</p>
+        <p> By selecting both full and limited callout, and investigating each incident cause in each year, it could be observed that <b>Overdue</b> and <b>Lost</b> seems to happen more often in the <b>early morning and late night</b> and rescue during these hours took longer, likely due to the lack of light. In contrast, <b>cragfast seldom happened in early morning</b> and <b>Injury & Medical</b> also mainly happened <b>between 12 noon and 6pm</b>. This has led me to wonder if during day time, people are more daring to explore to the extent that it might lead to be stuck in some unbeaten path and get injured. Furthermore, Cragfast seems to be on the rise since 2023, probably due to more and more amateur walkers attempting difficult areas.</p>
+        <p> In each year, there seem to be a couple of operations that stretch over two grids, meaning taking 12 hours to complete. This is obvious in year 2015 and 2023. The average number of rescuers involved in <b>callout</b> fluctuate between 12 and 15. 
+        <b>These observations really show that incidents could happen at any time in a day and sometimes the rescuers have to sacrifice their sleep to assist the walkers.</b>     
         </p>
-        
-        <h2>Who else are involved in the rescue operations?</h2>
 
-        <h2>How are the weather conditions during the rescue operations?</h2>
+        <br>
 
+        <h2>Predicting the future</h2>
+        <p>As observed earlier, the number of rescues has shown steadily increasing trend since 2021 and typically peak in the summer season, that there is seasonality in the number of incidents. Therefore, it is possible to predict the future number of incidents based on the trend and seasonality in the past data. The chart below shows such prediction for the year of 2026, with margin of errors. Prediction would help the mountain rescue team to prepare resources accordingly, but of course let's hope the future number of incidents will go down instead. </p>
+
+            <div class="chartholder">
+            <div id="prediction"></div>
+            </div>
+       
     </section>
-            1. why 2017 is high (dec 0)
+     <!-- <h2>Who else are involved in the rescue operations?</h2>
+
+        <h2>How are the weather conditions during the rescue operations?</h2> -->
+
+            <!-- 1. why 2017 is high (dec 0)
             2. why 2019 cragfast increase
             3. summer month more injury, while autumn more lost due to weather change
             4. 2016 no overdue
@@ -114,7 +177,7 @@
             3. staff
             4. Weather
             5. quantitative 
-            6. Staff victim ratios
+            6. Staff victim ratios -->
 
         </p>
             <br>
@@ -124,26 +187,27 @@
 
 
     <footer>
-    <div id="appendix">
-    <img
+     <img class="myImage"
     src="https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/photo.jpg"
     alt="Me at the top of Red Pike in Buttermere"
     width="230"
     height="170" />
+
         <h4>Disclaimer</h4>
         <ul>
             <li> The opinion expressed here is my own and does not represent any mountain rescue team. Despite me having read quite a lot of the incident reports and conducting the analyses presented here,  my understandding on mountain rescue is highly likely different from the team members who have done all the hardwork.</li>
             <li> As a leisure hiker who goes to Lake District every year, I did this piece to express my personal admiration to these unsung heroes who sacrificed their time and sometimes put themselves at risk to ensure all walkers could enjoy the beautiful scenery in Lake District safely. I am in awe with their selfless efforts, whether during summer when everybody is enjoying holiday except them, or during cold winter night when visibility is low on the mountains, or during rainy days when walking paths become flowing streams.  </li>
-            <li> I hope this piece will raise awareness in future hikers such that when they set up for a walk, they would have the mountain rescue team in their mind and they do not risk their own safety that in turn requires the team risking theirs. </li>
+            <!-- <li> I hope this piece will raise awareness in future hikers such that when they set up for a walk, they would have the mountain rescue team in their mind and they do not risk their own safety that in turn requires the team risking theirs. </li> -->
         </ul>
         <h4>Methodology</h4>
         <ul>
             <li>I only presented data from the past 10 year for simplicity and recency purposes, while the records of incident reports on the team website started from 1968. </li>
-            <li>I excluded Incident Type marked as 'Other' for simplicity. They are equally significant and taking time and effort from the team. These 'Other' events included assisting local emergency, saving dog in distress on mountains, rescuing people from lakes, clearing road during winter, assisting flood rescues.</li>   
+            <li>The visualisation is created with Python library Altair-Vega.</li>
+            <li>The prediction is done with SARIMA model, machine learning has also been trialled but performed less well than SARIMA</li>
             <li>Relevant code, data and other analyses can be found at this <a href="https://github.com/Shiminc/mountain_rescue" , target="_blank">github repository</a> of mine.</li>
             <li>You could reach me at shiminc@gmail.com. </li>
         </ul>
-    </div>
+
     </footer>
     </body>
 
@@ -166,6 +230,13 @@
 <script type="text/javascript">
         var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/gantt.json";
         vegaEmbed('#gantt', spec,{'loader':{'target':'_blank'}}).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+</script>
+
+<script type="text/javascript">
+        var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/prediction.json";
+        vegaEmbed('#prediction', spec,{'loader':{'target':'_blank'}}).then(function(result) {
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         }).catch(console.error);
 </script>

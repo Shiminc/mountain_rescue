@@ -2,7 +2,9 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.utils import set_up_altair, convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
+# from utils.utils import set_up_altair, convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
+from utils.plot import set_up_altair
+from utils.utils import preprocess_data
 import pandas as pd
 import numpy as np
 import networkx as nx
@@ -101,12 +103,14 @@ def create_chord_chart(df):
     return d3
 
 def main():
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
-    data = convert_to_numeric(data)
-    data = handling_problematic_data(data)
-    data = calculating_other_agencies(data)
-    data = determine_next_day(data)
+    # data = read_json_to_df(PATH)
+    # data = format_time_columns(data)
+    # data = convert_to_numeric(data)
+    # data = handling_problematic_data(data)
+    # data = calculating_other_agencies(data)
+    # data = determine_next_day(data)
+
+    data =  preprocess_data()
 
     pair_list = create_weather_pair(data['Weather'])
     pair_count = count_weather_pair(pair_list)
