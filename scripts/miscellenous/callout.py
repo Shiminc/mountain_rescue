@@ -1,7 +1,8 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.utils import convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
+from utils.utils import preprocess_data
+# from utils.utils import convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
 from utils.plot import create_histogram, set_up_altair, create_stacked_bar
 import pandas as pd
 from scipy.stats import chi2_contingency
@@ -68,18 +69,20 @@ def run_anova(data, ind_var, dep_var):
 
 def main():
     set_up_altair()
-    data = read_json_to_df(PATH)
-    data = format_time_columns(data)
-    data = convert_to_numeric(data)
-    data = handling_problematic_data(data)
-    data = calculating_other_agencies(data)
-    data = determine_next_day(data)
-    data = data[(data['year']>2014) & (data['year']<2026)]
+    data = preprocess_data()
+
+    # data = read_json_to_df(PATH)
+    # data = format_time_columns(data)
+    # data = convert_to_numeric(data)
+    # data = handling_problematic_data(data)
+    # data = calculating_other_agencies(data)
+    # data = determine_next_day(data)
+    # data = data[(data['year']>2014) & (data['year']<2026)]
 
     # data['Incident_Type'].value_counts()
 
-    print(data.groupby('Incident_Type')[['hrs','staff','total_hrs','Agencies_count','next_day']].agg(['mean', 'median','min','max']))
-    print(data.groupby('Incident_Type')[['year','month']].median())
+    # print(data.groupby('Incident_Type')[['hrs','staff','total_hrs','Agencies_count','next_day']].agg(['mean', 'median','min','max']))
+    # print(data.groupby('Incident_Type')[['year','month']].median())
 
 
     # (create_histogram(data[data['Incident_Type']=='Alert'],'staff',bin=False) & create_histogram(data[data['Incident_Type']=='Full Callout'],'staff',bin=False) & create_histogram(data[data['Incident_Type']=='Limited Callout'],'staff',bin=False)).show()
@@ -89,13 +92,13 @@ def main():
     # run_chi2(data,'Incident_Type','next_day')
     print(' ')
 
-    print('Incident_Type')
+    # print('Incident_Type')
 
-    run_anova(data,'Incident_Type','hrs')
-    run_anova(data,'Incident_Type','staff')
-    run_anova(data,'Incident_Type','total_hrs')
+    # run_anova(data,'Incident_Type','hrs')
+    # run_anova(data,'Incident_Type','staff')
+    # run_anova(data,'Incident_Type','total_hrs')
 
-    print('')
+    # print('')
 
     print('Incident_Cause')
     run_anova(data,'Incident_Cause','hrs')

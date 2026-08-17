@@ -60,7 +60,7 @@
             }
           ],
           "height": 500,
-          "width": 400
+          "width": "container"
         },
         {
           "vconcat": [

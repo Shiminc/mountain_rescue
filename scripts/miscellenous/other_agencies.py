@@ -30,7 +30,7 @@ def main():
 
 
     # create_histogram(agencies, 'Other Agencies', bin=False).show()
-    (create_stacked_bar(agencies, 'Other Agencies', 'Incident_Cause')  
-    create_stacked_bar(data, 'Agencies_count', 'Incident_Cause')).show()
+    # create_stacked_bar(agencies, 'Other Agencies', 'Incident_Cause')  
+    create_stacked_bar(data, 'Agencies_count', 'Incident_Cause').show()
     print('finish')
 main()
