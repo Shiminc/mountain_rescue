@@ -20,9 +20,6 @@ def create_bar_line(df):
         y = 'sum(hrs)',
     )
 
-
-
-
     chart = (bar_chart + line_chart).resolve_scale(y='independent')
 
     return chart
@@ -48,24 +45,13 @@ def create_stacked_bar(df):
 
     return bar_chart_cause & bar_chart_hrs & bar_chart_total_hrs
 
-def create_stacked_area(df):
-
-    chart = alt.Chart(df).mark_area().encode(
-       alt.X("yearmonth(date):T").axis(format="%Y", domain=False, tickSize=0),
-       alt.Y('count(Incident_Cause)'),
-        color = 'Incident_Cause:N' 
-    )
-
-    return chart.properties(width=1000)
-
 def main():
     set_up_altair()
     data = preprocess_data()
 
 
-    create_bar_line(data).show()
-    # create_stacked_bar(data).show()
-    # create_stacked_area(data).show()
+    # create_bar_line(data).show()
+    create_stacked_bar(data).show()
 
     print('finish')
 

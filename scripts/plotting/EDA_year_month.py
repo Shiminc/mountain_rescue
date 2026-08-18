@@ -15,6 +15,7 @@ def create_stacked_bar(df):
         y = 'count(Incident_Cause)',
         color = 'Incident_Cause:N'
     )
+    
     line_chart = alt.Chart(df).mark_line(color='black').encode(
         x = 'yearmonth(date)',
         y = 'sum(hrs)',
@@ -23,7 +24,7 @@ def create_stacked_bar(df):
     year_list = []
     for year in range(2015, 2026):
         year_list.append({'year': pd.Timestamp(year, 1, 1, 0)})
-        
+    
 
     year_list = pd.DataFrame(year_list)
  
@@ -36,34 +37,10 @@ def create_stacked_bar(df):
     chart = (bar_chart + year_line + line_chart).properties(width = 1000).configure_axisX(title=None)
     return chart
 
-def create_scatter(df):
-    incident = df.groupby(['year','month'])['Incident'].count()
-    hrs = df.groupby(['year','month'])['hrs'].sum()
-
-    print('break')
-
-    data = pd.merge(incident, hrs, on=['year','month']).reset_index(drop=True)
-
-
-    chart = alt.Chart(data).mark_point().encode(
-        alt.X('Incident'),
-        alt.Y('hrs'),
-        # alt.Color('year')
-    )
-    return chart
-
 def main():
     set_up_altair()
     data = preprocess_data()
-    # data = read_json_to_df(PATH)
-    # data = format_time_columns(data)
-    # data.loc[data['Incident_Cause'] == '','Incident_Cause'] = 'Other'
-    # data = data[data['date']>pd.Timestamp(2015, 1, 1, 0) ]
 
-    # data['hrs'] = data['hrs'].astype(float)
-    # data['total_hrs'] = data['total_hrs'].astype(float)
-    # data['staff'] = data['staff'].astype(float)
-    create_scatter(data).show()
 
     create_stacked_bar(data).show()
     print('finish')
