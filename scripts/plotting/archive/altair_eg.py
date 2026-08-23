@@ -1,14 +1,14 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 import pandas as pd
 import altair as alt
 from altair import data
 import json
 
 
-set_up_altair()
+set_up_altair_browser()
 path='population.json'
 with open(path, 'r') as json_file:
         source = json.load(json_file)

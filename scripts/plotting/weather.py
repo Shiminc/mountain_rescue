@@ -2,7 +2,7 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
 # from utils.utils import set_up_altair, moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
 import pandas as pd
@@ -69,7 +69,7 @@ def weather_gantt(df):
     return base | legend_weather | legend_year
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
     df = data.explode(['Weather'])
     # before 2018 weather is null

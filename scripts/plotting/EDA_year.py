@@ -1,22 +1,29 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
 # double axis by year, count of incident then hrs/staff/total_hrs
+# TODO change to yeardata too
 
-def create_bar_line(df):
+
+def create_bar_line(df,time='year'):
+    if time == 'year':
+        x_var = 'year(date)'
+    elif time == 'yearmonth':
+        x_var = 'yearmonth(date)'
+
     bar_chart = alt.Chart(df).mark_bar().encode(
-        x = 'year(date)',
+        x = x_var,
         y = 'count(Incident_Cause)',
         color = 'Incident_Cause:N'
     )
     line_chart = alt.Chart(df).mark_line(color='black').encode(
-        x = 'year(date)',
+        x = x_var,
         y = 'sum(hrs)',
     )
 
@@ -46,11 +53,11 @@ def create_stacked_bar(df):
     return bar_chart_cause & bar_chart_hrs & bar_chart_total_hrs
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
 
 
-    # create_bar_line(data).show()
+    # create_bar_line(data, time='yearmonth').show()
     create_stacked_bar(data).show()
 
     print('finish')

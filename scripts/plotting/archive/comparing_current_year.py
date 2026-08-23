@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import moving_averages, read_json_to_df, format_time_columns,aggregate_by_year_month, filter_by_year
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 import pandas as pd
 import altair as alt
 
@@ -28,7 +28,7 @@ def aggregate_by_month(df):
     return aggregated_df
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
 
     data = read_json_to_df(PATH)
     data = format_time_columns(data)

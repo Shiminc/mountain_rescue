@@ -1,22 +1,13 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
-from utils.utils import preprocess_data,  aggregate_by_year_month
+from utils.plot import set_up_altair_browser
+from utils.utils import preprocess_data
 
-import pandas as pd
 import altair as alt
 # zoom in zoom out
 # various plot to show trends with month and year as x, y axis, heatmap, bubble, tick-dash
 
-def tick_dash(df):
-    chart = alt.Chart(df).mark_tick().encode(
-        alt.X('dayofyear(date):T'),
-        alt.Y('year(date):T'),
-        alt.Color('Incident_Cause:N'),
-        alt.Tooltip(['Incident_Cause','count()']),
-    )
-    return chart
 
 # TODO colourblind colour, legend to show bar chart about how many cases in each cause, and side bar to show each year total 
 
@@ -33,16 +24,6 @@ def bubble(df):
         width = 1000
     )
     return chart
-
-def cause_bar(data):
-    chart = alt.Chart(data).mark_bar().encode(
-        alt.X('count()').title(None),
-        alt.Y('Incident_Cause:N').sort('-x').title(None),
-        alt.Color('Incident_Cause:N').legend(None),
-    )
-
-    return chart
-
 
 
 def stacked_horizon(data):
@@ -118,24 +99,21 @@ def monthly_bar_caption():
                           
     )
     return caption
-    
-def main():
-    set_up_altair()
-    data = preprocess_data()
-    # bubble(data).save('../../charts/main_chart.json')
-    # alt.concat(stacked_horizon(data),bubble(data),  spacing=5).show()
-    # alt.concat((bubble(data) & monthly_bar(data)).resolve_scale(x='shared'), stacked_horizon(data) & stacked_horizon_caption(),spacing=-5).show()
-    # ((bubble(data)|(stacked_horizon(data) & stacked_horizon_caption())) & monthly_bar(data)).resolve_scale(x='shared').show()
 
-    alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
+def present_main_charts(data):
+    chart = alt.concat(stacked_horizon(data) & stacked_horizon_caption(),
                   (bubble(data) & (monthly_bar(data))).resolve_scale(x='shared'),
-    #             #  (monthly_bar_caption()),
-    #             #  (cause_bar(data) & week_bar(data)),
-                  spacing=-2).show()
-    # .save('../../charts/main_chart.json')
+                  spacing=-2)
+    return chart
 
-    # week_bar(data).save('../../charts/week.json')
-    # (stacked_horizon(data)|bubble(data)).resolve_scale(y='shared').show()
+def main():
+    set_up_altair_browser()
+    data = preprocess_data()
+    present_main_charts(data).show()
+
+    #present_main_charts(data).save('../../charts/main_chart.json')
+
+ 
     print('finish')
 
 

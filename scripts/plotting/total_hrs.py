@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month, moving_averages
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
@@ -50,9 +50,9 @@ def create_year_month_line(df):
 
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
 
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
     total_hrs_average = aggregate_by_year_month_hrs(data)
     create_year_month_line(total_hrs_average).show()

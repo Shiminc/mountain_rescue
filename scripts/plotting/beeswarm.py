@@ -1,12 +1,14 @@
+# plot to show the distributionof hours used in rescue (x), year in y-axis 
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
 from statsmodels.tsa.seasonal import STL as STL
-import pandas as pd
 import altair as alt
 # TODO : choose with or without alert 
+
 def beeswarm_plot(data, variable):
     beeswarm = alt.Chart(data).mark_point(filled=True, stroke='Black', strokeWidth=0.2).encode(
     # alt.Y('yearmonth(date):T'),
@@ -33,7 +35,7 @@ def beeswarm_plot(data, variable):
     return beeswarm + mean_line + overall_mean
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
         
 

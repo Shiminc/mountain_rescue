@@ -1,20 +1,12 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month, convert_month_to_word,convert_day_to_word
 
 import pandas as pd
 import altair as alt
 
-
-def tick_dash(df):
-    chart = alt.Chart(df).mark_tick().encode(
-        alt.X('dayofyear(date):T'),
-        alt.Y('year(date):T'),
-        color = alt.Color('Incident_Cause:N'),
-    )
-    return chart
 
 def heat_map(df):
     data = aggregate_by_year_month(df)
@@ -54,11 +46,16 @@ def week_bar(data):
     )
     return chart
 
+def present_week_heat(data):
+    return (week_bar(data)|heat_map(data))
+
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
 
-    (week_bar(data)|heat_map(data)).save('../../charts/week.json')
+    present_week_heat(data).show()
+
+    # present_week_heat(data).save('../../charts/week.json')
 
     print('finish')
 
