@@ -1,4 +1,4 @@
-CAUSE_ORDER = ['Injury & Medical',
+CAUSE_ORDER = ['Injured & Medical',
                'Lost',
                'Overdue',
                'Cragfast',
