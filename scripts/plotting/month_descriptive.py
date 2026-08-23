@@ -25,16 +25,24 @@ def boxplot_with_mean(data):
     return boxplot + mean_tick
 
 def monthly_bar(data):
-    bar = alt.Chart(data).mark_bar().encode(
-        alt.Y('mean(Incident)').title('Count of Incidents'),
-        alt.X('month(dateTime):T').axis(None),
-        # tooltip =[
-        #     alt.Tooltip(field="Incident_Cause"),
-        #     alt.Tooltip('count()', title='Count of Incidents')  
-        # ],
+    bar = alt.Chart(data,
+                    title = alt.Title(
+                        'Total numbers of incident in each months',
+                        subtitle = 'Summing across 2015-2025',
+                        orient = 'bottom'
+                    )
+                    ).mark_bar().encode(
+        alt.Y('count()').title('Count of Incidents'),
+        alt.X('month(date):T').axis(None),
+        alt.Color('Incident_Cause:N'),
+        tooltip =[
+            alt.Tooltip(field="Incident_Cause"),
+            alt.Tooltip('count()', title='Count of Incidents')  
+        ],
     ).properties(
         height=100
     )
+    return bar
 
 
     return bar
@@ -48,7 +56,7 @@ def main():
     data_year_month.groupby(by='month')['Incident'].agg(['sum','mean','median','min','max','std'])
     # boxplot
     boxplot_with_mean(data_year_month).show()
-    # monthly_bar(data_year_month).show()
+    monthly_bar(data).show()
     # create_year_month_line_chart(data).show()
     print('finish')
 
