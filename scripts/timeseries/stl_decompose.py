@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import read_json_to_df, format_time_columns, preprocess_data, aggregate_by_year_month, filter_by_year
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
@@ -83,7 +83,7 @@ def line_chart(df, series_component, colour='purple', point: bool = False):
     return (line + year_rule).properties(width=1000, height=100)
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
 
     # data = read_json_to_df(PATH)
     # data = format_time_columns(data)

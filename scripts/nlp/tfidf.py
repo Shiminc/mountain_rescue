@@ -4,7 +4,7 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
 import pandas as pd
 import altair as alt
@@ -38,7 +38,7 @@ def find_matched_vector(new_doc, docs, vectorizer):
     top_3 = np.argsort(relevance_array.squeeze())[-3:0]
     return max_cos_similarity, docs[max_doc_index], min_cos_similarity,docs[min_doc_index], top_3
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     new_doc, docs = construct_corpus()
     print(new_doc)
     vectorizer = fit_vectorizer(docs)

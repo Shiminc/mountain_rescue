@@ -3,13 +3,13 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.victims import create_separate_victims_tuple, create_victims_df
 from utils.utils import convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
-from utils.plot import create_histogram, set_up_altair, create_stacked_bar
+from utils.plot import create_histogram, set_up_altair_browser, create_stacked_bar
 import pandas as pd
 PATH = "../../data/all_incidents.json"
 
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     victim = create_victims_df()
     victim = create_separate_victims_tuple(victim)
     victim = victim[['Incident','human_victims']]

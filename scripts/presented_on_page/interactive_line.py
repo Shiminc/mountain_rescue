@@ -52,8 +52,8 @@ def trend_year(data):
     )
 
     return((chart + month_ave).properties(
-    width=800,
-    height=1000) | legend).configure_legend(False) 
+    width=300,
+    height=500) | legend).configure_legend(False) 
 
 
 def stacked_bar_chart(data):
@@ -74,16 +74,6 @@ def stacked_bar_chart(data):
 
     return (bar_chart + label)
 
-def heat_map(df):
-    data = aggregate_by_year_month(df)
-
-    heat_map = alt.Chart(data).mark_rect().encode(
-        alt.X('month:O'),
-        alt.Y('year:O',sort='descending'),
-        alt.Color('Incident:Q')
-    )   
-    return heat_map
-
 
 def main():
     set_up_altair_browser()
@@ -92,7 +82,6 @@ def main():
 
     trend_chart = trend_year(data)
     bar_chart = stacked_bar_chart(data)
-    heatmap_chart = heat_map(data)
 
     (trend_chart| bar_chart).resolve_scale(color='independent').show()
     print('finish')

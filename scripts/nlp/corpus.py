@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
 import pandas as pd
 import altair as alt
@@ -78,7 +78,7 @@ def find_doc_close_to_new_doc(vectorizer, new_doc, skVector_matrix):
     return max_cos_similarity, max_doc_index, min_cos_similarity, min_doc_index
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     print(punctuation)
     data = preprocess_data()
     sample = data.iloc[0:10]
