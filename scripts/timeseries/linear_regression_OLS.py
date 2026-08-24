@@ -5,7 +5,7 @@ from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import altair as alt
 import numpy as np
-from utils_features import create_features
+from utils.features_engineering import create_features
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from statsmodels.graphics.gofplots import qqplot

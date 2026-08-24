@@ -1,13 +1,12 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair_browser
+from utils.variables import HOLIDAY_PATH
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import altair as alt
 import numpy as np
 
-PATH = "../../data/ukbankholidays-jul19.csv"
 
 def create_season(df):
     df['season'] = 'season'
@@ -24,7 +23,7 @@ def create_season(df):
 #     return ...
 
 def count_bank_holidays():
-    data = pd.read_csv(PATH)
+    data = pd.read_csv(HOLIDAY_PATH)
     data = data[['UK BANK HOLIDAYS']].dropna()
     data.columns =['bankholidays']
     data['bankholidays'] = pd.to_datetime(data['bankholidays'], format='%d-%b-%Y')
