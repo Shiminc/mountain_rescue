@@ -9,7 +9,7 @@ from sklearn.model_selection import RandomizedSearchCV
 
 from sklearn.svm import SVR
 # Epsilon-Support Vector Regression.
-from utils_ML import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
+from utils.machine_learning import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
 
 
 

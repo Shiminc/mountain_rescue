@@ -9,7 +9,7 @@ from sklearn.model_selection import RandomizedSearchCV
 from scipy import stats
 
 from xgboost import XGBRegressor
-from utils_ML import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
+from utils.machine_learning import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
 
 # https://xgboost.readthedocs.io/en/latest/parameter.html
 

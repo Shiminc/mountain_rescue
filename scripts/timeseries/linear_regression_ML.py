@@ -7,7 +7,7 @@ import numpy as np
 from utils.features_engineering import create_features
 
 from sklearn.linear_model import LinearRegression
-from utils_ML import create_data, run_evaluation
+from utils.machine_learning import create_data, run_evaluation
 
 
 
