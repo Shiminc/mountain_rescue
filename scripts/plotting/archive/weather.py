@@ -1,6 +1,5 @@
 import os
 import sys
-
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data

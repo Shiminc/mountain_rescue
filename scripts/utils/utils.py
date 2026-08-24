@@ -94,6 +94,10 @@ def format_time_columns(df):
 
     # identify week number of the year
     df['week_number'] = df['date'].dt.isocalendar().week.astype(int)
+    # reassing the week number being misassign by isocalendar from 53 of previous years to 1
+    df.loc[(df['week_number']==53) & (df['year']==2021),'week_number']=1
+
+    
     df['year_month'] = df['year'].astype(str) + '-' + df['month'].astype(str)
     df['year_month'] = pd.to_datetime(df['year_month'], format='%Y-%m')
 
@@ -102,9 +106,6 @@ def format_time_columns(df):
 def filter_by_year(df,year):
     df = df[df['year']>year]
     return df
-
-def aggregate_by_year_week(df):
-    return ...
 
 def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-12-31', freq='MS'):
     #create a dummy series that include all date so that when we merge with the data, any month without any incident will be able to filled with 0
