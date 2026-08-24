@@ -1,3 +1,5 @@
+# histogram of each variables
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -6,7 +8,6 @@ from utils.utils import preprocess_data
 import pandas as pd
 import altair as alt
 
-# histogram of each variables
 def histogram(df,var_x:str):
     chart = alt.Chart(df).mark_bar().encode(
         alt.X(var_x),

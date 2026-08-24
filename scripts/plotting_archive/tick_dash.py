@@ -26,3 +26,12 @@ def cause_bar(data):
     )
 
     return chart
+
+
+def main():
+    set_up_altair_browser()
+    data = preprocess_data()
+    tick_dash(data).show()
+    cause_bar(data).show()
+    
+main()

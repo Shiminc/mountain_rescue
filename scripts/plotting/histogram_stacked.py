@@ -1,3 +1,5 @@
+# histogram of each variable and general view
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -6,7 +8,6 @@ from utils.utils import preprocess_data
 import pandas as pd
 import altair as alt
 
-# histogram of each variables
 
 def create_stacked_bar(df, var_x, stacked_var):
     string_y = 'count(' + stacked_var + ')'

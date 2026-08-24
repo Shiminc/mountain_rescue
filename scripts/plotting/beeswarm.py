@@ -1,4 +1,4 @@
-# plot to show the distributionof hours used in rescue (x), year in y-axis 
+# plot to show the distribution of hours used in rescue (x), year in y-axis 
 
 import os
 import sys
@@ -9,12 +9,12 @@ from statsmodels.tsa.seasonal import STL as STL
 import altair as alt
 # TODO : choose with or without alert 
 
-def beeswarm_plot(data, variable):
-    beeswarm = alt.Chart(data).mark_point(filled=True, stroke='Black', strokeWidth=0.2).encode(
+def beeswarm_plot(data, variable, title):
+    beeswarm = alt.Chart(data, title = title).mark_point(filled=True, stroke='Black', strokeWidth=0.2).encode(
     # alt.Y('yearmonth(date):T'),
     alt.Y('year:O'),
     alt.X(variable),
-    alt.Color('Incident_Cause:N').scale(scheme='redyellowblue').legend(None),
+    alt.Color('Incident_Cause:N'),
     yOffset="jitter:Q",
 
     ).transform_calculate(
@@ -32,6 +32,8 @@ def beeswarm_plot(data, variable):
     x=alt.X(mean_value)
     )
 
+
+
     return beeswarm + mean_line + overall_mean
 
 def main():
@@ -39,7 +41,9 @@ def main():
     data = preprocess_data()
         
 
-    beeswarm_plot(data,'hrs').show()
+    (beeswarm_plot(data,'hrs',title='Alert & Callout') &
+     beeswarm_plot(data,'staff',title='Alert & Callout') &
+     beeswarm_plot(data,'total_hrs',title='Alert & Callout')).show()
     print('finish')
 
 main()

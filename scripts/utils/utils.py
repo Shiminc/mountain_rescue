@@ -84,6 +84,8 @@ def convert_month_to_word(df):
 def format_time_columns(df):
     df['date'] = pd.to_datetime(df['date'], format='%d %b %Y')
     # df.sort_values(by=['date'])
+    # mainly happened in archive data
+    df.dropna(subset=['date'],inplace=True)
     df['year'] = df['date'].dt.year.astype(int)
     df['month'] = df['date'].dt.month.astype(int)
     # df = convert_month_to_word(df)

@@ -7,7 +7,7 @@ from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
-# double axis by year, count of incident then hrs/staff/total_hrs
+#x axis by year, count of incident then hrs/staff/total_hrs
 # TODO change to yeardata too
 
 

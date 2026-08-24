@@ -11,9 +11,7 @@ import altair as alt
 from altair import datum
 
 
-def set_up_altair_browser():
-    alt.renderers.enable('browser')
-    alt.data_transformers.disable_max_rows()
+
 
 def time_spent_plot(data):
    
