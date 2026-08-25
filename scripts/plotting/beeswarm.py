@@ -1,4 +1,5 @@
-# plot to show the distribution of hours used in rescue (x), year in y-axis 
+#plot to show the distribution of hours used in rescue (x), year in y-axis 
+# each dot represents an incident
 
 import os
 import sys

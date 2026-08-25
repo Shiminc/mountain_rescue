@@ -1,4 +1,24 @@
-# histogram of each variable and general view
+"""
+This script creates histogram and bar charts for a general overview of the distribution of the data
+#### But with stacked bar for incident cause
+# histogram (ordinal or interval scale)
+    - hrs
+    - total_hrs
+    - staff
+    - agencies count
+    - end_time, start_time
+# bar chart (categorical/ordinal variable)
+    - incident type
+    - incident cause
+    - next day
+    - year
+    - month
+    - weather
+    - agencies involved
+    - injury diagnosis
+
+"""
+
 
 import os
 import sys

@@ -1,11 +1,28 @@
-# histogram of each variables
+"""
+This script creates histogram and bar charts for a general overview of the distribution of the data
+# histogram (ordinal or interval scale)
+    - hrs
+    - total_hrs
+    - staff
+    - agencies count
+    - end_time, start_time
+# bar chart (categorical/ordinal variable)
+    - incident type
+    - incident cause
+    - next day
+    - year
+    - month
+    - weather
+    - agencies involved
+    - injury diagnosis
+
+"""
 
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
-import pandas as pd
 import altair as alt
 
 def histogram(df,var_x:str):
