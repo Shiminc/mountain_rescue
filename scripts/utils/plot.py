@@ -13,7 +13,7 @@ def set_up_altair_browser():
     alt.data_transformers.disable_max_rows()
 
 def set_up_altair_jupyter():
-    alt.renderers.enable('mimetype') # offline renderer
+    alt.renderers.enable('jupyter') # offline renderer
 
 
 def create_year_month_line_chart(df):

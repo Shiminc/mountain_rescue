@@ -34,11 +34,9 @@ def sorted_bar(df,var_x:str):
     )
     return chart
 
-def main():
-    set_up_altair_browser()
-    data = preprocess_data()
 
-    ((histogram(data,'hrs') |  histogram(data,'total_hrs'))
+def histogram_for_overview(data):
+    chart = ((histogram(data,'hrs') |  histogram(data,'total_hrs'))
       & (histogram(data,'staff') | histogram(data,'Agencies_count'))
       & (histogram(data,'next_day') | histogram(data,'Incident_Type') | histogram(data,'Incident_Cause')) 
       & (histogram(data,'year') | histogram(data,'month'))
@@ -46,7 +44,14 @@ def main():
       & (sorted_bar(data,'Weather'))
       & (sorted_bar(data,'Other Agencies'))
       & (sorted_bar(data,'Diagnosis'))
-      ).show()
+      )
+    return chart
+
+def main():
+    set_up_altair_browser()
+    data = preprocess_data()
+
+    histogram_for_overview(data).show()
 
 
     print('finish')

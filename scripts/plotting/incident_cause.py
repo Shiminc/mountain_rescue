@@ -28,16 +28,21 @@ def heat_map(df,title):
 )
     return heat_map
 
+def combine_chart(data):
+    chart_list = []
+    
+    for cause in CAUSE_ORDER:
+        data_cause = data.loc[(data['Incident_Cause']==cause)]
+        chart_list.append(heat_map(data_cause,title=cause))
 
+    
+    return alt.vconcat(chart_list[0],chart_list[1],chart_list[2],chart_list[3],chart_list[4] )
 def main():
     set_up_altair_browser()
     data = preprocess_data()
 
-    for cause in CAUSE_ORDER:
-        data_cause = data.loc[(data['Incident_Cause']==cause)]
-        heat_map(data_cause,title=cause).show()
-
-    # present_week_heat(data).save('../../charts/week.json')
+    chart = combine_chart(data)
+    chart.show()
 
     print('finish')
 

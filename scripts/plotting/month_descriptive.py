@@ -44,15 +44,15 @@ def monthly_bar(data):
     )
     return bar
 
-    
+
 def main():
     set_up_altair_browser()
     data = preprocess_data()
     data_year_month = aggregate_by_year_month(data)
     # descriptive stats
-    data_year_month.groupby(by='month')['Incident'].agg(['sum','mean','median','min','max','std'])
+    print(data_year_month.groupby(by='month')['Incident'].agg(['sum','mean','median','min','max','std']))
     # each month numbers
-    pd.crosstab(data['year'],data['month'])
+    print(pd.crosstab(data['year'],data['month']))
     # boxplot
     boxplot_with_mean(data_year_month).show()
     monthly_bar(data).show()
