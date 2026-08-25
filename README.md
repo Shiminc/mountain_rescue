@@ -1,5 +1,6 @@
-# mountain_rescue
+# Job interview
 
+This branch was created for a job interview and focus on the descriptive analysis of the incidents between 2015 - 2025 and timeseries analysis
 This is a toy project of mine to practice several programming skills and engage in various visualisation design to understand the best strategy for different scenarios. Some analyses may not be exactly suitable to this data, but they are just for practicing purposes. 
 
 It is still work-in-progress so could be messy. There are different modules in the `scripts` directory corresponding to various skills I am practicing.
