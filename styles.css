@@ -4,10 +4,10 @@ body {
         }
 
 header {
-    position: sticky;
+    position: relative;
+    width: 85.0%;
+    left: 7.5%;
     top:0;
-    /* width: 80.0%;
-    left: 7.5%;*/
     padding: 1%; 
     background: rgba(255, 255, 255, 1);
     /* make it always in front */
