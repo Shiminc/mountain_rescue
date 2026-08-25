@@ -108,7 +108,9 @@ def main():
     seasonal = output_formatting(seasonal,'season')
     residuals = output_formatting(residuals,'resid')
 
-    ((stacked_bar(data) + line_chart(original_series, 'Observed')) & line_chart(trend, 'trend') & line_chart(seasonal, 'season') & line_chart(residuals, 'residuals')).show()
+    chart = ((stacked_bar(data) + line_chart(original_series, 'Observed')) & line_chart(trend, 'trend') & line_chart(seasonal, 'season') & line_chart(residuals, 'residuals'))
+    chart.show()
+    chart.save('../../charts/stl.json')
     # (line_chart(original_series, 'Incident') + line_chart(trend, 'trend')).show()
   
     print('finish')

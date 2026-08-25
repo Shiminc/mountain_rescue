@@ -87,6 +87,14 @@
         <p> Although Injured & Medical are the most common cause of incidents, there are some months <b>(Oct - Feb ) when there are more Lost incidents</b>. It is likely due to the <a href="https://www.wmrt.org.uk/incidents/high-scarth-crag-eskdale-sun-24th-jan-2016/">shorter day time</a> and less visibilities during those months such that people are more susceptible to losing their route. </p>
 
         <br>
+        <h2> Seasonality and Trend of Incidents</h2>
+        <p> As observed above, the number of incidents is affected by seasons within a year, and there is also a long term upward trend across the years. To clearly show these patterns in the data, I also ran a statistical analysis -- Seasonal and Trend decomposition using Loess to show these two patterns, as well as to tease out any unexpected number of incidents on top of these patterns. These patterns are shown in the four charts below:
+            1. The
+        </p>
+            <div class="chartholder">
+            <div id="stl"></div>
+        </div>
+            <br>
 
         <h2>How long do rescue operations take?</h2>
         <p>In the gannt chart below, <b>each bar represents an incident</b> in the context of the day it happened to illustrate how long a rescue operation could take as well as when incidents happen in the day. 
@@ -183,6 +191,13 @@
 <script type="text/javascript">
         var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/week.json";
         vegaEmbed('#week', spec).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+</script>
+
+<script type="text/javascript">
+        var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/stl.json";
+        vegaEmbed('#stl', spec,{'loader':{'target':'_blank'}}).then(function(result) {
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         }).catch(console.error);
 </script>
