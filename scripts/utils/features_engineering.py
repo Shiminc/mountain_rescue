@@ -1,11 +1,14 @@
+"""
+The functions in this module are mainly used for creating features for predicting timeseries with machine learning.
+features created include seasons, number of bankholidays, weekends, last year number (time-lagged)
+The function `create_features` listed last combined all functions to apply to the dataset. 
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.variables import HOLIDAY_PATH
-from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
-import altair as alt
-import numpy as np
 
 
 def create_season(df):
@@ -16,11 +19,6 @@ def create_season(df):
     df.loc[df['month'].isin([9,10,11]),'season'] ='autumn'
 
     return df
-
-# def create_temp(start_date='2015-01-01', end_date='2025-12-31', freq='MS'):
-#     index = pd.date_range(start_date, end_date, freq=freq)
-
-#     return ...
 
 def count_bank_holidays():
     data = pd.read_csv(HOLIDAY_PATH)
@@ -55,7 +53,6 @@ def count_weekenddays(start_date='2015-01-01', end_date='2025-12-31'):
 def create_time_lagged(data):
     # only last year value as a practice.
     data['last_year'] = data['Incident'].shift(12)
-  
     return data.dropna(subset=['last_year'])
 
 def create_features(incident_count):

@@ -1,10 +1,10 @@
-import pandas as pd
-import json
-import time
-from datetime import timedelta, date, datetime 
-import numpy as np
+"""
+This project used exclusively altair-vega for visualisation https://altair-viz.github.io/index.html
+The functions in this module configure the visualisation library output in browsers and jupyter notebook
+and create some basic functions for visualisation
+"""
+
 import altair as alt
-import os 
 
 def set_up_altair_browser():
     alt.renderers.enable('browser')
@@ -28,12 +28,15 @@ def create_year_month_line_chart(df):
     )
     return line
 
-def create_histogram(df, var_x, bin=True):
+def create_histogram(df, var_x:str, bin=True):
     bar_chart = alt.Chart(df).mark_bar().encode(
         alt.X(var_x, bin=bin),
-        y = 'count()',
+        alt.Y('count():Q'),
+        tooltip=([var_x,'count()'])
     )
     return bar_chart
+
+
 
 def create_stacked_bar(df, var_x, stacked_var):
     string_y = 'count(' + stacked_var + ')'
@@ -54,6 +57,10 @@ def create_stacked_bar_by_date(df,time='year'):
     elif time == 'yearmonth':
         x_var = 'yearmonth(date)'
         chart_width = 1000
+    elif time == 'month':
+        x_var = 'month(date)'
+        chart_width = 600
+
 
     bar_chart = alt.Chart(df).mark_bar().encode(
         x = x_var ,

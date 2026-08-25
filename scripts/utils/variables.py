@@ -1,3 +1,7 @@
+"""
+In this module, global variables are declared. 
+The CAUSE_ORDER is used for visualisation and some data organisation to ensure consistency rather than the automatic sorting by pandas or alt library 
+"""
 CAUSE_ORDER = ['Injured & Medical',
                'Lost',
                'Overdue',

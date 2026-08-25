@@ -1,4 +1,7 @@
-import pandas as pd
+"""
+# This module consisted of one function that replace problematic data.
+# It also acted as a documentation of what has been changed. 
+"""
 
 def handling_problematic_data(data):
     # empty cell in incident cause to be recoded to another original value Other

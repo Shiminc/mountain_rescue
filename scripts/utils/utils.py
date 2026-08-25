@@ -1,6 +1,14 @@
 """
-This module contains functions used for preprocessing data.
+This module contains functions used for preprocessing data, including 
+# reading the json data and convert to panda dataframe
+# formating datetime variables
+# aggregate data into year_month unit of analysis
+# calculating moving averages with time window 12
+# convert string variables (day, month, hrs, staff, total_hrs) into numerics
+# creating variables - bankholiday, whether a mission goes into next day, how many agencies are involved. 
+# the `preprocessing` combined most of the functions so that users could just use this function to retrieve the data and get a clean data with all the possbile variables 
 """
+
 import pandas as pd
 import json
 from datetime import datetime 

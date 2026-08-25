@@ -1,16 +1,24 @@
-# Run chisquare test for the association between month and incident cause, but unfortunately the assumption not fulfill as some have small values, especially cragfast and others
+"""
+This python file runs an analysis to address the research question
+2. Is there any association between the month and the incident cause?
+   such that a particular kind of incident occurs more than expected in certain months. 
+
+# Run chisquare test for the frequency of incident cause in each month
+# Present the results in a visualisation as well as in print in terminal 
+
+
+""" 
 
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair_browser
-from utils.utils import preprocess_data,  aggregate_by_year_month, convert_month_to_word,convert_day_to_word
+from utils.plot import set_up_altair_browser, create_stacked_bar_by_date, create_histogram
+from utils.utils import preprocess_data
 from utils.variables import CAUSE_ORDER 
 import pandas as pd
 import altair as alt
 import numpy as np
 from scipy.stats import chisquare
-f_exp = np.array([486,318,170,107,135])
 
 def results_heat_map(data):
     data['results'] = data['results'].astype('string')
@@ -42,9 +50,24 @@ def results_heat_map(data):
         alt.Y('Month:O'),
         text = alt.Text('expected')
     )
-    return heat_map + p_value + observed + expected
+
+    caption = alt.Chart().mark_text(
+        align =  "left",
+        baseline = "bottom",).encode(
+        text = alt.value(['the p-value for each chisquare conducted for each month is shown',
+                         'at the right hand side, while in each square, the number above',
+                          'is the observed incident number in the corresponding month and',
+                           'incident cause, the number below is the expected frequency based',
+                            'on the overall numbers'])
+    )
+    return (heat_map + p_value + observed + expected) & caption
 
 def create_f_exp(data):
+    """
+    This function creates the expected frequency for the five incident cause to be used in the chi-square analysis
+    This differs from the normal practice of assuming equal sample size as the expected frequency because
+    in view of the overwhelmingly more number of some causes in their total count, this is considered more accurate expectancy for each month comparison, else it would be highly like every comparison would be signficant. 
+    """
     total_freq = pd.DataFrame(data['Incident_Cause'].value_counts())
     total_freq = total_freq.reset_index()
     # change to category data type so we can sort based on CAUSE_ORDER
@@ -60,7 +83,6 @@ def run_chisquare_all_months(df,exp_array, significance=0.05):
     data = df.copy()
     # chisquare_stats = []
     p_value_list = []
-    significance_list = []
     # expected_value = []
     month_list = []
     observedHigher = []
@@ -80,7 +102,7 @@ def run_chisquare_all_months(df,exp_array, significance=0.05):
         print(np.round(expected_list,decimals=1))
         print('Is observed > expected')
         print(observed_list>expected_list)
-
+        
         results = chisquare(observed_list,expected_list)
         print('chi-square statistics: ', results.statistic)
         print('p-value: ', results.pvalue)
@@ -106,14 +128,19 @@ def reorganise_data(data):
     return df
 
 def main():
+    # configure the visualisation
     set_up_altair_browser()
+    # read the clean data
     data = preprocess_data()
+    # create the expected frequency for the chisquare
     f_exp = create_f_exp(data)
-
+    # reorgnised the data for analysis
     df = reorganise_data(data)
+    # run the chisquare for each month and record the data as well as print it out
     results = run_chisquare_all_months(df, exp_array = f_exp, significance=0.05)
+    # presented the findings in visualisation
+    (results_heat_map(results) | create_stacked_bar_by_date(data, time='month') | create_histogram(data, 'Incident_Cause', bin=False)).show()
 
-    results_heat_map(results).show()
     print('finish')
 
 
