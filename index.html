@@ -88,10 +88,13 @@
 
         <br>
         <h2> Seasonality and Trend of Incidents</h2>
-        <p> As observed above, the number of incidents is affected by seasons within a year, and there is also a long term upward trend across the years. To clearly show these patterns in the data, I also ran a statistical analysis -- Seasonal and Trend decomposition using Loess to show these two patterns, as well as to tease out any unexpected number of incidents on top of these patterns. These patterns are shown in the four charts below:
-            1. The
-        </p>
-            <div class="chartholder">
+        <p> As observed above, the number of incidents is affected by seasons within a year, and there is also a long term upward trend across the years. To clearly show these patterns in the data, I also ran a statistical modelling -- Seasonal and Trend decomposition using Loess to show these two patterns, as well as to tease out any unexpected number of incidents on top of these patterns. These patterns are shown in the four charts below with the x-axis being month-year:</p>
+        <p>1. The line in the first chart visualises the total number of incidents in each month across the years, with additional stacked bar to show the breakdown of different incident causes. </p>
+        <p>2. The line in the trend panel visualises the number of incidents that are associated with the long term trend. It is not possible to show the breakdown of incident cause in this trend, as well as the season and residual below, due to low number of some causes for meaningful statistical analysis.</p>
+        <p>3. The line in the season panel visualises how the number of incidents change across the season, with peaks usually around July and August, which is the summer months good for hiking.</p>
+        <p>4. The line in the residual visualises the number of incidents which is not expected by the trend and seasonality, that is there might be some other factors that cause the increase or decrease of the incidents. The two peaks in October in 2017 and 2021 are the odd times that there are more incidents than expected due to seasonality and trend. It awaits further investigation so the team could better prepare in the future for this kind of unexpected rise of incidents. </p>
+        <p> You can also hover over the line to see the exact number of incidents in each model. It is worth bearing in mind that it is a modelling of the incident number and this modelling essentially breakdown the original number into three components - trend, season, residuals. The number of these three components add up to the original incident number. The negative number in season and residuals is just an indication that there should be fewer incidents due to the season and residuals in those months.</p>
+        <div class="chartholder">
             <div id="stl"></div>
         </div>
             <br>
