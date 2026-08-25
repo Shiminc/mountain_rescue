@@ -7,7 +7,6 @@ from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
-PATH = "../../data/all_incidents.json"
 
 def decompose(df):
     # https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.STL.html
