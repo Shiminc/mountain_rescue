@@ -12,6 +12,38 @@ import numpy as np
 from scipy.stats import chisquare
 f_exp = np.array([486,318,170,107,135])
 
+def results_heat_map(data):
+    data['results'] = data['results'].astype('string')
+    data.loc[data['results']=='False','results']='observed lower than expected'
+    data.loc[data['results']=='True','results']='observed higher than expected'
+
+    heat_map = alt.Chart(data).mark_rect().encode(
+        alt.X('Incident_Cause').sort(CAUSE_ORDER),
+        alt.Y('Month:O'),
+        alt.Color('results').legend(orient = 'bottom')
+    ).properties(
+        width=400,
+        height=400
+    )
+    p_value = alt.Chart(data).mark_text(dx=250).encode(
+        alt.Y('Month:O'),
+        text = alt.Text('p-value')
+    )
+
+    observed = alt.Chart(data).mark_text(dy=-7, fontSize=10).encode(
+        alt.X('Incident_Cause').sort(CAUSE_ORDER),
+        alt.Y('Month:O'),
+        text = alt.Text('observed')
+    )
+
+    
+    expected = alt.Chart(data).mark_text(dy=+3, fontSize=10).encode(
+        alt.X('Incident_Cause').sort(CAUSE_ORDER),
+        alt.Y('Month:O'),
+        text = alt.Text('expected')
+    )
+    return heat_map + p_value + observed + expected
+
 def create_f_exp(data):
     total_freq = pd.DataFrame(data['Incident_Cause'].value_counts())
     total_freq = total_freq.reset_index()
@@ -27,12 +59,17 @@ def run_chisquare_all_months(df,exp_array, significance=0.05):
 
     data = df.copy()
     # chisquare_stats = []
-    # p_value = []
-    # significance_list = []
+    p_value_list = []
+    significance_list = []
     # expected_value = []
-    # improved = []
+    month_list = []
+    observedHigher = []
+    cause_list = []
+    observed = []
+    expected= []
     for month in range(1,13,1):
         month_df = data.loc[df['month']==month, CAUSE_ORDER]
+        print('')
         print('Month ' + str(month))
         print(CAUSE_ORDER)
         observed_list = month_df.values[0]
@@ -40,23 +77,25 @@ def run_chisquare_all_months(df,exp_array, significance=0.05):
         print(observed_list)
         expected_list = (exp_array) * sum(observed_list)
         print('expected number of incidents')
-        print(expected_list)
+        print(np.round(expected_list,decimals=1))
         print('Is observed > expected')
         print(observed_list>expected_list)
+
         results = chisquare(observed_list,expected_list)
         print('chi-square statistics: ', results.statistic)
         print('p-value: ', results.pvalue)
         print('significance: ', results.pvalue < significance)
-        # chisquare_stats.append(results.statistic)
-        # p_value.append(results.pvalue)
-        # significance_list.append(results.pvalue < significance)
 
-    # # data['expected_value'] = expected_value
-    # data['chisquare'] = chisquare_stats
-    # data['p_value'] =  p_value 
-    # data['significance'] = significance_list
+        observed = observed + list(observed_list)
+        expected = expected + list(np.round(expected_list,decimals=1))
+        p_value_list = p_value_list + [np.round(results.pvalue, decimals=3)]*len(CAUSE_ORDER)
+        month_list= month_list + [month]*len(CAUSE_ORDER)
+        observedHigher= observedHigher + (list(observed_list>expected_list))
+        cause_list = cause_list + CAUSE_ORDER
 
   
+    results_for_overview = pd.DataFrame({'Month':month_list, 'Incident_Cause': cause_list, 'observed' : observed, 'expected': expected,'results':observedHigher, 'p-value': p_value_list})
+    return results_for_overview
 
 def reorganise_data(data):
     df = pd.DataFrame(data.groupby(['month','Incident_Cause'])['title'].count())
@@ -72,8 +111,9 @@ def main():
     f_exp = create_f_exp(data)
 
     df = reorganise_data(data)
-    run_chisquare_all_months(df, exp_array = f_exp, significance=0.05)
+    results = run_chisquare_all_months(df, exp_array = f_exp, significance=0.05)
 
+    results_heat_map(results).show()
     print('finish')
 
 
