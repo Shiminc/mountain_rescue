@@ -1,16 +1,15 @@
+"""
+Interaction line chart for each year within the same chart with month as x-axis
+Users could highlight each line, while other lines are greyout
+Mean line is shown
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month
 
-from statsmodels.tsa.seasonal import STL as STL
-import pandas as pd
 import altair as alt
-from altair import datum
-
-PATH = "../../data/all_incidents.json"
-
 
 
 def trend_year(data):

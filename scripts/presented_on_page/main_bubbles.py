@@ -1,3 +1,10 @@
+"""
+Create bubble chart and the marginal chart 
+The bubble chart shows every single incident
+The margin chart is align to show sum across the years and month
+the chart saved to `charts` to be published on the webpage
+
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -109,9 +116,9 @@ def present_main_charts(data):
 def main():
     set_up_altair_browser()
     data = preprocess_data()
-    present_main_charts(data).show()
-
-    #present_main_charts(data).save('../../charts/main_chart.json')
+    chart = present_main_charts(data)
+    chart.show()
+    chart.save('../../charts/main_chart.json')
 
  
     print('finish')

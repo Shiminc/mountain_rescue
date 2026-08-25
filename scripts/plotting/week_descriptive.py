@@ -1,3 +1,9 @@
+"""
+unit of analysis: week
+to examine if average across 52 week x 11 years, mean number of incident in each day of the week 
+just to double confirm the sum for each day
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -35,6 +41,6 @@ def main():
     set_up_altair_browser()
     data = preprocess_data()
     dayofweek = aggregate_by_week_dayofweek(data)
-
+    print(dayofweek)
     print('finish')
 main()

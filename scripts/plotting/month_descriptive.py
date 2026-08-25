@@ -1,14 +1,15 @@
+"""
+Look at incident numbers at the month level
+Boxplot: showing the median and mean
+bar chart: showing sum and the number of each incident cause
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair_browser, create_year_month_line_chart
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month
-import numpy as np
 import pandas as pd
-import json
-from datetime import timedelta, date, datetime 
 import altair as alt
-from altair import datum
 
 def boxplot_with_mean(data):
     # Note that the default value of the extent property is 1.5, which represents the convention of extending the whiskers to the furthest points within 1.5 * IQR from the first and third quartile.
@@ -22,7 +23,13 @@ def boxplot_with_mean(data):
     mean_tick = base.mark_tick(color = 'black').encode(
     alt.Y('mean(Incident)')    )
 
-    return boxplot + mean_tick
+    caption = alt.Chart().mark_text(
+            align =  "left",
+            baseline = "bottom",).encode(
+            text = alt.value('White tick is median, black tick is mean')
+            )
+
+    return (boxplot + mean_tick) & caption
 
 def monthly_bar(data):
     bar = alt.Chart(data,
@@ -53,10 +60,8 @@ def main():
     print(data_year_month.groupby(by='month')['Incident'].agg(['sum','mean','median','min','max','std']))
     # each month numbers
     print(pd.crosstab(data['year'],data['month']))
-    # boxplot
-    boxplot_with_mean(data_year_month).show()
-    monthly_bar(data).show()
-    # create_year_month_line_chart(data).show()
+    # boxplot and monthly_bar to show sum
+    (boxplot_with_mean(data_year_month)& monthly_bar(data)).show()
     print('finish')
 
 main()

@@ -1,9 +1,13 @@
+"""
+Create gannt chart to show the rescue operation from start to end
+the chart saved to `charts` to be published on the webpage
+
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
-from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 

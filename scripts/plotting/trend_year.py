@@ -1,14 +1,16 @@
+"""
+bar chart showing hrs, total_hrs, staff in each year
+similar trend in grand scheme
+
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
-from statsmodels.tsa.seasonal import STL as STL
-import pandas as pd
 import altair as alt
 
 #x axis by year, count of incident then hrs/staff/total_hrs
-# TODO change to yeardata too
 
 
 def create_bar_line(df,time='year'):

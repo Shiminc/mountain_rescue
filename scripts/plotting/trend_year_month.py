@@ -1,15 +1,20 @@
+"""
+stacked bar chart and trend line at year-month level
+to examine if number of incidents and sum of hrs (or staff/total_hrs) correlates
+sum of hrs seems patchy
+
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
-from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
 # double y-axis by year_month to show count of incident and staff/hrs/total_hrs in the same chart to show trends
 # do hrs correspond to incident numbers
-def create_stacked_bar(df):
+def create_stacked_bar_line(df):
     bar_chart = alt.Chart(df).mark_bar(width=5).encode(
         x = 'yearmonth(date)',
         y = 'count(Incident_Cause)',
@@ -42,7 +47,7 @@ def main():
     data = preprocess_data()
 
 
-    create_stacked_bar(data).show()
+    create_stacked_bar_line(data).show()
     print('finish')
 
 

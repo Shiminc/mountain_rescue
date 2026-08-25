@@ -1,4 +1,6 @@
-
+"""
+create faceted heatmap of month x year to show the number of incidents for each cause
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
