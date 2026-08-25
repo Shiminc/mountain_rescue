@@ -14,6 +14,7 @@ Below is a quick introduction to the directories and files in the repositories, 
 4. `scripts`: consisted of different modules corresponding to various skills I am practicing.
 - `llm` - accessing an API of a LLM and using it to help identify information from text about mountain rescue incidents.
 - `scraping` - scraping a website - Wasdale Mountain Rescue https://www.wmrt.org.uk/, only publicly available content (Incident reports) is scraped.
+- **`analysis`** - conducting chisquare using scipy statsmodel
 - **`plotting`** - various kinds of plots are designed to both explore the data as well as to achieve the goal of making a data journalism piece. I moved some of the scripts to another `plotting_archive` for those scripts I won't be discussing during the interview,and to `presented_on_page` for those scripts that produced visualisations on the webpage. 
 - **`timeseries`** - statistical modelling and plotting (arima, sarima, decomposition) and machine learning (linear regression, SVM, random forest, xgboost) and hybrid of both to predict monthly number of incidents in timeseries
 - `network` - using the graph theory to visualise the relationship of weather conditions in each mountain rescue incident.
