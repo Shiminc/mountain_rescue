@@ -17,6 +17,7 @@
     <meta property="og:description" content="Interactive visualisation of Mountain Rescue Team in Lake District"> 
     <meta property="og:locale" content="en_UK">
     <base target="_blank">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
 
     <!-- <link rel="stylesheet" href="styles.css"> -->
 
@@ -28,72 +29,30 @@
         </script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script> -->
     <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <!-- Import vega-embed -->
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <style>
-        html,body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
 
-        header {
-            position: relative;
-            width: 80.0%;
-            left: 7.5%;
-            padding: 1%;
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/favicon.PNG" type="image/x-icon" />
 
-        }
-
-        section, footer {
-            position: relative;
-            width: 80.0%;
-            left: 7.5%;
-            padding: 1%;
-
-        }
-
-
-        .chartholder {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            left: 5%;
-            top: 0.0%;
-
-        }
-
-        .square {
-            width:16px;
-            height:16px; 
-            display: inline-block;
-
-        }
-
-        .myImage {
-            float: right;
-            margin: 50px 50px 15px 20px;
-
-
-        }
-
-    </style>
   </head>
 
   <body>
+    <div class = "grid-nav-container">
+        <div class = 'grid-logo' id ='logo' ><img src="assets/logo.PNG"/></div>
+        <div class = 'grid-about'><a href='https://shiminc.github.io/vizard/about.html'>About</a></div>
+
+    </div>
     <header>
     <h1>Mountain Rescue Team works for free for our leisure and safety</h1>
     <p>SHI MIN CHUA</p>
 
     </header>
-    <section id="introduction">
+    <main>
         <p> At the beginning of 2026, an outpouring of donation has been made to <a href="https://www.wmrt.org.uk/", target="_blank">Wasdale Mountain Rescue Team</a> to help cover the cost of hotel fee after <a href="https://www.bbc.co.uk/news/articles/c9vx0jrnmejo#:~:text=Wasdale%20Mountain%20Rescue%20Team%20said,29%20December%2C%20in%20%22treacherous%22%20conditions.", target="_blank">news</a> of two walkers not paying the hotel after the team rescued them and arranged for them to spend the night in the hotel. 
             However, the cost of the rescue is not limited to the hotel fee.           
             According to the <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-mon-29th-dec-2025/", target="_blank">incident report</a>, the rescue
@@ -129,6 +88,7 @@
 
         <br>
 
+
         <h2>How long do rescue operations take?</h2>
         <p>In the gannt chart below, <b>each bar represents an incident</b> in the context of the day it happened to illustrate how long a rescue operation could take as well as when incidents happen in the day. 
           Each grid corresponds to 6 hours. Although UK day time changes across the seasons, it could be safely assumed that 0-6 and 18-24, that is the lowest and highest part of the chart cover mostly the night time. Sometimes, an operation could go on until the next day, that is crossing the next day reference line in the chart. </p>
@@ -149,15 +109,27 @@
         </p>
 
         <br>
+        <h2> Appendix - Statistical Modelling</h2>
+        <h3> Seasonality and Trend of Incidents</h3>
+        <p> As observed above, the number of incidents is affected by seasons within a year, and there is also a long term upward trend across the years. To clearly show these patterns in the data, I also ran a statistical modelling -- Seasonal and Trend decomposition using Loess to show these two patterns, as well as to tease out any unexpected number of incidents on top of these patterns. These patterns are shown in the four charts below with the x-axis being month-year:</p>
+        <p>1. The line in the first chart visualises the total number of incidents in each month across the years, with additional stacked bar to show the breakdown of different incident causes. </p>
+        <p>2. The line in the trend panel visualises the number of incidents that are associated with the long term trend. It is not possible to show the breakdown of incident cause in this trend, as well as the season and residual below, due to low number of some causes for meaningful statistical analysis.</p>
+        <p>3. The line in the season panel visualises how the number of incidents change across the season, with peaks usually around July and August, which is the summer months good for hiking.</p>
+        <p>4. The line in the residual visualises the number of incidents which is not expected by the trend and seasonality, that is there might be some other factors that cause the increase or decrease of the incidents. The two peaks in October in 2017 and 2021 are the odd times that there are more incidents than expected due to seasonality and trend. It awaits further investigation so the team could better prepare in the future for this kind of unexpected rise of incidents. </p>
+        <p> You can also hover over the line to see the exact number of incidents in each model. It is worth bearing in mind that it is a modelling of the incident number and this modelling essentially breakdown the original number into three components - trend, season, residuals. The number of these three components add up to the original incident number. The negative number in season and residuals is just an indication that there should be fewer incidents due to the season and residuals in those months.</p>
+        <div class="chartholder">
+            <div id="stl"></div>
+        </div>
+            <br>
 
-        <h2>Predicting the future</h2>
+        <h3>Predicting the future</h3>
         <p>As observed earlier, the number of rescues has shown steadily increasing trend since 2021 and typically peak in the summer season, that there is seasonality in the number of incidents. Therefore, it is possible to predict the future number of incidents based on the trend and seasonality in the past data. The chart below shows such prediction for the year of 2026, with margin of errors. Prediction would help the mountain rescue team to prepare resources accordingly, but of course let's hope the future number of incidents will go down instead. </p>
 
             <div class="chartholder">
             <div id="prediction"></div>
             </div>
        
-    </section>
+        </main>
      <!-- <h2>Who else are involved in the rescue operations?</h2>
 
         <h2>How are the weather conditions during the rescue operations?</h2> -->
@@ -178,12 +150,6 @@
             4. Weather
             5. quantitative 
             6. Staff victim ratios -->
-
-        </p>
-            <br>
-
-        <p>
-        </p>
 
 
     <footer>
@@ -210,7 +176,14 @@
 
     </footer>
     </body>
+    
+<!-- Script for logo -->
 
+<script>
+        document.getElementById('logo').addEventListener('click', function(){
+            window.location.href ='https://shiminc.github.io/vizard'
+        })
+</script>
 <!-- Script for other charts -->
 
 <script type="text/javascript">
@@ -223,6 +196,13 @@
 <script type="text/javascript">
         var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/week.json";
         vegaEmbed('#week', spec).then(function(result) {
+          // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+</script>
+
+<script type="text/javascript">
+        var spec = "https://raw.githubusercontent.com/Shiminc/mountain_rescue/main/charts/stl.json";
+        vegaEmbed('#stl', spec,{'loader':{'target':'_blank'}}).then(function(result) {
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         }).catch(console.error);
 </script>

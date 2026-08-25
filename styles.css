@@ -1,19 +1,22 @@
-html,body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+body {
+        /* width: 100%; */
+        padding: 0;
+        }
 
 header {
     position: relative;
-    width: 80.0%;
+    width: 85.0%;
     left: 7.5%;
-    padding: 1%;
+    top:0;
+    padding: 1%; 
+    background: rgba(255, 255, 255, 1);
+    /* make it always in front */
+    z-index:9000;
+    border-bottom : gray 1px solid;
 
 }
 
-section, footer {
+main, footer {
     position: relative;
     width: 80.0%;
     left: 7.5%;
@@ -47,5 +50,63 @@ section, footer {
 
 }
 
+/* logo and navbar */
 
+.grid-logo{
+    position: relative;
+    display: flex;
+    justify-content: left;
+    max-width: 400px;
+    /* width: 10%;
+    height: 10%; */
+    left: 0%;
+    top: 0.0%;
+    /* border-bottom : black 5px solid; */
+
+}
+
+.grid-about:hover,
+.grid-logo:hover{
+    cursor:pointer;
+}
+
+
+
+.grid-nav-container {
+    display: grid;
+    /* grid-template-columns:400px 1000px 200px; */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: 80px;
+    grid-gap: 20px;
+    margin: 20px;
+    margin-right:150px;
+}
+
+.grid-about {
+    font-size: 1.5rem;
+    color: #fdae6b;
+    /* margin-top: auto;
+    margin-bottom: 0;
+    margin-left: auto; 
+    margin-right: 0;     */
+    position: relative;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+}
+
+.grid-about a:link{
+    color: gray;
+    color: #fdae6b;
+
+    text-decoration: none;
+}
+
+.grid-about a:visited{
+    color: rgb(52, 49, 49);
+    color: #fdae6b;
+
+    text-decoration: none;
+}
 
