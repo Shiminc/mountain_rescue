@@ -17,6 +17,7 @@
     <meta property="og:description" content="Interactive visualisation of Mountain Rescue Team in Lake District"> 
     <meta property="og:locale" content="en_UK">
     <base target="_blank">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
 
     <!-- <link rel="stylesheet" href="styles.css"> -->
 
@@ -34,66 +35,24 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <!-- Import vega-embed -->
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <style>
-        html,body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
 
-        header {
-            position: relative;
-            width: 80.0%;
-            left: 7.5%;
-            padding: 1%;
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/favicon.PNG" type="image/x-icon" />
 
-        }
-
-        section, footer {
-            position: relative;
-            width: 80.0%;
-            left: 7.5%;
-            padding: 1%;
-
-        }
-
-
-        .chartholder {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            left: 5%;
-            top: 0.0%;
-
-        }
-
-        .square {
-            width:16px;
-            height:16px; 
-            display: inline-block;
-
-        }
-
-        .myImage {
-            float: right;
-            margin: 50px 50px 15px 20px;
-
-
-        }
-
-    </style>
   </head>
 
   <body>
+    <div class = "grid-nav-container">
+        <div class = 'grid-logo' id ='logo' ><img src="assets/logo.PNG"/></div>
+        <div class = 'grid-about'><a href='https://shiminc.github.io/vizard/about.html'>About</a></div>
+
+    </div>
     <header>
     <h1>Mountain Rescue Team works for free for our leisure and safety</h1>
     <p>SHI MIN CHUA</p>
 
     </header>
-    <section id="introduction">
+    <main>
         <p> At the beginning of 2026, an outpouring of donation has been made to <a href="https://www.wmrt.org.uk/", target="_blank">Wasdale Mountain Rescue Team</a> to help cover the cost of hotel fee after <a href="https://www.bbc.co.uk/news/articles/c9vx0jrnmejo#:~:text=Wasdale%20Mountain%20Rescue%20Team%20said,29%20December%2C%20in%20%22treacherous%22%20conditions.", target="_blank">news</a> of two walkers not paying the hotel after the team rescued them and arranged for them to spend the night in the hotel. 
             However, the cost of the rescue is not limited to the hotel fee.           
             According to the <a href="https://www.wmrt.org.uk/incidents/corridor-route-scafell-pike-mon-29th-dec-2025/", target="_blank">incident report</a>, the rescue
@@ -157,7 +116,7 @@
             <div id="prediction"></div>
             </div>
        
-    </section>
+        </main>
      <!-- <h2>Who else are involved in the rescue operations?</h2>
 
         <h2>How are the weather conditions during the rescue operations?</h2> -->
@@ -178,12 +137,6 @@
             4. Weather
             5. quantitative 
             6. Staff victim ratios -->
-
-        </p>
-            <br>
-
-        <p>
-        </p>
 
 
     <footer>
@@ -210,7 +163,14 @@
 
     </footer>
     </body>
+    
+<!-- Script for logo -->
 
+<script>
+        document.getElementById('logo').addEventListener('click', function(){
+            window.location.href ='https://shiminc.github.io/vizard'
+        })
+</script>
 <!-- Script for other charts -->
 
 <script type="text/javascript">
