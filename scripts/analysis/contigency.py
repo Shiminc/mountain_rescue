@@ -26,38 +26,37 @@ def create_f_exp(data):
 def run_chisquare_all_months(df,exp_array, significance=0.05):
 
     data = df.copy()
-    chisquare_stats = []
-    p_value = []
-    significance_list = []
-    expected_value = []
-    improved = []
+    # chisquare_stats = []
+    # p_value = []
+    # significance_list = []
+    # expected_value = []
+    # improved = []
     for month in range(1,13,1):
-        month_df = df.loc[df['month']==month, CAUSE_ORDER]
+        month_df = data.loc[df['month']==month, CAUSE_ORDER]
         print('Month ' + str(month))
         print(CAUSE_ORDER)
         observed_list = month_df.values[0]
+        print('observed number of incidents')
         print(observed_list)
-        # expected_value.append(sum(observed_list)/len((cause)))
         expected_list = (exp_array) * sum(observed_list)
+        print('expected number of incidents')
         print(expected_list)
+        print('Is observed > expected')
         print(observed_list>expected_list)
         results = chisquare(observed_list,expected_list)
-        print(results.statistic)
-        print(results.pvalue)
-        print(results.pvalue < significance)
-        chisquare_stats.append(results.statistic)
-        p_value.append(results.pvalue)
-        significance_list.append(results.pvalue < significance)
+        print('chi-square statistics: ', results.statistic)
+        print('p-value: ', results.pvalue)
+        print('significance: ', results.pvalue < significance)
+        # chisquare_stats.append(results.statistic)
+        # p_value.append(results.pvalue)
+        # significance_list.append(results.pvalue < significance)
 
-    # data['expected_value'] = expected_value
-    data['chisquare'] = chisquare_stats
-    data['p_value'] =  p_value 
-    data['significance'] = significance_list
+    # # data['expected_value'] = expected_value
+    # data['chisquare'] = chisquare_stats
+    # data['p_value'] =  p_value 
+    # data['significance'] = significance_list
 
   
-
-    return data
-
 
 def reorganise_data(data):
     df = pd.DataFrame(data.groupby(['month','Incident_Cause'])['title'].count())
@@ -73,7 +72,7 @@ def main():
     f_exp = create_f_exp(data)
 
     df = reorganise_data(data)
-    results= run_chisquare_all_months(df, exp_array = f_exp, significance=0.05)
+    run_chisquare_all_months(df, exp_array = f_exp, significance=0.05)
 
     print('finish')
 
