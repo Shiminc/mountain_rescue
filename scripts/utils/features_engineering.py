@@ -1,9 +1,8 @@
 """
 The functions in this module are mainly used for creating features for predicting timeseries with machine learning.
-features created include seasons, number of bankholidays, weekends, last year number (time-lagged)
+features: seasons, number of bankholidays, weekends, last year number, last month(time-lagged)
 The function `create_features` listed last combined all functions to apply to the dataset. 
 
-#TODO could add last month number too as a predictors
 """
 
 import os
@@ -68,6 +67,7 @@ def create_features(incident_count):
     bankholidays = count_bank_holidays()
     data = data.merge(weekenddays, how = 'left', on = 'dateTime').merge(bankholidays, how = 'left', on = 'dateTime').sort_index().fillna(0)
     data = create_time_lagged_last_year(data)
+    data = create_time_lagged_last_month(data)
     return data 
 
 # def main():

@@ -18,9 +18,9 @@ from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import altair as alt
 import pmdarima as pm
-from sklearn.metrics import mean_absolute_error as MAE
-from statsmodels.tsa.statespace.sarimax import SARIMAX
 
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from utils.machine_learning import run_evaluation
 """
 https://alkaline-ml.com/pmdarima/quickstart.html#auto-arima-example
 """
@@ -111,9 +111,6 @@ def draw_forecast(existing_series, fitted_series, predicted_series, conf_int_ser
     height=100)
 
 
-def run_evaluation():
-    return ...
-
 
 def main():
     set_up_altair_browser()
@@ -138,11 +135,10 @@ def main():
     train_fitted = model.fittedvalues()
     train_fitted.index.freq = 'MS'
 
+    run_evaluation(train_series, test_series, train_fitted,test_predicted)
+
     print('')
-    print('MAE of predicting 2025')
-    print(MAE(test_series, test_predicted))
-    print('MAE of training data')
-    print(MAE(train_series, train_fitted))
+
 
     # if this model is choosen, refit the model with the whole series, 2015-2025, then forecast 2026
     final_model = fit_final_model(order,seasonal_order, full_series)

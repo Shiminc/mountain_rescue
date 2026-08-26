@@ -1,9 +1,14 @@
+"""
+This script runs the random forest with grid search to find the best model
+fit the best model to run evaluation
+"""
+
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import preprocess_data,  aggregate_by_year_month
-import pandas as pd
-import numpy as np
+
 from utils.features_engineering import create_features
 from sklearn.model_selection import RandomizedSearchCV
 

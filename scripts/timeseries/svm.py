@@ -1,3 +1,7 @@
+"""
+This script runs the svm with grid search to find the best model
+fit the best model to run evaluation
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -40,7 +44,6 @@ def run_svm(X_train, X_test, y_train, y_test):
 
 
 def main():
-    # set_up_altair()
     data = preprocess_data()
     incident_count = aggregate_by_year_month(data)
     incident_count.set_index('dateTime', inplace=True)

@@ -1,7 +1,14 @@
+"""
+This script breakdowns the timeseries with STL
+1. It contains the functions for formatting the input and output to the model
+2. it also create charts based on the components.
+
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.utils import read_json_to_df, format_time_columns, preprocess_data, aggregate_by_year_month, filter_by_year
+from utils.utils import preprocess_data, aggregate_by_year_month
 from utils.plot import set_up_altair_browser
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
@@ -84,19 +91,11 @@ def line_chart(df, series_component, colour='purple', point: bool = False):
 def main():
     set_up_altair_browser()
 
-    # data = read_json_to_df(PATH)
-    # data = format_time_columns(data)
-
     data = preprocess_data()
 
     incident_count = aggregate_by_year_month(data)
     timeseries = input_formatting(incident_count)
     
-    training_data = incident_count[incident_count['year']<2025]
-    test_data = incident_count[incident_count['year']==2025]
-
-    # timeseries = input_formatting(training_data)
-
     decomposed_result = decompose(timeseries)
     trend = pd.DataFrame(decomposed_result.trend)
     seasonal = pd.DataFrame(decomposed_result.seasonal)

@@ -1,11 +1,14 @@
+"""
+The function in this modules is used to examine if the time-series is stationary.
+It is not used for our purposes as all models we have been running does not require the assumption of stationary.
+https://otexts.com/fpp3/stationarity.html
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair_browser
-from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
-import altair as alt
-import numpy as np
+
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.stattools import kpss
 
@@ -74,19 +77,19 @@ def check_stationarity(timeseries):
 
 
 
-def main():
-    set_up_altair_browser()
-    data = preprocess_data()
+# def main():
+#     set_up_altair_browser()
+#     data = preprocess_data()
 
-    incident_count = aggregate_by_year_month(data)
-    incident_count.set_index('dateTime', inplace=True)
-    training_data = incident_count[incident_count['year']<2025]
-    test_data = incident_count[incident_count['year']==2025]
+#     incident_count = aggregate_by_year_month(data)
+#     incident_count.set_index('dateTime', inplace=True)
+#     training_data = incident_count[incident_count['year']<2025]
+#     test_data = incident_count[incident_count['year']==2025]
 
-    check_stationarity(training_data['Incident'])
-    # non-stationary series, but could not use logarithmic transformation as there is 0 in the data. 
-    # so change to stl_decompose
-    print('finish')
+#     check_stationarity(training_data['Incident'])
+#     # non-stationary series, but could not use logarithmic transformation as there is 0 in the data. 
+#     # so change to stl_decompose
+#     print('finish')
 
 
 main()

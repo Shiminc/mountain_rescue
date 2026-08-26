@@ -1,3 +1,11 @@
+"""
+This script runs xgboost ML by creating a grid search and use the features selected.
+Select the best model then fit the data again to run evaluation in comparison with other models.  
+Print out evaluation
+# https://xgboost.readthedocs.io/en/latest/parameter.html
+
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -9,7 +17,6 @@ from scipy import stats
 from xgboost import XGBRegressor
 from utils.machine_learning import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
 
-# https://xgboost.readthedocs.io/en/latest/parameter.html
 
 def create_xgboost_gridsearch():
     """
@@ -34,7 +41,6 @@ def create_xgboost_gridsearch():
     return grid_search
 
 def main():
-    # set_up_altair()
     data = preprocess_data()
     incident_count = aggregate_by_year_month(data)
     incident_count.set_index('dateTime', inplace=True)

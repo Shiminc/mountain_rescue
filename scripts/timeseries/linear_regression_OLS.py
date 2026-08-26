@@ -1,16 +1,17 @@
+"""
+This script runs linear regression using the statsmodel as it prints out parameters and diagnostic. 
+it supplements the linear regression ran using sklearn
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
-import altair as alt
-import numpy as np
 from utils.features_engineering import create_features
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from statsmodels.graphics.gofplots import qqplot
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-
+from utils.machine_learning import create_data
 # performance worse than sarima
 # no time lag features
 # to avoid using our own forecast as another input for the next forecast (doable but to keep it simple here)
@@ -18,22 +19,8 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 # I could use time lag say rolling mean of past one year but that means could only forecast next month
 
 
-
-def create_data(data,year=2025):
-    # use 2025 as test data, 2015-2024 as train data
-    train_data = data[data['year']<2025]
-    test_data = data[data['year'] == 2025]
-    
-    X_train = train_data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
-    y_train = train_data[['Incident']]
-    X_test = test_data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
-    y_test = test_data[['Incident']]
-
-    return X_train, X_test, y_train, y_test 
-
-
 def preprocessing_for_statsmodels(data):
-    X = pd.get_dummies(data[['count_of_weekend_days','bankholidays','year','month','season','last_year']],
+    X = pd.get_dummies(data[['count_of_weekend_days','bankholidays','year','month','season','last_year','last_month']],
                             columns = ['season','month'],
                             drop_first = True,
                             dtype = int)
@@ -63,31 +50,7 @@ def run_ols(X_train, X_test, y_train, y_test):
 
     return model
 
-# stats model doesn't work like sklearn
-# def run_evaluation(model,X_train, X_test, y_train, y_test):
-#     y_test_predict = model.predict(X_test)
-
-#     mse_score = mean_squared_error(y_test, y_test_predict)
-#     mae_score = mean_absolute_error(y_test, y_test_predict)
-
-#     print('evaluation based on test data')
-#     print(f'mse:  {mse_score}')
-#     print('evaluation based on test data')
-#     print(f'mae:  {mae_score}')
-
-#     y_train_predict = model.predict(X_train)
-
-#     mse_score = mean_squared_error(y_train, y_train_predict)
-#     mae_score = mean_absolute_error(y_train, y_train_predict)
-
-#     print('evaluation based on train data')
-#     print(f'mse:  {mse_score}')
-#     print('evaluation based on train data')
-#     print(f'mae:  {mae_score}')
-
-
 def main():
-    # set_up_altair()
     data = preprocess_data()
     incident_count = aggregate_by_year_month(data)
     incident_count.set_index('dateTime', inplace=True)
@@ -99,7 +62,6 @@ def main():
     X_train, X_test, y_train, y_test = preprocessing_for_statsmodels(data)
     model = run_ols(X_train, X_test, y_train, y_test)
 
-    # run_evaluation(model,X_train, X_test, y_train, y_test)
     
     print('finish')
 
