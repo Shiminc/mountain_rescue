@@ -1,4 +1,6 @@
-# histogram of hrs, total_hrs, staff for each incident cause
+"""
+histogram of hrs, total_hrs, staff for each incident cause
+"""
 
 import os
 import sys

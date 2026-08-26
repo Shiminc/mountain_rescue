@@ -1,3 +1,6 @@
+""""
+This script shows the proportion,number of incident of different incidents each month in each year as well as by year
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))

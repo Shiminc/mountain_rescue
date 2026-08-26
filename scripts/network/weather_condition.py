@@ -1,3 +1,7 @@
+"""
+this script trial network analysis with weather data
+
+"""
 import os
 import sys
 

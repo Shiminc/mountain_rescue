@@ -1,5 +1,5 @@
 """
-The function in this modules is used to examine if the time-series is stationary.
+The function in this module is used to examine if the time-series is stationary.
 It is not used for our purposes as all models we have been running does not require the assumption of stationary.
 https://otexts.com/fpp3/stationarity.html
 """
@@ -92,4 +92,4 @@ def check_stationarity(timeseries):
 #     print('finish')
 
 
-main()
+# main()

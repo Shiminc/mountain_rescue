@@ -1,3 +1,6 @@
+"""
+This scripts run annova and chisquare to compare incident type/cause on hrs, total_hrs, staff
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -94,9 +97,9 @@ def main():
 
     # print('Incident_Type')
 
-    # run_anova(data,'Incident_Type','hrs')
-    # run_anova(data,'Incident_Type','staff')
-    # run_anova(data,'Incident_Type','total_hrs')
+    run_anova(data,'Incident_Type','hrs')
+    run_anova(data,'Incident_Type','staff')
+    run_anova(data,'Incident_Type','total_hrs')
 
     # print('')
 

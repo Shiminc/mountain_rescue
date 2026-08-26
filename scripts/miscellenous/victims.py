@@ -1,3 +1,7 @@
+"""
+this script show number of different number of victims with stacked bar chart
+victims number is created by using llm, see relevant folder
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
