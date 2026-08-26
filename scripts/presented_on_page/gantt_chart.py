@@ -1,9 +1,13 @@
+"""
+Create gannt chart to show the rescue operation from start to end
+the chart saved to `charts` to be published on the webpage
+
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
-from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
 import altair as alt
 
@@ -198,27 +202,14 @@ def gantt_chart(df):
 
 
 
-# def top_20_hrs(data):
-#     year_list = list(data['year'].unique())
-#     for i, year in enumerate(year_list):
-#         temp_df = data[data['year'] == year]
-#         temp_df_top = temp_df.sort_values(by=['hrs'], ascending = False).head(20)
-#         if i == 0:
-#             df = temp_df_top
-#         else:
-#             df = pd.concat([df,temp_df_top])
-
-#     return df
-
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
         
-    # data=top_20_hrs(data)
     chart = gantt_chart(data)
     chart.show()
     chart.save('../../charts/gantt.json')
-    chart.save('../../charts/gantt.png')
+    # chart.save('../../charts/gantt.png')
 
     print('finish')
 

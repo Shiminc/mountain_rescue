@@ -1,13 +1,16 @@
+"""
+The functions in this module are mainly used for creating features for predicting timeseries with machine learning.
+features: seasons, number of bankholidays, weekends, last year number, last month(time-lagged)
+The function `create_features` listed last combined all functions to apply to the dataset. 
+
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
-from utils.utils import preprocess_data,  aggregate_by_year_month
+from utils.variables import HOLIDAY_PATH
 import pandas as pd
-import altair as alt
-import numpy as np
 
-PATH = "../../data/ukbankholidays-jul19.csv"
 
 def create_season(df):
     df['season'] = 'season'
@@ -18,13 +21,8 @@ def create_season(df):
 
     return df
 
-# def create_temp(start_date='2015-01-01', end_date='2025-12-31', freq='MS'):
-#     index = pd.date_range(start_date, end_date, freq=freq)
-
-#     return ...
-
 def count_bank_holidays():
-    data = pd.read_csv(PATH)
+    data = pd.read_csv(HOLIDAY_PATH)
     data = data[['UK BANK HOLIDAYS']].dropna()
     data.columns =['bankholidays']
     data['bankholidays'] = pd.to_datetime(data['bankholidays'], format='%d-%b-%Y')
@@ -53,18 +51,23 @@ def count_weekenddays(start_date='2015-01-01', end_date='2025-12-31'):
     data = data.set_index('dateTime')
     return data 
 
-def create_time_lagged(data):
+def create_time_lagged_last_year(data):
     # only last year value as a practice.
     data['last_year'] = data['Incident'].shift(12)
-  
     return data.dropna(subset=['last_year'])
+
+def create_time_lagged_last_month(data):
+    data['last_month'] = data['Incident'].shift(1)
+    return data.dropna(subset=['last_month'])
+
 
 def create_features(incident_count):
     data = create_season(incident_count)
     weekenddays = count_weekenddays()
     bankholidays = count_bank_holidays()
     data = data.merge(weekenddays, how = 'left', on = 'dateTime').merge(bankholidays, how = 'left', on = 'dateTime').sort_index().fillna(0)
-    data = create_time_lagged(data)
+    data = create_time_lagged_last_year(data)
+    data = create_time_lagged_last_month(data)
     return data 
 
 # def main():

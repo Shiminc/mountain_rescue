@@ -1,16 +1,15 @@
+"""
+Interaction line chart for each year within the same chart with month as x-axis
+Users could highlight each line, while other lines are greyout
+Mean line is shown
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month
 
-from statsmodels.tsa.seasonal import STL as STL
-import pandas as pd
 import altair as alt
-from altair import datum
-
-PATH = "../../data/all_incidents.json"
-
 
 
 def trend_year(data):
@@ -52,8 +51,8 @@ def trend_year(data):
     )
 
     return((chart + month_ave).properties(
-    width=800,
-    height=1000) | legend).configure_legend(False) 
+    width=300,
+    height=500) | legend).configure_legend(False) 
 
 
 def stacked_bar_chart(data):
@@ -74,25 +73,14 @@ def stacked_bar_chart(data):
 
     return (bar_chart + label)
 
-def heat_map(df):
-    data = aggregate_by_year_month(df)
-
-    heat_map = alt.Chart(data).mark_rect().encode(
-        alt.X('month:O'),
-        alt.Y('year:O',sort='descending'),
-        alt.Color('Incident:Q')
-    )   
-    return heat_map
-
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
 
     data = preprocess_data()
 
     trend_chart = trend_year(data)
     bar_chart = stacked_bar_chart(data)
-    heatmap_chart = heat_map(data)
 
     (trend_chart| bar_chart).resolve_scale(color='independent').show()
     print('finish')

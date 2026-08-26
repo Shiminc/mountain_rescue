@@ -1,12 +1,30 @@
+"""
+This script creates histogram and bar charts for a general overview of the distribution of the data
+# histogram (ordinal or interval scale)
+    - hrs
+    - total_hrs
+    - staff
+    - agencies count
+    - end_time, start_time
+# bar chart (categorical/ordinal variable)
+    - incident type
+    - incident cause
+    - next day
+    - year
+    - month
+    - weather
+    - agencies involved
+    - injury diagnosis
+
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
-import pandas as pd
 import altair as alt
 
-# histogram of each variables
 def histogram(df,var_x:str):
     chart = alt.Chart(df).mark_bar().encode(
         alt.X(var_x),
@@ -33,11 +51,9 @@ def sorted_bar(df,var_x:str):
     )
     return chart
 
-def main():
-    set_up_altair()
-    data = preprocess_data()
 
-    ((histogram(data,'hrs') |  histogram(data,'total_hrs'))
+def histogram_for_overview(data):
+    chart = ((histogram(data,'hrs') |  histogram(data,'total_hrs'))
       & (histogram(data,'staff') | histogram(data,'Agencies_count'))
       & (histogram(data,'next_day') | histogram(data,'Incident_Type') | histogram(data,'Incident_Cause')) 
       & (histogram(data,'year') | histogram(data,'month'))
@@ -45,7 +61,14 @@ def main():
       & (sorted_bar(data,'Weather'))
       & (sorted_bar(data,'Other Agencies'))
       & (sorted_bar(data,'Diagnosis'))
-      ).show()
+      )
+    return chart
+
+def main():
+    set_up_altair_browser()
+    data = preprocess_data()
+
+    histogram_for_overview(data).show()
 
 
     print('finish')

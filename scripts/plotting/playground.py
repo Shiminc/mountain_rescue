@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser, create_stacked_bar_by_date
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import numpy as np
 import pandas as pd
@@ -35,13 +35,14 @@ def heatmap(data):
     return chart
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
-    data = data[data['year'] == 2025]
+    create_stacked_bar_by_date(data).show()
+    # data = data[data['year'] == 2025]
 
-    trial = generate_calendar()
+    # trial = generate_calendar()
 
-    heatmap(data).show()
+    # heatmap(data).show()
     print('finish')
 
 main()

@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month
 from statsmodels.tsa.seasonal import STL as STL
 import pandas as pd
@@ -42,7 +42,7 @@ def trend_year(df):
     height=1000)
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
 
     incident_count = aggregate_by_year_month(data)

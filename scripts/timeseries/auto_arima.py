@@ -1,20 +1,32 @@
+"""
+This scripts contain functions and do several things in relation to finding the best sarima model
+1. Split data into training (2015-2024) and testing data(2025) set 
+2. run auto_arima to get the best model
+4. print out the models and its evaluation statistics. We could also look into plot in acf_pcf.py to see if the model make sense
+5. print out the diagnostic of the best model, and pop up the charts for the diagnostics
+6. Also calculated the MAE for train and test data, for comparing with other machine learning models (see scripts in the directory)
+7. Refit the best model with the full dataset, 2015-2025, so as to forecast 2026 
+8. Save the final model fitted values and residual into pickle for future modelling of the residuals
+9. draw the original series, fitted values and forecast in line chart
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import altair as alt
-import numpy as np
 import pmdarima as pm
-import statsmodels.tsa.stattools as ts
-from sklearn.metrics import mean_absolute_error as MAE
-from statsmodels.tsa.statespace.sarimax import SARIMAX
-import pickle
 
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from utils.machine_learning import run_evaluation
+"""
+https://alkaline-ml.com/pmdarima/quickstart.html#auto-arima-example
+"""
 
 def auto_arima(timeseries):
-    # the function return the best model so you don't need to create a new model with sarima with the params found. BUT realised the pdarima does not provide confidence level, so still better fit again with SARIMA
+    # the function return the best model so we don't need to create a new model with sarima with the params found. BUT realised the pdarima does not provide confidence level, so still better fit again with SARIMA
     # the model selected fulfil observation from acf, pacf
     stepwise_model = pm.auto_arima(timeseries, start_p=1, start_q=1,
                             max_p=3, max_q=3, m=12,
@@ -28,7 +40,7 @@ def auto_arima(timeseries):
     print(stepwise_model.summary())
     # Ljung-box, Heteroskedasticity null hypo is normal dist
     # JB, skew, kurtosis further away from 0, more non-normal 
-    #  you could just return the model, which will be the best model. BUT the pdarima.output does not provide confidence level, so still better fit again with SARIMA
+    #  we could just return the model, which will be the best model. BUT the pdarima.output does not provide confidence level, so still better fit again with SARIMA
     # return stepwise_model
     return (stepwise_model, stepwise_model.order, stepwise_model.seasonal_order)
 
@@ -99,12 +111,9 @@ def draw_forecast(existing_series, fitted_series, predicted_series, conf_int_ser
     height=100)
 
 
-def run_evaluation():
-    return ...
-
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
 
     incident_count = aggregate_by_year_month(data)
@@ -126,11 +135,10 @@ def main():
     train_fitted = model.fittedvalues()
     train_fitted.index.freq = 'MS'
 
+    run_evaluation(train_series, test_series, train_fitted,test_predicted)
+
     print('')
-    print('MAE of predicting 2025')
-    print(MAE(test_series, test_predicted))
-    print('MAE of training data')
-    print(MAE(train_series, train_fitted))
+
 
     # if this model is choosen, refit the model with the whole series, 2015-2025, then forecast 2026
     final_model = fit_final_model(order,seasonal_order, full_series)

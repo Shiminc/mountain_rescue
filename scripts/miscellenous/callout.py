@@ -3,7 +3,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import preprocess_data
 # from utils.utils import convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
-from utils.plot import create_histogram, set_up_altair, create_stacked_bar
+from utils.plot import create_histogram, set_up_altair_browser, create_stacked_bar
 import pandas as pd
 from scipy.stats import chi2_contingency
 from statsmodels.formula.api import ols
@@ -68,7 +68,7 @@ def run_anova(data, ind_var, dep_var):
 
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
 
     # data = read_json_to_df(PATH)

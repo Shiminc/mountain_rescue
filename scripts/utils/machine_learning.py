@@ -1,13 +1,16 @@
+"""
+ The functions in this module are mainly used for machine learning:
+# evaluation using MAE, MSE
+# create training data, test data and transform
+# create gridsearch structure
+# fit model selected and produce predicted values
+
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.utils import preprocess_data,  aggregate_by_year_month
-import pandas as pd
-import altair as alt
 import numpy as np
-from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.compose import ColumnTransformer
 
@@ -20,7 +23,7 @@ def create_data(data,year=2025):
 
     preprocessor = transform_features()
 
-    X = data[['count_of_weekend_days','bankholidays','year','month','season','last_year']]
+    X = data[['count_of_weekend_days','bankholidays','year','month','season','last_year','last_month']]
     X = preprocessor.fit_transform(X)
 
     X_train = X[:X.shape[0]-12]
@@ -55,26 +58,6 @@ def run_grid_search(X_train, y_train, grid_search):
     print(model.best_score_) 
     return model.best_estimator_
 
-# def run_evaluation(best_model,X_train, X_test, y_train, y_test):
-#     y_test_predict = best_model.fit(X_train, y_train).predict(X_test)
-#     y_train_predict = best_model.fit(X_train, y_train).predict(X_train)
-
-#     mse_score = mean_squared_error(y_test, y_test_predict)
-#     mae_score = mean_absolute_error(y_test, y_test_predict)
-
-#     print('evaluation based on test data')
-#     print(f'mse:  {mse_score}')
-#     print('evaluation based on test data')
-#     print(f'mae:  {mae_score}')
-
-
-#     mse_score = mean_squared_error(y_train, y_train_predict)
-#     mae_score = mean_absolute_error(y_train, y_train_predict)
-
-#     print('evaluation based on train data')
-#     print(f'mse:  {mse_score}')
-#     print('evaluation based on train data')
-#     print(f'mae:  {mae_score}')
 
 def get_predicted_train_test_from_best_model(best_model,X_train, y_train, X_test):
   

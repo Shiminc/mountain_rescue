@@ -1,16 +1,17 @@
+# histogram of hrs, total_hrs, staff for each incident cause
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from utils.plot import set_up_altair
+from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data
-import pandas as pd
 import altair as alt
 
 
-def faceted_histogram(df):
+def faceted_histogram(df, variable):
     chart = alt.Chart(df).mark_bar().encode(
         
-        x = 'total_hrs',
+        x = variable,
         y = 'count()',
     ).facet(
         row = alt.Row('Incident_Cause')
@@ -19,9 +20,9 @@ def faceted_histogram(df):
     
 
 def main():
-    set_up_altair()
+    set_up_altair_browser()
     data = preprocess_data()
-    faceted_histogram(data).show()
+    (faceted_histogram(data, variable ='total_hrs')|faceted_histogram(data, variable ='hrs')|faceted_histogram(data, variable ='staff')).show()
 
     print('finish')
 

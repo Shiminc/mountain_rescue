@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import convert_to_numeric, handling_problematic_data, read_json_to_df, format_time_columns,calculating_other_agencies, determine_next_day
-from utils.plot import set_up_altair, create_histogram, create_stacked_bar
+from utils.plot import set_up_altair_browser, create_histogram, create_stacked_bar
 import altair as alt
 PATH = "../../data/all_incidents.json"
 
@@ -22,7 +22,7 @@ def main():
     diagnosis = data.explode(['Diagnosis'])
     diagnosis = diagnosis[variables]
     diagnosis['Diagnosis'].value_counts()
-    set_up_altair()
+    set_up_altair_browser()
 
 
     # create_histogram(diagnosis, 'Other Agencies', bin=False).show()

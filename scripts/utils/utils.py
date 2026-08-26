@@ -1,13 +1,22 @@
+"""
+This module contains functions used for preprocessing data, including 
+# reading the json data and convert to panda dataframe
+# formating datetime variables
+# aggregate data into year_month unit of analysis
+# calculating moving averages with time window 12
+# convert string variables (day, month, hrs, staff, total_hrs) into numerics
+# creating variables - bankholiday, whether a mission goes into next day, how many agencies are involved. 
+# the `preprocessing` combined most of the functions so that users could just use this function to retrieve the data and get a clean data with all the possbile variables 
+"""
+
 import pandas as pd
 import json
-import time
-from datetime import timedelta, date, datetime 
+from datetime import datetime 
 import numpy as np
-import altair as alt
-import os 
-
-PATH = "../../data/all_incidents.json"
-HOLIDAY_PATH = "../../data/ukbankholidays-jul19.csv"
+import os,sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils.problematic_data import handling_problematic_data 
+from utils.variables import PATH, HOLIDAY_PATH 
 
 def determine_bankholiday(df):
     holidays = pd.read_csv(HOLIDAY_PATH)
@@ -83,6 +92,8 @@ def convert_month_to_word(df):
 def format_time_columns(df):
     df['date'] = pd.to_datetime(df['date'], format='%d %b %Y')
     # df.sort_values(by=['date'])
+    # mainly happened in archive data
+    df.dropna(subset=['date'],inplace=True)
     df['year'] = df['date'].dt.year.astype(int)
     df['month'] = df['date'].dt.month.astype(int)
     # df = convert_month_to_word(df)
@@ -91,7 +102,12 @@ def format_time_columns(df):
     # df = convert_day_to_word(df)
     df['day']=df['date'].dt.day.astype(int)
 
+    # identify week number of the year
+    df['week_number'] = df['date'].dt.isocalendar().week.astype(int)
+    # reassing the week number being misassign by isocalendar from 53 of previous years to 1
+    df.loc[(df['week_number']==53) & (df['year']==2021),'week_number']=1
 
+    
     df['year_month'] = df['year'].astype(str) + '-' + df['month'].astype(str)
     df['year_month'] = pd.to_datetime(df['year_month'], format='%Y-%m')
 
@@ -100,7 +116,6 @@ def format_time_columns(df):
 def filter_by_year(df,year):
     df = df[df['year']>year]
     return df
-
 
 def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-12-31', freq='MS'):
     #create a dummy series that include all date so that when we merge with the data, any month without any incident will be able to filled with 0
@@ -124,39 +139,7 @@ def aggregate_by_year_month(df, start_date='2015-01-01', end_date='2025-12-31', 
     merged_df['moving_average']=moving_averages(merged_df.Incident,12)
     return merged_df
 
-def handling_problematic_data(data):
-    # empty cell in incident cause to be recoded to another original value Other
-    # data.Incident_Cause[data.Incident_Cause=='']='Other'
-    # data['Incident_Cause'].replace({'': 'Other'})
-    # other could include help sweeping snow or flood or dog https://www.wmrt.org.uk/incidents/corney-fell-sat-11th-mar-2023/, https://www.wmrt.org.uk/incidents/brown-tongue-scafell-pike-thu-1st-jan-1970/
-    
-    data.loc[data['Incident_Cause']=='','Incident_Cause']='Other' 
-    # based on the mean number of staff of the full callout and limited callout - 15 vs 7, current data only 6 count of callout which is quite seprate, 2, 4, then 11 , so use 10 as cut off
-    data.loc[(data['Incident_Type']=='Callout') & (data['staff'] >=10),'Incident_Type']='Full Callout'
-    data.loc[(data['Incident_Type']=='Callout') & (data['staff'] <10),'Incident_Type']='Limited Callout'
-    # missing data on Incident_Type, I read through and assign based on my judgement
-    data.loc[data["Incident"]=='106 in 2025', 'Incident_Type']='Alert'
-    data.loc[data["Incident"]=='38 in 2025', 'Incident_Type']='Full Callout'
-    data.loc[data["Incident"]=='87 in 2025', 'Incident_Type']='Full Callout'
-    data.loc[data["Incident"]=='133 in 2023', 'Incident_Type']='Alert'
-    data.loc[data["Incident"]=='95 in 2023', 'Incident_Type']='Full Callout'
-    data.loc[data["Incident"]=='55 in 2023', 'Incident_Type']='Limited Callout'
-    # odd number of staff for small alerts due to the big number of staff around for other incidents or training, change the number to reflect based on reading of incident reports
-    # to avoid inflation of total_hrs 
-    data.loc[data["Incident"]=='117 in 2025', 'staff'] = 1
-    data.loc[data["Incident"]=='117 in 2025', 'total_hrs'] = 2.6
-    data.loc[data["Incident"]=='2 in 2023', 'staff'] = 1
-    data.loc[data["Incident"]=='2 in 2023', 'total_hrs'] = 0.6
-    data.loc[data["Incident"]=='121 in 2021', 'staff'] = 1
-    data.loc[data["Incident"]=='121 in 2021', 'total_hrs'] = 4.3
-    # replace with mean number of staff as again training nearby with 22 members
-    data.loc[data["Incident"]=='57 in 2017', 'staff'] = 7
-    data.loc[data["Incident"]=='57 in 2017', 'total_hrs'] = 20.3
-    # drop rows with hrs or staff as NaN, most are either short alert or flood responding rather than mountain rescue
-    data = data.dropna(subset=['hrs','staff','date'])
 
-    return data
-    
 def convert_to_numeric(data):
     # data['hrs'] = data['hrs'].astype(float)
     # data['total_hrs'] = data['total_hrs'].astype(float)
@@ -187,6 +170,7 @@ def determine_next_day(data):
 
     return data
 
+# main functions to be used in other main scripts. 
 def preprocess_data():
     data = read_json_to_df(PATH)
     data = format_time_columns(data)
@@ -197,3 +181,4 @@ def preprocess_data():
     data = determine_bankholiday(data)
     data = data[(data['year']>2014) & (data['year']<2026)]
     return data
+

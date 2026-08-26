@@ -1,11 +1,18 @@
+"""
+This script attempts to conduct hybrid modelling with both sarima and ml models. 
+Not yet working.
+The idea is to model the residuals from SARIMA with addtional variables
+However this dataset does not really have variables outside of time-features. 
+
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
-import numpy as np
-from utils_features import create_features
-from utils_ML import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
+from utils.features_engineering import create_features
+from utils.machine_learning import create_data, run_grid_search, run_evaluation, get_predicted_train_test_from_best_model
 from svm import create_svm_gridsearch
 from random_forest import create_random_forest_gridsearch
 from emsemble import create_xgboost_gridsearch
