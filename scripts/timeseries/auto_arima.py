@@ -1,3 +1,8 @@
+"""
+This scripts contain functions and do several things
+1. run auto_arima to get the best model 
+"""
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -5,16 +10,16 @@ from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import altair as alt
-import numpy as np
 import pmdarima as pm
-import statsmodels.tsa.stattools as ts
 from sklearn.metrics import mean_absolute_error as MAE
 from statsmodels.tsa.statespace.sarimax import SARIMAX
-import pickle
 
+"""
+https://alkaline-ml.com/pmdarima/quickstart.html#auto-arima-example
+"""
 
 def auto_arima(timeseries):
-    # the function return the best model so you don't need to create a new model with sarima with the params found. BUT realised the pdarima does not provide confidence level, so still better fit again with SARIMA
+    # the function return the best model so we don't need to create a new model with sarima with the params found. BUT realised the pdarima does not provide confidence level, so still better fit again with SARIMA
     # the model selected fulfil observation from acf, pacf
     stepwise_model = pm.auto_arima(timeseries, start_p=1, start_q=1,
                             max_p=3, max_q=3, m=12,
@@ -28,7 +33,7 @@ def auto_arima(timeseries):
     print(stepwise_model.summary())
     # Ljung-box, Heteroskedasticity null hypo is normal dist
     # JB, skew, kurtosis further away from 0, more non-normal 
-    #  you could just return the model, which will be the best model. BUT the pdarima.output does not provide confidence level, so still better fit again with SARIMA
+    #  we could just return the model, which will be the best model. BUT the pdarima.output does not provide confidence level, so still better fit again with SARIMA
     # return stepwise_model
     return (stepwise_model, stepwise_model.order, stepwise_model.seasonal_order)
 

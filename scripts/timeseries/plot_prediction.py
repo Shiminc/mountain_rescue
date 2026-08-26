@@ -1,3 +1,7 @@
+"""
+This script draw the forecast error band and value
+It is the one presented on the webpage
+"""
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -5,12 +9,7 @@ from utils.plot import set_up_altair_browser
 from utils.utils import preprocess_data,  aggregate_by_year_month
 import pandas as pd
 import altair as alt
-import numpy as np
-import pmdarima as pm
-import statsmodels.tsa.stattools as ts
-from sklearn.metrics import mean_absolute_error as MAE
-from statsmodels.tsa.statespace.sarimax import SARIMAX
-import pickle
+
 
 rule_data = pd.DataFrame(
     [
