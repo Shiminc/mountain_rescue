@@ -21,6 +21,13 @@ import numpy as np
 from scipy.stats import chisquare
 
 def results_heat_map(data):
+    """
+    This chart will be shown on a web browser
+    1. one heatmap showing incident cause on x-axis, month on y-axis, colour indicating which incident cause has higher number than expected in a particular month
+    2. beside the heatmap, there will be p-value showing whether the chiquare test of the contigency table for each month is significant
+    3. for ease of inspection, within the heatmap, they will be observed and expected value. 
+
+    """
     data['results'] = data['results'].astype('string')
     data.loc[data['results']=='False','results']='observed lower than expected'
     data.loc[data['results']=='True','results']='observed higher than expected'
@@ -79,7 +86,7 @@ def create_f_exp(data):
 
 
 def run_chisquare_all_months(df,exp_array, significance=0.05):
-
+    # create empty list to record the results and values
     data = df.copy()
     # chisquare_stats = []
     p_value_list = []
@@ -89,6 +96,8 @@ def run_chisquare_all_months(df,exp_array, significance=0.05):
     cause_list = []
     observed = []
     expected= []
+
+    # run the chisquare through each month, while print out the statistics
     for month in range(1,13,1):
         month_df = data.loc[df['month']==month, CAUSE_ORDER]
         print('')
@@ -120,6 +129,7 @@ def run_chisquare_all_months(df,exp_array, significance=0.05):
     return results_for_overview
 
 def reorganise_data(data):
+    # reorgnise the data into wide format
     df = pd.DataFrame(data.groupby(['month','Incident_Cause'])['title'].count())
     df = df.reset_index()
     df = df.pivot(index='month',columns = 'Incident_Cause',values='title')
@@ -138,7 +148,7 @@ def main():
     df = reorganise_data(data)
     # run the chisquare for each month and record the data as well as print it out
     results = run_chisquare_all_months(df, exp_array = f_exp, significance=0.05)
-    # presented the findings in visualisation
+    # presented the findings in visualisation with heatmap, along with the stacked bar chart in month, and the total number of each incident cause for inspection
     (results_heat_map(results) | create_stacked_bar_by_date(data, time='month') | create_histogram(data, 'Incident_Cause', bin=False)).show()
 
     print('finish')
