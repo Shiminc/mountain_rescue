@@ -1,6 +1,13 @@
 """
-This scripts contain functions and do several things
-1. run auto_arima to get the best model 
+This scripts contain functions and do several things in relation to finding the best sarima model
+1. Split data into training (2015-2024) and testing data(2025) set 
+2. run auto_arima to get the best model
+4. print out the models and its evaluation statistics. We could also look into plot in acf_pcf.py to see if the model make sense
+5. print out the diagnostic of the best model, and pop up the charts for the diagnostics
+6. Also calculated the MAE for train and test data, for comparing with other machine learning models (see scripts in the directory)
+7. Refit the best model with the full dataset, 2015-2025, so as to forecast 2026 
+8. Save the final model fitted values and residual into pickle for future modelling of the residuals
+9. draw the original series, fitted values and forecast in line chart
 """
 
 import os

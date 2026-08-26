@@ -1,5 +1,6 @@
 """
-This scripts plot acf and pacf to test for the assumption of time series
+This scripts plot acf and pacf to observe the time-lag and seasonality of the time series.
+it assisted in deciding on the SARIMA model parameters. 
 # acf :
 x = lag
 y = correlation coef
@@ -29,11 +30,7 @@ def main():
     plot_acf(incident_count['Incident'], lags=48, ax=ax1)
     plot_pacf(incident_count['Incident'], lags = 48, ax=ax2)
     fig.show()
-    #null hypothesis is randomness, i.e., stationary
-    # results = sm.stats.acorr_ljungbox(incident_count['Incident'])
 
-    # plot_pacf(incident_count['Incident']).show()
-    # month_plot(incident_count['Incident']).show()
 
     print('finish')
 
